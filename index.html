@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a1a0f">
+<title>Weekendr — Find Your Escape</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;overflow-x:hidden;min-height:100vh;-webkit-font-smoothing:antialiased;}
+
+/* ════════════════════════════
+   SCREENS
+════════════════════════════ */
+.screen{display:none;min-height:100vh;}
+.screen.on{display:block;}
+
+/* ════════════════════════════
+   HOME
+════════════════════════════ */
+#home{background:#EDF5F0;}
+
+/* ── HERO ── */
+.hero{
+  width:100%;
+  height:88vw;
+  max-height:500px;
+  position:relative;
+  overflow:hidden;
+  border-radius:0 0 40px 40px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.3);
+}
+
+/* Deep sky — dawn to dusk */
+.h-sky{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,
+    #0a1628 0%,
+    #0d2240 5%,
+    #1a3d6a 13%,
+    #2d6090 22%,
+    #4a88b0 32%,
+    #72aec8 40%,
+    #a0ccd8 46%,
+    #c8e4e0 50%,
+    #e8eed0 53%,
+    #f5dfa0 56%,
+    #f0c060 59%,
+    #e89040 63%,
+    #d06020 68%,
+    #902810 74%,
+    #501008 80%,
+    #200804 88%,
+    #0a1a0f 100%
+  );
+}
+
+/* Sun with realistic glow */
+.h-sun{
+  position:absolute;
+  width:56px;height:56px;
+  border-radius:50%;
+  top:50%;left:64%;
+  transform:translate(-50%,-50%);
+  background:radial-gradient(circle,#fffde0 0%,#fff5a0 20%,#ffd840 45%,#ffaa20 65%,rgba(255,140,20,0) 100%);
+  box-shadow:
+    0 0 0 8px rgba(255,220,80,0.15),
+    0 0 0 20px rgba(255,180,40,0.10),
+    0 0 0 45px rgba(255,140,20,0.07),
+    0 0 80px 40px rgba(255,160,30,0.25);
+  z-index:3;
+}
+
+/* Sun reflection on water */
+.h-sunray{
+  position:absolute;
+  top:50%;left:64%;
+  transform:translateX(-50%);
+  width:3px;
+  height:35%;
+  background:linear-gradient(to bottom,rgba(255,200,60,0.5),rgba(255,160,30,0.1),transparent);
+  z-index:3;
+  border-radius:2px;
+}
+
+/* Horizon haze */
+.h-haze{
+  position:absolute;
+  top:46%;left:0;right:0;height:8%;
+  background:linear-gradient(180deg,transparent,rgba(255,200,80,0.18),transparent);
+  z-index:2;
+}
+
+/* Mountains — dark silhouette */
+.h-mtn{
+  position:absolute;
+  bottom:32%;left:0;right:0;
+  height:24%;
+  z-index:4;
+  overflow:hidden;
+}
+.h-mtn::before{
+  content:'';position:absolute;
+  bottom:0;left:-5%;right:-5%;top:0;
+  background:
+    radial-gradient(ellipse 22% 100% at 10% 100%,#0c2018 70%,transparent 100%),
+    radial-gradient(ellipse 18% 85% at 22% 100%,#091812 60%,transparent 100%),
+    radial-gradient(ellipse 28% 95% at 38% 100%,#0e2820 65%,transparent 100%),
+    radial-gradient(ellipse 20% 80% at 55% 100%,#0a1e16 55%,transparent 100%),
+    radial-gradient(ellipse 25% 90% at 70% 100%,#0d2418 62%,transparent 100%),
+    radial-gradient(ellipse 22% 100% at 85% 100%,#0c2018 70%,transparent 100%),
+    radial-gradient(ellipse 18% 80% at 95% 100%,#091812 55%,transparent 100%);
+}
+
+/* Ocean — layered water */
+.h-ocean{
+  position:absolute;
+  bottom:0;left:0;right:0;height:33%;
+  z-index:5;
+  background:linear-gradient(180deg,
+    rgba(8,40,28,0) 0%,
+    rgba(8,35,22,0.6) 15%,
+    rgba(6,28,18,0.88) 35%,
+    rgba(5,22,13,0.97) 60%,
+    #050f08 100%
+  );
+}
+/* Water shimmer lines */
+.h-ocean::before{
+  content:'';position:absolute;
+  top:8%;left:5%;right:5%;height:2px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,220,100,0.35) 20%,
+    rgba(255,200,70,0.55) 40%,
+    rgba(255,220,100,0.65) 55%,
+    rgba(255,200,70,0.45) 72%,
+    rgba(255,220,100,0.2) 88%,
+    transparent 100%
+  );
+  border-radius:2px;
+}
+.h-ocean::after{
+  content:'';position:absolute;
+  top:28%;left:10%;right:10%;height:1px;
+  background:linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,200,80,0.18) 25%,
+    rgba(255,180,60,0.32) 50%,
+    rgba(255,200,80,0.18) 75%,
+    transparent 100%
+  );
+}
+
+/* Palms — proper silhouette */
+.h-palm-l{
+  position:absolute;
+  bottom:28%;left:1%;
+  z-index:6;
+  width:48px;
+  height:65%;
+}
+.h-palm-l::before{
+  content:'🌴';
+  position:absolute;bottom:0;left:0;
+  font-size:clamp(70px,22vw,110px);
+  line-height:1;
+  filter:brightness(0) sepia(1) hue-rotate(80deg) saturate(0.3) brightness(0.2);
+  transform-origin:bottom center;
+  transform:rotate(-8deg);
+}
+
+.h-palm-r{
+  position:absolute;
+  bottom:26%;right:-2%;
+  z-index:6;
+  width:60px;
+  height:72%;
+}
+.h-palm-r::before{
+  content:'🌴';
+  position:absolute;bottom:0;right:0;
+  font-size:clamp(85px,28vw,130px);
+  line-height:1;
+  filter:brightness(0) sepia(1) hue-rotate(80deg) saturate(0.3) brightness(0.15);
+  transform-origin:bottom right;
+  transform:rotate(6deg) scaleX(-1);
+}
+
+/* Distant tree line */
+.h-treeline{
+  position:absolute;
+  bottom:31%;left:0;right:0;
+  height:6%;z-index:4;
+  background:repeating-linear-gradient(
+    90deg,
+    #0a1e14 0px, #0a1e14 3px,
+    #0d2418 3px, #0d2418 7px,
+    #091810 7px, #091810 4px,
+    transparent 11px, transparent 18px
+  );
+  opacity:0.7;
+  mask:linear-gradient(to bottom,transparent 0%,#000 40%,#000 70%,transparent 100%);
+  -webkit-mask:linear-gradient(to bottom,transparent 0%,#000 40%,#000 70%,transparent 100%);
+}
+
+/* Flying birds */
+.h-birds{
+  position:absolute;top:18%;left:20%;
+  z-index:7;display:flex;gap:14px;align-items:center;
+}
+.h-bird{
+  width:14px;height:5px;
+  border-top:2.5px solid rgba(180,210,200,0.55);
+  border-radius:50% 50% 0 0;
+  animation:bfly 2.8s ease-in-out infinite;
+}
+.h-bird:nth-child(2){animation-delay:0.5s;transform:scale(0.7);opacity:0.8;}
+.h-bird:nth-child(3){animation-delay:1s;transform:scale(0.55);opacity:0.6;}
+.h-bird:nth-child(4){animation-delay:0.25s;transform:scale(0.65) translateY(4px);opacity:0.7;}
+@keyframes bfly{0%,100%{transform:scaleY(1);}50%{transform:scaleY(0.25);}}
+
+/* Star dots */
+.h-stars{
+  position:absolute;top:0;left:0;right:0;height:35%;
+  z-index:2;
+  background-image:
+    radial-gradient(circle 1px at 15% 12%,rgba(255,255,255,0.7) 0%,transparent 100%),
+    radial-gradient(circle 1px at 30% 8%,rgba(255,255,255,0.5) 0%,transparent 100%),
+    radial-gradient(circle 1.5px at 48% 18%,rgba(255,255,255,0.6) 0%,transparent 100%),
+    radial-gradient(circle 1px at 62% 10%,rgba(255,255,255,0.4) 0%,transparent 100%),
+    radial-gradient(circle 1px at 78% 6%,rgba(255,255,255,0.65) 0%,transparent 100%),
+    radial-gradient(circle 1px at 88% 20%,rgba(255,255,255,0.45) 0%,transparent 100%),
+    radial-gradient(circle 1px at 5% 28%,rgba(255,255,255,0.35) 0%,transparent 100%),
+    radial-gradient(circle 1px at 92% 14%,rgba(255,255,255,0.5) 0%,transparent 100%);
+}
+
+/* Navbar on hero */
+.h-nav{
+  position:absolute;top:0;left:0;right:0;z-index:20;
+  padding:18px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:linear-gradient(to bottom,rgba(8,18,14,0.7) 0%,transparent 100%);
+}
+.h-logo{
+  font-family:'Playfair Display',serif;
+  font-style:italic;font-size:1.5rem;
+  font-weight:700;color:#fff;
+  letter-spacing:-0.3px;
+  text-shadow:0 1px 12px rgba(0,0,0,0.6);
+}
+.h-logo b{color:#A8DFC0;font-style:normal;}
+.h-pill{
+  background:rgba(255,255,255,0.14);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,0.25);
+  color:#fff;font-size:0.6rem;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:7px 15px;border-radius:100px;
+}
+
+/* Hero text */
+.h-text{
+  position:absolute;bottom:0;left:0;right:0;z-index:10;
+  padding:24px 22px 26px;
+  background:linear-gradient(to top,
+    rgba(5,15,10,0.95) 0%,
+    rgba(5,15,10,0.7) 40%,
+    rgba(5,15,10,0.2) 70%,
+    transparent 100%
+  );
+}
+.h-tag{
+  display:inline-flex;align-items:center;gap:7px;
+  background:rgba(168,223,192,0.15);
+  border:1px solid rgba(168,223,192,0.28);
+  color:#A8DFC0;font-size:0.6rem;font-weight:600;
+  letter-spacing:2.2px;text-transform:uppercase;
+  padding:5px 13px;border-radius:100px;margin-bottom:10px;
+}
+.h-h1{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.75rem,6.5vw,2.4rem);
+  font-weight:900;color:#fff;line-height:1.15;
+  text-shadow:0 2px 24px rgba(0,0,0,0.5);
+  margin-bottom:8px;
+}
+.h-h1 em{font-style:italic;color:#A8DFC0;font-weight:700;}
+.h-sub{
+  font-size:0.82rem;color:rgba(255,255,255,0.6);
+  font-weight:300;line-height:1.55;
+}
+
+/* ── HOME BODY ── */
+.hbody{padding:0 15px 32px;}
+
+.sec-lbl{
+  font-size:0.6rem;font-weight:700;
+  letter-spacing:2.2px;text-transform:uppercase;
+  color:#4a8a68;margin:24px 0 13px;
+  display:flex;align-items:center;gap:10px;
+}
+.sec-lbl::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,rgba(74,138,104,0.35),transparent);
+}
+
+/* Mode cards */
+.mc-wrap{display:flex;flex-direction:column;gap:11px;margin-bottom:20px;}
+
+.mc{
+  border-radius:22px;overflow:hidden;
+  position:relative;height:138px;
+  cursor:pointer;
+  transition:transform 0.18s,box-shadow 0.18s;
+  box-shadow:0 8px 32px rgba(0,0,0,0.22),0 2px 8px rgba(0,0,0,0.12);
+}
+.mc:active{transform:scale(0.975);}
+
+.mc-beach{
+  background:
+    radial-gradient(circle 100px at 76% 32%,rgba(255,215,65,0.88) 0%,rgba(255,165,25,0.5) 42%,transparent 65%),
+    linear-gradient(155deg,
+      #142840 0%,#1e4868 12%,
+      #2e6888 24%,#3e8898 35%,
+      #48a090 44%,#2a7060 52%,
+      #184838 62%,#0c2820 74%,
+      #081810 88%,#050e0a 100%
+    );
+}
+.mc-city{
+  background:
+    radial-gradient(circle 80px at 52% 36%,rgba(255,175,55,0.82) 0%,rgba(255,115,30,0.42) 45%,transparent 65%),
+    linear-gradient(155deg,
+      #0e1830 0%,#182848 14%,
+      #28386a 26%,#3a4880 38%,
+      #584870 48%,#805868 58%,
+      #a87068 68%,#c08870 78%,
+      #8a5035 88%,#4a2015 100%
+    );
+}
+
+.mc-body{
+  position:absolute;inset:0;padding:18px 20px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:linear-gradient(to top,
+    rgba(0,0,0,0.68) 0%,
+    rgba(0,0,0,0.2) 50%,
+    transparent 100%
+  );
+}
+.mc-arr{
+  position:absolute;top:15px;right:15px;
+  width:33px;height:33px;border-radius:50%;
+  background:rgba(255,255,255,0.16);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.26);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;color:#fff;font-weight:500;
+}
+.mc-ic{font-size:1.3rem;margin-bottom:5px;}
+.mc-tt{
+  font-family:'Playfair Display',serif;
+  font-size:1.15rem;font-weight:700;
+  color:#fff;margin-bottom:3px;
+  text-shadow:0 1px 10px rgba(0,0,0,0.5);
+}
+.mc-st{font-size:0.74rem;color:rgba(255,255,255,0.7);font-weight:300;}
+
+/* Stats */
+.stats{
+  display:grid;grid-template-columns:1fr 1fr 1fr;
+  background:#fff;border-radius:18px;overflow:hidden;
+  border:1px solid rgba(74,138,104,0.12);
+  box-shadow:0 3px 16px rgba(45,110,80,0.08);
+  margin-bottom:18px;
+}
+.stat{
+  padding:16px 6px;text-align:center;
+  border-right:1px solid rgba(74,138,104,0.1);
+}
+.stat:last-child{border-right:none;}
+.stat-n{
+  font-family:'Playfair Display',serif;
+  font-size:1.35rem;font-weight:700;
+  color:#1E7A52;line-height:1;
+}
+.stat-l{font-size:0.6rem;color:#88a898;margin-top:4px;}
+
+/* How it works */
+.hiw{
+  background:#fff;border-radius:20px;
+  padding:20px 18px;margin-bottom:18px;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 3px 16px rgba(45,110,80,0.07);
+}
+.hiw-h{
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;font-weight:700;
+  color:#1a2e22;margin-bottom:16px;
+}
+.hiw-steps{display:flex;flex-direction:column;gap:13px;}
+.hiw-step{display:flex;align-items:flex-start;gap:13px;}
+.hiw-num{
+  width:28px;height:28px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,#2D8C6A,#1a6b50);
+  color:#fff;font-size:0.75rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 3px 10px rgba(45,140,106,0.3);
+}
+.hiw-t h4{font-size:0.88rem;font-weight:600;color:#1a2e22;margin-bottom:2px;}
+.hiw-t p{font-size:0.74rem;color:#7a9888;line-height:1.55;font-weight:300;}
+
+/* Destinations preview */
+.dest-preview{
+  background:#fff;border-radius:20px;
+  padding:20px 18px;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 3px 16px rgba(45,110,80,0.07);
+}
+.dp-h{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1a2e22;margin-bottom:14px;}
+.dp-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.dp-tag{
+  padding:7px 13px;border-radius:100px;
+  font-size:0.76rem;font-weight:400;
+  border:1.5px solid #C8E8D4;
+  color:#2D8C6A;background:#F2FAF5;
+}
+
+/* Footer */
+.wftr{
+  background:#fff;border-top:1px solid rgba(74,138,104,0.1);
+  padding:22px 18px;text-align:center;
+  margin-top:6px;
+}
+.wftr-lg{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:1.2rem;color:#1a2e22;margin-bottom:5px;
+}
+.wftr-lg b{color:#2D8C6A;}
+.wftr p{font-size:0.68rem;color:#88a898;line-height:1.65;}
+
+/* ════════════════════════════
+   FORM SCREENS
+════════════════════════════ */
+#escapeForm,#localForm{background:#EDF5F0;}
+
+.fnav{
+  background:#fff;
+  border-bottom:1px solid rgba(74,138,104,0.12);
+  height:56px;padding:0 16px;
+  display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.fnav-bk{
+  width:36px;height:36px;border-radius:11px;
+  background:#EDF5F0;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;cursor:pointer;color:#2D8C6A;flex-shrink:0;
+}
+.fnav-tt{
+  font-family:'Playfair Display',serif;
+  font-size:1rem;font-weight:700;color:#1a2e22;
+}
+
+/* Form banner */
+.fbanner{
+  width:100%;height:115px;
+  position:relative;overflow:hidden;
+}
+.fbn-beach{
+  background:
+    radial-gradient(circle 75px at 68% 40%,rgba(255,215,65,0.9) 0%,rgba(255,165,25,0.48) 40%,transparent 64%),
+    linear-gradient(180deg,#1a3a58 0%,#2a5878 22%,#3a8090 38%,#4a9880 50%,#1e5840 64%,#0e2e1e 80%,#081510 100%);
+}
+.fbn-city{
+  background:
+    radial-gradient(circle 62px at 56% 38%,rgba(255,175,50,0.85) 0%,rgba(255,115,30,0.44) 44%,transparent 64%),
+    linear-gradient(180deg,#0e1828 0%,#1e2e50 24%,#383868 42%,#584870 55%,#907068 68%,#b88060 80%,#784030 100%);
+}
+.fbn-txt{
+  position:absolute;bottom:14px;left:18px;
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:0.92rem;color:rgba(255,255,255,0.88);
+  text-shadow:0 1px 10px rgba(0,0,0,0.5);
+}
+
+/* Form content */
+.fc{padding:14px 14px 0;}
+.fs{
+  background:#fff;border-radius:18px;
+  padding:18px;margin-bottom:11px;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 2px 12px rgba(45,110,80,0.06);
+}
+.fs-tt{
+  font-size:0.58rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:#4a8a68;margin-bottom:13px;
+  display:flex;align-items:center;gap:8px;
+}
+.fs-tt::after{content:'';flex:1;height:1px;background:rgba(74,138,104,0.18);}
+.fl{font-size:0.7rem;font-weight:500;color:#88a898;margin-bottom:6px;display:block;}
+.fi,.fsel{
+  width:100%;padding:12px 14px;
+  background:#F4FAF7;
+  border:1.5px solid #C8E4D4;
+  border-radius:12px;color:#1a2e22;
+  font-family:'DM Sans',sans-serif;font-size:0.88rem;
+  appearance:none;outline:none;
+  transition:border-color 0.2s,box-shadow 0.2s;
+  margin-bottom:9px;
+}
+.fi:focus,.fsel:focus{
+  border-color:#2D8C6A;
+  box-shadow:0 0 0 3px rgba(45,140,106,0.1);
+  background:#fff;
+}
+.fi::placeholder{color:#b0c8b8;}
+.fi:last-child,.fsel:last-child{margin-bottom:0;}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+.frow>div{display:flex;flex-direction:column;}
+.frow .fsel{margin-bottom:0;}
+
+/* Vibes */
+.vwrap{display:flex;flex-wrap:wrap;gap:7px;}
+.vibe{
+  padding:7px 13px;border-radius:100px;
+  border:1.5px solid #C8E4D4;
+  font-size:0.76rem;color:#4a8a68;
+  background:#F4FAF7;cursor:pointer;
+  transition:all 0.18s;user-select:none;
+}
+.vibe.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
+
+/* Submit */
+.fsub{padding:13px 14px 36px;}
+.fsbtn{
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,#2D8C6A 0%,#1c6a4e 100%);
+  color:#fff;border:none;border-radius:16px;
+  font-family:'DM Sans',sans-serif;font-size:0.95rem;font-weight:600;
+  cursor:pointer;letter-spacing:0.2px;
+  box-shadow:0 8px 28px rgba(45,140,106,0.3);
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  transition:all 0.2s;
+}
+.fsbtn:active{transform:scale(0.98);}
+
+/* ════════════════════════════
+   LOADING
+════════════════════════════ */
+#loading{
+  background:#EDF5F0;min-height:100vh;
+  display:none;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:32px 22px;
+}
+.ld-visual{
+  width:100%;max-width:320px;height:170px;
+  border-radius:26px;overflow:hidden;
+  position:relative;margin-bottom:28px;
+  box-shadow:0 20px 56px rgba(0,0,0,0.22);
+}
+.ld-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle 75px at 66% 38%,rgba(255,218,65,0.92) 0%,rgba(255,168,28,0.52) 38%,transparent 62%),
+    linear-gradient(180deg,
+      #0d1e30 0%,#1a3558 12%,
+      #2a5880 24%,#48a0b8 36%,
+      #e8e0a0 50%,#f0b848 56%,
+      #d06828 62%,#802010 72%,
+      #280a04 82%,#0a1808 92%,#060e05 100%
+    );
+  animation:ldbgp 3s ease-in-out infinite;
+}
+@keyframes ldbgp{0%,100%{filter:brightness(0.88);}50%{filter:brightness(1.08);}}
+.ld-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(5,12,8,0.6) 0%,transparent 60%);
+}
+.ld-txt{
+  position:absolute;bottom:16px;left:0;right:0;
+  font-family:'Playfair Display',serif;font-style:italic;
+  color:rgba(255,255,255,0.88);font-size:0.9rem;
+  text-shadow:0 1px 8px rgba(0,0,0,0.6);
+}
+.ld-dots{display:flex;gap:8px;justify-content:center;margin-bottom:14px;}
+.ldd{
+  width:9px;height:9px;border-radius:50%;
+  background:#2D8C6A;animation:lddp 1.4s ease-in-out infinite;
+}
+.ldd:nth-child(2){animation-delay:.2s;background:#5CB890;}
+.ldd:nth-child(3){animation-delay:.4s;background:#A0DCC0;}
+@keyframes lddp{0%,80%,100%{transform:scale(0.55);opacity:0.3;}40%{transform:scale(1.25);opacity:1;}}
+.ld-h{
+  font-family:'Playfair Display',serif;
+  font-style:italic;font-size:1.35rem;
+  color:#1a2e22;margin-bottom:6px;
+}
+.ld-p{font-size:0.8rem;color:#7a9888;transition:opacity 0.3s;font-weight:300;}
+
+/* ════════════════════════════
+   RESULTS
+════════════════════════════ */
+#results{background:#EDF5F0;min-height:100vh;display:none;}
+
+.rnav{
+  background:#fff;
+  border-bottom:1px solid rgba(74,138,104,0.12);
+  height:56px;padding:0 16px;
+  display:flex;align-items:center;gap:12px;
+  position:sticky;top:0;z-index:50;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+}
+.rnav-bk{
+  width:36px;height:36px;border-radius:11px;
+  background:#EDF5F0;border:none;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;cursor:pointer;color:#2D8C6A;flex-shrink:0;
+}
+.rnav-tt{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1a2e22;}
+
+/* Results banner */
+.rbanner{
+  width:100%;height:125px;
+  position:relative;overflow:hidden;
+}
+.rbn-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(circle 78px at 68% 40%,rgba(255,215,62,0.9) 0%,rgba(255,165,28,0.5) 40%,transparent 64%),
+    linear-gradient(180deg,
+      #0d1e30 0%,#1e3e60 14%,
+      #3268a0 28%,#58a8c0 40%,
+      #4a9080 50%,#1e5038 62%,
+      #0e2818 76%,#061408 90%,#040c06 100%
+    );
+}
+.rbn-cnt{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:12px 18px 15px;
+  background:linear-gradient(to top,rgba(4,12,7,0.88) 0%,transparent 100%);
+}
+.rbn-ey{font-size:0.57rem;font-weight:700;letter-spacing:2.2px;text-transform:uppercase;color:#A8DFC0;margin-bottom:4px;}
+.rbn-tt{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#fff;line-height:1.2;}
+.rbn-tt em{font-style:italic;color:#A8DFC0;}
+.rbn-sb{font-size:0.68rem;color:rgba(255,255,255,0.55);margin-top:3px;}
+
+/* Destination cards */
+.rcards{padding:13px 13px 36px;display:flex;flex-direction:column;gap:13px;}
+
+.dcard{
+  background:#fff;border-radius:22px;overflow:hidden;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 4px 22px rgba(45,110,80,0.1);
+  animation:cup 0.4s ease both;
+}
+@keyframes cup{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* Card scene — unique per destination */
+.dsc{height:145px;position:relative;overflow:hidden;}
+.dscb{position:absolute;inset:0;}
+
+/* Each destination's unique sky */
+.sc1{background:radial-gradient(circle 62px at 72% 36%,rgba(255,218,68,0.92) 0%,rgba(255,170,32,0.52) 40%,transparent 64%),linear-gradient(180deg,#5BBAD4 0%,#80D0E8 26%,#A8EAD8 42%,#40C0A0 50%,#208874 60%,#0E4A32 76%,#062218 100%);}
+.sc2{background:radial-gradient(circle 55px at 66% 32%,rgba(255,228,85,0.9) 0%,rgba(255,178,38,0.5) 40%,transparent 63%),linear-gradient(180deg,#88CCE8 0%,#B0E0F5 28%,#78C8B0 44%,#40B098 52%,#1E7058 66%,#0C3826 100%);}
+.sc3{background:radial-gradient(circle 72px at 78% 34%,rgba(255,208,58,0.9) 0%,rgba(255,162,26,0.48) 42%,transparent 65%),linear-gradient(180deg,#C8E8F8 0%,#E2F4FC 26%,#A4D8EC 42%,#58C0CA 52%,#2A8090 64%,#125060 100%);}
+.sc4{background:radial-gradient(circle 56px at 68% 28%,rgba(255,192,48,0.85) 0%,rgba(222,150,26,0.44) 42%,transparent 62%),linear-gradient(180deg,#90C890 0%,#6CAA6C 22%,#4C8A4C 36%,#306830 52%,#1C4A1C 68%,#0C2A0C 100%);}
+.sc5{background:radial-gradient(circle 62px at 60% 34%,rgba(255,202,72,0.87) 0%,rgba(242,160,36,0.48) 40%,transparent 64%),linear-gradient(180deg,#D4A878 0%,#C29858 22%,#A07848 38%,#7A5430 54%,#4A3018 70%,#2A180A 100%);}
+.sc6{background:radial-gradient(circle 60px at 72% 32%,rgba(255,228,92,0.92) 0%,rgba(255,185,46,0.52) 38%,transparent 62%),linear-gradient(180deg,#88D4EA 0%,#AADFF2 26%,#CAEEE8 42%,#5CCAB2 50%,#2C9A82 62%,#124040 100%);}
+
+/* Water shimmer on card scenes */
+.dsc::after{
+  content:'';position:absolute;
+  bottom:22%;left:8%;right:8%;height:1.5px;
+  background:linear-gradient(90deg,transparent,rgba(255,210,80,0.45) 30%,rgba(255,190,50,0.6) 55%,rgba(255,210,80,0.38) 78%,transparent);
+  border-radius:2px;
+}
+
+.dsc-badge{
+  position:absolute;top:11px;left:11px;z-index:2;
+  background:rgba(255,255,255,0.94);
+  color:#1a2e22;font-size:0.57rem;font-weight:700;
+  letter-spacing:0.8px;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.14);
+}
+.dsc-drive{
+  position:absolute;bottom:11px;right:11px;z-index:2;
+  background:rgba(0,0,0,0.44);color:#fff;
+  font-size:0.67rem;font-weight:500;
+  padding:4px 10px;border-radius:100px;
+  backdrop-filter:blur(6px);
+}
+
+/* Card body */
+.dcb{padding:15px 17px 17px;}
+.dc-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:9px;}
+.dcc{font-size:0.57rem;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+.dcc-g{color:#1a6b50;background:#D5F0E2;border:1px solid #AEDCC4;}
+.dcc-b{color:#1a4e80;background:#D4E8F8;border:1px solid #A8CCF0;}
+.dcc-s{color:#6e4e1a;background:#F8EAD0;border:1px solid #E4CCA0;}
+
+.dc-name{
+  font-family:'Playfair Display',serif;
+  font-size:1.2rem;font-weight:700;
+  color:#1a2e22;margin-bottom:2px;line-height:1.2;
+}
+.dc-state{font-size:0.68rem;color:#88a898;margin-bottom:8px;}
+.dc-desc{font-size:0.78rem;color:#486058;line-height:1.65;margin-bottom:12px;font-weight:300;}
+
+/* Price block */
+.dc-pb{
+  display:flex;align-items:center;justify-content:space-between;
+  background:#F2FAF5;border-radius:13px;
+  padding:11px 13px;margin-bottom:12px;
+  border:1px solid #C8E4D4;
+}
+.dc-pl .dc-plbl{font-size:0.57rem;color:#88a898;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;}
+.dc-pl .dc-pval{
+  font-family:'Playfair Display',serif;
+  font-size:1.55rem;font-weight:700;color:#1E7A52;line-height:1;
+}
+.dc-pl .dc-pper{font-size:0.6rem;color:#88a898;margin-top:2px;}
+.dc-pr{text-align:right;}
+.dc-safe{font-size:0.7rem;color:#2D8C6A;font-weight:500;}
+.dc-safs{font-size:0.6rem;color:#88a898;margin-top:2px;}
+
+/* Things */
+.dc-thl{font-size:0.57rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#88a898;margin-bottom:8px;}
+.dc-ths{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.dc-th{display:flex;align-items:flex-start;gap:8px;font-size:0.77rem;color:#3a5548;font-weight:300;line-height:1.5;}
+.dc-thdot{width:5px;height:5px;border-radius:50%;background:#A0DCC0;flex-shrink:0;margin-top:7px;}
+
+/* Buttons */
+.dc-btns{display:flex;flex-direction:column;gap:7px;}
+.dc-bk{
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,#2D8C6A,#1c6a4e);
+  color:#fff;border:none;border-radius:13px;
+  font-family:'DM Sans',sans-serif;font-size:0.86rem;font-weight:600;
+  cursor:pointer;box-shadow:0 5px 18px rgba(45,140,106,0.25);
+  transition:all 0.2s;
+}
+.dc-bk:active{transform:scale(0.98);}
+.dc-ac{
+  width:100%;padding:11px;
+  background:transparent;color:#2D8C6A;
+  border:1.5px solid #B0DCC4;border-radius:13px;
+  font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;
+  cursor:pointer;transition:all 0.2s;
+}
+.dc-ac:active{background:#F2FAF5;}
+
+/* Local results */
+.lrc{padding:13px 13px 36px;display:flex;flex-direction:column;gap:11px;}
+.lr-day{
+  background:#fff;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 3px 15px rgba(45,110,80,0.08);
+  animation:cup 0.4s ease both;
+}
+.lr-dh{
+  padding:13px 17px;
+  background:linear-gradient(135deg,#F2FAF5,#E8F5EE);
+  border-bottom:1px solid #D4EEE0;
+  display:flex;align-items:center;gap:9px;
+}
+.lr-dic{font-size:1.05rem;}
+.lr-dlb{font-size:0.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2D8C6A;}
+.lr-dit{padding:12px 17px;display:flex;flex-direction:column;gap:8px;}
+.lr-di{display:flex;align-items:flex-start;gap:9px;font-size:0.78rem;color:#3a5548;font-weight:300;line-height:1.5;}
+.lr-dd{width:5px;height:5px;border-radius:50%;background:#2D8C6A;flex-shrink:0;margin-top:7px;}
+
+.lr-htl{
+  background:#fff;border-radius:20px;overflow:hidden;
+  border:1px solid rgba(74,138,104,0.1);
+  box-shadow:0 3px 15px rgba(45,110,80,0.08);
+  animation:cup 0.45s 0.1s ease both;
+}
+.lr-hh{padding:13px 17px;background:linear-gradient(135deg,#F2FAF5,#E8F5EE);border-bottom:1px solid #D4EEE0;}
+.lr-hlb{font-size:0.58rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#2D8C6A;}
+.lr-hl{padding:11px 17px;display:flex;flex-direction:column;gap:9px;}
+.lr-h{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:11px 13px;
+  background:#F4FAF7;border:1px solid #C8E4D4;border-radius:13px;
+}
+.lr-hn{font-size:0.82rem;font-weight:600;color:#1a2e22;margin-bottom:2px;}
+.lr-ha{font-size:0.67rem;color:#88a898;}
+.lr-hp{
+  font-family:'Playfair Display',serif;
+  font-size:1.02rem;font-weight:700;
+  color:#1E7A52;margin-bottom:5px;text-align:right;
+}
+.lr-hb{
+  padding:7px 12px;display:block;
+  background:linear-gradient(135deg,#2D8C6A,#1c6a4e);
+  color:#fff;border:none;border-radius:8px;
+  font-family:'DM Sans',sans-serif;font-size:0.67rem;font-weight:600;
+  cursor:pointer;white-space:nowrap;
+}
+</style>
+</head>
+<body>
+
+<!-- ════════ HOME ════════ -->
+<div id="home" class="screen on">
+  <div class="hero">
+    <!-- Sky layers -->
+    <div class="h-sky"></div>
+    <div class="h-stars"></div>
+    <div class="h-sun"></div>
+    <div class="h-sunray"></div>
+    <div class="h-haze"></div>
+    <div class="h-treeline"></div>
+    <div class="h-mtn"></div>
+    <div class="h-ocean"></div>
+    <!-- Palms -->
+    <div class="h-palm-l"></div>
+    <div class="h-palm-r"></div>
+    <!-- Birds -->
+    <div class="h-birds">
+      <div class="h-bird"></div>
+      <div class="h-bird"></div>
+      <div class="h-bird"></div>
+      <div class="h-bird"></div>
+    </div>
+    <!-- Nav -->
+    <div class="h-nav">
+      <div class="h-logo">Weekendr<b>.</b></div>
+      <div class="h-pill">Free · No Signup</div>
+    </div>
+    <!-- Text -->
+    <div class="h-text">
+      <div class="h-tag">✦ AI Weekend Planner</div>
+      <div class="h-h1">Your perfect escape<br>is <em>closer than you think.</em></div>
+      <div class="h-sub">Tell us your vibe. We plan the perfect weekend — real deals, hidden gems, zero stress.</div>
+    </div>
+  </div>
+
+  <div class="hbody">
+    <div class="sec-lbl">How do you want to spend this weekend?</div>
+
+    <div class="mc-wrap">
+      <div class="mc mc-beach" onclick="show('escapeForm')">
+        <div class="mc-body">
+          <div class="mc-arr">→</div>
+          <div class="mc-ic">🚗</div>
+          <div class="mc-tt">Escape the City</div>
+          <div class="mc-st">Hidden gems · Scenic drives · Best hotel deals</div>
+        </div>
+      </div>
+      <div class="mc mc-city" onclick="show('localForm')">
+        <div class="mc-body">
+          <div class="mc-arr">→</div>
+          <div class="mc-ic">🏙️</div>
+          <div class="mc-tt">Explore Locally</div>
+          <div class="mc-st">Insider spots · Staycation deals · No tourist traps</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-n">2min</div><div class="stat-l">To plan</div></div>
+      <div class="stat"><div class="stat-n">Free</div><div class="stat-l">Always</div></div>
+      <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Personalized</div></div>
+    </div>
+
+    <div class="hiw">
+      <div class="hiw-h">How Weekendr works</div>
+      <div class="hiw-steps">
+        <div class="hiw-step">
+          <div class="hiw-num">1</div>
+          <div class="hiw-t"><h4>Tell us your vibe</h4><p>City, budget, who's coming & what kind of weekend you want. Takes 20 seconds.</p></div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">2</div>
+          <div class="hiw-t"><h4>AI builds your plan</h4><p>We scan hotels, hidden gems & activities — then build your complete weekend itinerary.</p></div>
+        </div>
+        <div class="hiw-step">
+          <div class="hiw-num">3</div>
+          <div class="hiw-t"><h4>Book in one click</h4><p>Every hotel & activity links to the best available deal. Zero extra fees for you.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dest-preview">
+      <div class="dp-h">Popular escapes from Miami 🌴</div>
+      <div class="dp-tags">
+        <div class="dp-tag">🏖️ Florida Keys</div>
+        <div class="dp-tag">🌿 Everglades</div>
+        <div class="dp-tag">🏝️ Sanibel Island</div>
+        <div class="dp-tag">🌊 Naples, Gulf Coast</div>
+        <div class="dp-tag">🏰 St. Augustine</div>
+        <div class="dp-tag">🌴 Marco Island</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wftr">
+    <div class="wftr-lg">Weekendr<b>.</b></div>
+    <p>AI-powered weekend escape planner · Always free<br>Affiliate links — you pay nothing extra 🤝</p>
+  </div>
+</div>
+
+<!-- ════════ ESCAPE FORM ════════ -->
+<div id="escapeForm" class="screen">
+  <div class="fnav">
+    <button class="fnav-bk" onclick="show('home')">←</button>
+    <div class="fnav-tt">🚗 Escape the City</div>
+  </div>
+  <div class="fbanner fbn-beach">
+    <div class="fbn-txt">Where will the road take you this weekend?</div>
+  </div>
+  <div class="fc">
+    <div class="fs">
+      <div class="fs-tt">📍 Starting Point</div>
+      <label class="fl">Your city</label>
+      <input class="fi" id="eCity" type="text" placeholder="Miami, FL" value="Miami, FL">
+      <div class="frow">
+        <div><label class="fl">Max drive</label>
+          <select class="fsel" id="eDrive">
+            <option value="1">Under 1 hr</option>
+            <option value="2" selected>Under 2 hrs</option>
+            <option value="3">Under 3 hrs</option>
+            <option value="5">Under 5 hrs</option>
+          </select>
+        </div>
+        <div><label class="fl">Budget/person</label>
+          <select class="fsel" id="eBudget">
+            <option>Under $100</option>
+            <option selected>$100–$200</option>
+            <option>$200–$350</option>
+            <option>$350+</option>
+          </select>
+        </div>
+      </div>
+      <div class="frow" style="margin-top:9px;">
+        <div><label class="fl">Travelers</label>
+          <select class="fsel" id="eWho">
+            <option>Solo</option><option>Couple</option>
+            <option selected>Family</option><option>Friends</option>
+          </select>
+        </div>
+        <div><label class="fl">Pace</label>
+          <select class="fsel" id="ePace">
+            <option>Relaxed</option>
+            <option selected>Mix of both</option>
+            <option>Action-packed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-tt">🌿 Your Vibes</div>
+      <div class="vwrap" id="eVibes">
+        <div class="vibe on" onclick="tv(this)">🏖️ Beach</div>
+        <div class="vibe on" onclick="tv(this)">😌 Scenic & Chill</div>
+        <div class="vibe" onclick="tv(this)">🏔️ Mountains</div>
+        <div class="vibe" onclick="tv(this)">🌿 Nature & Hiking</div>
+        <div class="vibe" onclick="tv(this)">🏛️ Culture & History</div>
+        <div class="vibe" onclick="tv(this)">🍽️ Food Scene</div>
+        <div class="vibe on" onclick="tv(this)">👨‍👩‍👧 Family Safe</div>
+        <div class="vibe" onclick="tv(this)">💑 Romantic</div>
+        <div class="vibe" onclick="tv(this)">🌊 Water Sports</div>
+      </div>
+    </div>
+  </div>
+  <div class="fsub">
+    <button class="fsbtn" onclick="runEscape()">
+      <span>🗺️</span> Find My Perfect Escape
+    </button>
+  </div>
+</div>
+
+<!-- ════════ LOCAL FORM ════════ -->
+<div id="localForm" class="screen">
+  <div class="fnav">
+    <button class="fnav-bk" onclick="show('home')">←</button>
+    <div class="fnav-tt">🏙️ Explore Locally</div>
+  </div>
+  <div class="fbanner fbn-city">
+    <div class="fbn-txt">Your city has more hidden gems than you know…</div>
+  </div>
+  <div class="fc">
+    <div class="fs">
+      <div class="fs-tt">📍 Your City</div>
+      <label class="fl">Where are you?</label>
+      <input class="fi" id="lCity" type="text" placeholder="Miami, FL" value="Miami, FL">
+      <div class="frow">
+        <div><label class="fl">Budget/person</label>
+          <select class="fsel" id="lBudget">
+            <option>Under $80</option>
+            <option selected>$80–$180</option>
+            <option>$200+</option>
+          </select>
+        </div>
+        <div><label class="fl">Travelers</label>
+          <select class="fsel" id="lWho">
+            <option>Solo</option><option>Couple</option>
+            <option selected>Family</option><option>Friends</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="fs">
+      <div class="fs-tt">✨ Interests</div>
+      <div class="vwrap" id="lVibes">
+        <div class="vibe on" onclick="tv(this)">🍽️ Food & Dining</div>
+        <div class="vibe on" onclick="tv(this)">🌅 Scenic Views</div>
+        <div class="vibe" onclick="tv(this)">🎨 Art & Culture</div>
+        <div class="vibe" onclick="tv(this)">🍹 Nightlife</div>
+        <div class="vibe" onclick="tv(this)">🏊 Pools & Spas</div>
+        <div class="vibe" onclick="tv(this)">🛍️ Shopping</div>
+        <div class="vibe" onclick="tv(this)">🌿 Parks & Nature</div>
+        <div class="vibe" onclick="tv(this)">👨‍👩‍👧 Kid Friendly</div>
+      </div>
+    </div>
+  </div>
+  <div class="fsub">
+    <button class="fsbtn" style="background:linear-gradient(135deg,#5a8c72,#3a6a52);" onclick="runLocal()">
+      <span>🌆</span> Plan My Local Weekend
+    </button>
+  </div>
+</div>
+
+<!-- ════════ LOADING ════════ -->
+<div id="loading">
+  <div class="ld-visual">
+    <div class="ld-bg"></div>
+    <div class="ld-overlay"></div>
+    <div class="ld-txt">Crafting your perfect escape…</div>
+  </div>
+  <div class="ld-dots">
+    <div class="ldd"></div><div class="ldd"></div><div class="ldd"></div>
+  </div>
+  <div class="ld-h">Finding the best deals</div>
+  <div class="ld-p" id="ldTip">Scanning hotels across all booking sites</div>
+</div>
+
+<!-- ════════ RESULTS ════════ -->
+<div id="results">
+  <div class="rnav">
+    <button class="rnav-bk" onclick="goHome()">←</button>
+    <div class="rnav-tt" id="rNT">Your Escapes</div>
+  </div>
+  <div class="rbanner">
+    <div class="rbn-bg"></div>
+    <div class="rbn-cnt">
+      <div class="rbn-ey" id="rEy">✦ Weekend Escape Plan</div>
+      <div class="rbn-tt" id="rTt">Perfect Escapes from <em>Miami</em></div>
+      <div class="rbn-sb" id="rSb">Family · Scenic · Best value</div>
+    </div>
+  </div>
+  <div id="rBody"></div>
+  <div class="wftr">
+    <div class="wftr-lg">Weekendr<b>.</b></div>
+    <p>Hotel & activity links are affiliate partnerships.<br>You pay nothing extra — we earn a small commission when you book. 🤝</p>
+  </div>
+</div>
+
+<script>
+const DS=[
+  {s:'sc1',b:'🏆 Best Value',n:'Islamorada',st:'Florida Keys',dr:'1.5 hrs',ch:[{t:'Beach',c:'dcc-b'},{t:'Scenic',c:'dcc-g'},{t:'Family Safe',c:'dcc-g'}],desc:'Crystal-clear turquoise waters, snorkeling with sea turtles, sunsets that look hand-painted. The hidden gem locals keep to themselves.',p:'$89',th:["Glass-bottom boat at Robbie's Marina","Snorkel Cheeca Rocks coral reef","Sunset kayak through mangroves","Fresh stone crab at Lazy Days"],bk:'https://www.booking.com/search.html?ss=Islamorada%2C+FL',vi:'https://www.viator.com/Islamorada/d50766-ttd'},
+  {s:'sc2',b:'🌊 Most Scenic',n:'Key Largo',st:'Florida',dr:'1 hr',ch:[{t:'Snorkeling',c:'dcc-b'},{t:'Nature',c:'dcc-g'},{t:'Budget Friendly',c:'dcc-s'}],desc:"Diving capital of the world. Living coral reefs, wild bird sanctuaries, and that perfect laid-back island energy — just one hour south.",p:'$75',th:["John Pennekamp Coral Reef Park","Kayak mangrove trails at golden hour","Wild Bird Rehabilitation Center","Glass-bottom boat tours"],bk:'https://www.booking.com/search.html?ss=Key+Largo%2C+FL',vi:'https://www.viator.com/Key-Largo/d5503-ttd'},
+  {s:'sc3',b:'👨‍👩‍👧 Family Fave',n:'Naples',st:'Florida',dr:'2 hrs',ch:[{t:'Gulf Coast',c:'dcc-b'},{t:'Calm Waters',c:'dcc-g'},{t:'Upscale',c:'dcc-s'}],desc:"Pristine white-sand beaches with shallow calm water perfect for kids. World-class dining, gorgeous sunsets — the sophisticated quiet side of Florida.",p:'$110',th:["Naples Pier famous sunset walk","Delnor-Wiggins State Park beach","Naples Zoo & Caribbean Gardens","Fifth Avenue dining & boutiques"],bk:'https://www.booking.com/search.html?ss=Naples%2C+FL',vi:'https://www.viator.com/Naples-Florida/d4388-ttd'},
+  {s:'sc4',b:'🦎 Most Unique',n:'Everglades + Marco Island',st:'Florida',dr:'1.5 hrs',ch:[{t:'Wildlife',c:'dcc-g'},{t:'Adventure',c:'dcc-s'},{t:'Unique',c:'dcc-b'}],desc:"Morning airboat through the world's largest subtropical wilderness. Afternoon on Marco Island's pristine beach. Two worlds in one weekend.",p:'$95',th:["Sunrise airboat through Everglades","Spot alligators, herons & manatees","Marco Island Tigertail Beach","World-famous shell collecting"],bk:'https://www.booking.com/search.html?ss=Marco+Island%2C+FL',vi:'https://www.viator.com/Everglades-National-Park/d5031-ttd'},
+  {s:'sc5',b:'📚 Culture Pick',n:'St. Augustine',st:'Florida',dr:'5 hrs',ch:[{t:'History',c:'dcc-s'},{t:'Architecture',c:'dcc-g'},{t:'Romantic',c:'dcc-b'}],desc:"America's oldest city. Cobblestone streets, a 1672 Spanish fort, ghost tours and Atlantic beaches minutes from downtown's colonial architecture.",p:'$99',th:["Castillo de San Marcos — built 1672","Historic district horse-drawn tour","St. Augustine Lighthouse climb","Flagler College architecture walk"],bk:'https://www.booking.com/search.html?ss=St.+Augustine%2C+FL',vi:'https://www.viator.com/St-Augustine/d4394-ttd'},
+  {s:'sc6',b:'🐚 Gulf Secret',n:'Sanibel Island',st:'Florida',dr:'2.5 hrs',ch:[{t:'Shelling',c:'dcc-s'},{t:'Peaceful',c:'dcc-g'},{t:'No Chain Hotels',c:'dcc-b'}],desc:"One of the world's top shelling beaches. No traffic lights, no high-rises, no chain hotels. Sea turtles, dolphins, and absolute peace.",p:'$120',th:["Bowman's Beach — world-class shelling","Ding Darling Wildlife Refuge","Rent bikes around the whole island","Sea turtles nesting at night"],bk:'https://www.booking.com/search.html?ss=Sanibel+Island%2C+FL',vi:'https://www.viator.com/Sanibel/d4401-ttd'}
+];
+
+const LOC={
+  days:[
+    {ic:'🌆',lb:'Friday Evening',it:["Sunset cocktails at Brickell rooftop bars — SkyBar at Shore Club for the best view","Walk Wynwood Walls after dark — completely different energy than daytime","Late dinner in Little Havana on Calle Ocho — where Miami locals actually eat"]},
+    {ic:'☀️',lb:'Saturday',it:["8am: Virginia Key Beach — Miami's most beautiful and least crowded beach","Brunch at Zak the Baker, Wynwood — James Beard recognized chef","Afternoon: Vizcaya Museum & Gardens — feels like Italy, costs just $25","Evening: Coconut Grove for dinner and a sunset walk by the water"]},
+    {ic:'🌅',lb:'Sunday',it:["Morning: Coconut Grove Farmers Market — best local produce in Miami","Kayak or paddleboard at Oleta River State Park — $35/day rental","Afternoon: Bill Baggs Cape Florida State Park + historic lighthouse climb","Sunset from the lighthouse tower — unforgettable panoramic view of Miami"]}
+  ],
+  hotels:[
+    {n:'The Vagabond Hotel',a:'MiMo Historic District',p:'$89/night',u:'https://www.booking.com/hotel/us/the-vagabond.html'},
+    {n:'Freehand Miami',a:'Mid-Beach',p:'$75/night',u:'https://www.booking.com/search.html?ss=Freehand+Miami'},
+    {n:'EAST Miami',a:'Brickell',p:'$149/night',u:'https://www.booking.com/search.html?ss=EAST+Miami+Hotel'}
+  ]
+};
+
+const TE=['Scanning hotels near your city…','Comparing prices on Booking.com, Expedia & Kayak…','Finding hidden gems most tourists miss…','Checking safety ratings for families…','Building your personalized plan…'];
+const TL=['Discovering local hidden gems…','Finding best staycation hotel deals…','Curating your insider itinerary…','Almost ready — this is going to be good…'];
+let tipIv=null;
+
+function tv(el){el.classList.toggle('on');}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('loading').style.display='none';
+  document.getElementById('results').style.display='none';
+  document.getElementById(id).classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function startLoad(tips){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('results').style.display='none';
+  document.getElementById('loading').style.display='flex';
+  window.scrollTo(0,0);
+  let i=0; const el=document.getElementById('ldTip');
+  tipIv=setInterval(()=>{
+    el.style.opacity=0;
+    setTimeout(()=>{el.textContent=tips[i%tips.length];el.style.opacity=1;i++;},300);
+  },2000);
+}
+
+function showResults(){
+  clearInterval(tipIv);
+  document.getElementById('loading').style.display='none';
+  document.getElementById('results').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function goHome(){
+  document.getElementById('results').style.display='none';
+  document.getElementById('loading').style.display='none';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('on'));
+  document.getElementById('home').classList.add('on');
+  window.scrollTo(0,0);
+}
+
+function runEscape(){
+  const city=document.getElementById('eCity').value||'Miami';
+  const drive=parseInt(document.getElementById('eDrive').value);
+  const who=document.getElementById('eWho').value;
+  const dl={1:'1 hr',2:'2 hrs',3:'3 hrs',5:'5 hrs'}[drive];
+  let dests=DS;
+  if(drive<=1)dests=DS.filter(d=>d.dr==='1 hr');
+  else if(drive<=2)dests=DS.filter(d=>!d.dr.includes('5')&&!d.dr.includes('2.5'));
+  else if(drive<=3)dests=DS.filter(d=>!d.dr.includes('5'));
+  if(!dests.length)dests=DS.slice(0,4);
+  startLoad(TE);
+  setTimeout(()=>{
+    document.getElementById('rNT').textContent='Your Escapes';
+    document.getElementById('rEy').textContent='✦ Weekend Escape Plan';
+    document.getElementById('rTt').innerHTML=`Escapes from <em>${city.split(',')[0]}</em>`;
+    document.getElementById('rSb').textContent=`${who} · Under ${dl} drive · ${dests.length} curated picks`;
+    document.getElementById('rBody').innerHTML=`<div class="rcards">${dests.map((d,i)=>`
+      <div class="dcard" style="animation-delay:${i*0.07}s">
+        <div class="dsc">
+          <div class="dscb ${d.s}"></div>
+          <div class="dsc-badge">${d.b}</div>
+          <div class="dsc-drive">🚗 ${d.dr}</div>
+        </div>
+        <div class="dcb">
+          <div class="dc-chips">${d.ch.map(c=>`<span class="dcc ${c.c}">${c.t}</span>`).join('')}</div>
+          <div class="dc-name">${d.n}</div>
+          <div class="dc-state">📍 ${d.st}</div>
+          <div class="dc-desc">${d.desc}</div>
+          <div class="dc-pb">
+            <div class="dc-pl">
+              <div class="dc-plbl">Hotels from</div>
+              <div class="dc-pval">${d.p}</div>
+              <div class="dc-pper">per night avg</div>
+            </div>
+            <div class="dc-pr">
+              <div class="dc-safe">🛡️ Very Safe</div>
+              <div class="dc-safs">Family friendly</div>
+            </div>
+          </div>
+          <div class="dc-thl">Top things to do</div>
+          <div class="dc-ths">${d.th.map(t=>`<div class="dc-th"><div class="dc-thdot"></div>${t}</div>`).join('')}</div>
+          <div class="dc-btns">
+            <button class="dc-bk" onclick="window.open('${d.bk}','_blank')">🏨 View Hotel Deals — Book Now</button>
+            <button class="dc-ac" onclick="window.open('${d.vi}','_blank')">🎟️ Browse Tours & Activities</button>
+          </div>
+        </div>
+      </div>`).join('')}</div>`;
+    showResults();
+  },3200);
+}
+
+function runLocal(){
+  const city=document.getElementById('lCity').value||'Miami';
+  startLoad(TL);
+  setTimeout(()=>{
+    document.getElementById('rNT').textContent='Local Weekend';
+    document.getElementById('rEy').textContent='✦ Your Local Weekend Plan';
+    document.getElementById('rTt').innerHTML=`<em>${city.split(',')[0]}</em> Insider Weekend`;
+    document.getElementById('rSb').textContent='Hidden gems · Local favorites · No tourist traps';
+    document.getElementById('rBody').innerHTML=`<div class="lrc">
+      ${LOC.days.map((d,i)=>`
+        <div class="lr-day" style="animation-delay:${i*0.09}s">
+          <div class="lr-dh"><span class="lr-dic">${d.ic}</span><span class="lr-dlb">${d.lb}</span></div>
+          <div class="lr-dit">${d.it.map(it=>`<div class="lr-di"><div class="lr-dd"></div>${it}</div>`).join('')}</div>
+        </div>`).join('')}
+      <div class="lr-htl">
+        <div class="lr-hh"><div class="lr-hlb">🏨 Where to Stay — Best Local Deals</div></div>
+        <div class="lr-hl">${LOC.hotels.map(h=>`
+          <div class="lr-h">
+            <div><div class="lr-hn">${h.n}</div><div class="lr-ha">📍 ${h.a}</div></div>
+            <div><div class="lr-hp">${h.p}</div><button class="lr-hb" onclick="window.open('${h.u}','_blank')">Book →</button></div>
+          </div>`).join('')}
+        </div>
+      </div>
+    </div>`;
+    showResults();
+  },2800);
+}
+</script>
+</body>
+</html>
