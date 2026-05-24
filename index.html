@@ -50,15 +50,41 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
 .city-opt:active{background:#F2FAF5;}
 .city-opt-name{font-weight:600;font-size:0.83rem;color:#1a2e22;}
 .city-opt-st{font-size:0.7rem;color:#88a898;}
-.date-strip{display:flex;gap:7px;overflow-x:auto;padding-bottom:3px;margin-bottom:16px;-webkit-overflow-scrolling:touch;}
-.date-strip::-webkit-scrollbar{display:none;}
-.ds-btn{flex-shrink:0;padding:9px 13px;border-radius:11px;border:1.5px solid #C8E4D4;font-size:0.74rem;font-weight:500;color:#4a8a68;background:#fff;cursor:pointer;transition:all .2s;text-align:center;min-width:110px;}
-.ds-btn.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
-.ds-btn.hldy{border-color:#e8720c;color:#e8720c;background:#fff9f5;}
-.ds-btn.hldy.on{background:#e8720c;border-color:#e8720c;color:#fff;}
-.ds-date{font-size:0.6rem;opacity:.75;margin-top:2px;}
-.ds-hol{font-size:0.56rem;font-weight:700;color:#e8720c;margin-top:2px;}
-.ds-btn.on .ds-hol{color:rgba(255,255,255,0.85);}
+/* ── 2-STEP DATE PICKER ── */
+.pk-wrap{width:100%;}
+.pk-step1-lbl{font-size:0.58rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#88a898;margin-bottom:8px;}
+.pk-weeks{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;margin-bottom:12px;}
+.pk-weeks::-webkit-scrollbar{display:none;}
+.pk-wk{flex-shrink:0;padding:9px 14px;border-radius:12px;border:1.5px solid #C8E4D4;font-size:0.78rem;font-weight:600;color:#4a8a68;background:#fff;cursor:pointer;transition:all .2s;text-align:center;min-width:105px;}
+.pk-wk.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;box-shadow:0 4px 14px rgba(45,140,106,.25);}
+.pk-wk.hol{border-color:#e8720c;color:#e8720c;background:#fff9f5;}
+.pk-wk.hol.on{background:#e8720c;border-color:#e8720c;color:#fff;box-shadow:0 4px 14px rgba(232,114,12,.25);}
+.pk-wk-date{font-size:0.62rem;font-weight:400;opacity:.8;margin-top:3px;}
+.pk-wk-hol{font-size:0.56rem;font-weight:700;color:#e8720c;margin-top:2px;}
+.pk-wk.on .pk-wk-hol{color:rgba(255,255,255,.85);}
+.pk-step2-lbl{font-size:0.58rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#88a898;margin-bottom:8px;}
+.pk-dur{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:11px;}
+.pk-d{flex:1;min-width:calc(33% - 5px);padding:10px 6px;border-radius:11px;border:1.5px solid #C8E4D4;font-size:0.76rem;font-weight:600;color:#4a8a68;background:#F4FAF7;cursor:pointer;transition:all .2s;text-align:center;}
+.pk-d.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
+.pk-d.hol-d{border-color:#e8720c;color:#e8720c;}
+.pk-d.hol-d.on{background:#e8720c;border-color:#e8720c;color:#fff;}
+.pk-d-sub{font-size:0.6rem;opacity:.78;margin-top:2px;font-weight:400;}
+.pk-result{background:#F2FAF5;border:1.5px solid #C8E4D4;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:9px;}
+.pk-result-ic{font-size:1.1rem;}
+.pk-result-txt{font-size:0.82rem;font-weight:600;color:#1a2e22;line-height:1.35;}
+.pk-result-sub{font-size:0.68rem;color:#4a8a68;margin-top:2px;}
+.pk-result.hol-res{background:#fff9f5;border-color:#f0c090;}
+/* home strip compact version */
+.hs-weeks{display:flex;gap:7px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;-webkit-overflow-scrolling:touch;}
+.hs-weeks::-webkit-scrollbar{display:none;}
+.hs-wk{flex-shrink:0;padding:8px 13px;border-radius:11px;border:1.5px solid #C8E4D4;font-size:0.74rem;font-weight:600;color:#4a8a68;background:#fff;cursor:pointer;transition:all .2s;text-align:center;min-width:100px;}
+.hs-wk.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
+.hs-wk.hol{border-color:#e8720c;color:#e8720c;background:#fff9f5;}
+.hs-wk.hol.on{background:#e8720c;border-color:#e8720c;color:#fff;}
+.hs-wk-d{font-size:0.6rem;opacity:.75;margin-top:2px;}
+.hs-wk-h{font-size:0.55rem;font-weight:700;color:#e8720c;margin-top:1px;}
+.hs-wk.on .hs-wk-h{color:rgba(255,255,255,.82);}
+.hs-dur{display:flex;gap:6px;flex-wrap:wrap;}
 .mc-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
 .mc{border-radius:20px;overflow:hidden;position:relative;height:130px;cursor:pointer;transition:transform .18s;box-shadow:0 6px 28px rgba(0,0,0,.2);}
 .mc:active{transform:scale(.975);}
@@ -105,15 +131,7 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
 .frow{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .frow>div{display:flex;flex-direction:column;}
 .frow .fsel{margin-bottom:0;}
-.date-scroll{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
-.date-scroll::-webkit-scrollbar{display:none;}
-.dc-btn{flex-shrink:0;padding:9px 12px;border-radius:10px;border:1.5px solid #C8E4D4;font-size:0.72rem;font-weight:500;color:#4a8a68;background:#F4FAF7;cursor:pointer;transition:all .2s;text-align:center;min-width:90px;}
-.dc-btn.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
-.dc-btn.hbtn{border-color:#e8720c;color:#e8720c;background:#fff9f5;}
-.dc-btn.hbtn.on{background:#e8720c;border-color:#e8720c;color:#fff;}
-.dc-lbl{font-size:0.6rem;opacity:.8;margin-top:2px;}
-.dc-hol{font-size:0.55rem;font-weight:700;color:#e8720c;margin-top:1px;}
-.dc-btn.on .dc-hol{color:rgba(255,255,255,0.85);}
+/* date scroll removed - using pk- classes */
 .vwrap{display:flex;flex-wrap:wrap;gap:6px;}
 .vibe{padding:6px 12px;border-radius:100px;border:1.5px solid #C8E4D4;font-size:0.74rem;color:#4a8a68;background:#F4FAF7;cursor:pointer;transition:all .18s;user-select:none;}
 .vibe.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
@@ -222,6 +240,30 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
 .lr-ha{font-size:0.65rem;color:#88a898;}
 .lr-hp{font-family:'Playfair Display',serif;font-size:1rem;font-weight:700;color:#1E7A52;margin-bottom:4px;text-align:right;}
 .lr-hb{padding:6px 11px;display:block;background:linear-gradient(135deg,#2D8C6A,#1c6a4e);color:#fff;border:none;border-radius:7px;font-family:'DM Sans',sans-serif;font-size:0.65rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+
+/* Date badge in forms */
+.date-badge-wrap{margin-bottom:2px;}
+.date-badge{display:flex;align-items:center;justify-content:space-between;background:#F2FAF5;border:1.5px solid #C8E4D4;border-radius:12px;padding:11px 14px;}
+.date-badge.hol{background:#fff9f5;border-color:#f0c090;}
+.date-badge-left{display:flex;align-items:center;gap:9px;}
+.date-badge-ic{font-size:1.1rem;}
+.date-badge-txt{font-size:0.86rem;font-weight:700;color:#1a2e22;}
+.date-badge-sub{font-size:0.68rem;color:#4a8a68;margin-top:2px;}
+.date-badge-change{font-size:0.7rem;font-weight:600;color:#2D8C6A;background:#D5F0E2;border:1px solid #AEDCC4;padding:5px 11px;border-radius:100px;cursor:pointer;white-space:nowrap;border:none;}
+
+/* Multi-platform deal buttons */
+.deal-section{margin-bottom:11px;}
+.deal-title{font-size:0.55rem;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;color:#88a898;margin-bottom:8px;}
+.deal-platforms{display:flex;flex-direction:column;gap:7px;}
+.deal-row{border:1px solid #D0EAD8;border-radius:12px;overflow:hidden;}
+.deal-row-title{font-size:0.72rem;font-weight:600;color:#1a2e22;padding:9px 13px 4px;background:#F8FCF9;}
+.deal-btns{display:flex;gap:0;border-top:1px solid #D0EAD8;}
+.deal-btn{flex:1;padding:9px 4px;font-size:0.68rem;font-weight:600;text-align:center;cursor:pointer;border:none;border-right:1px solid #D0EAD8;background:#fff;color:#1a2e22;transition:background .15s;display:flex;flex-direction:column;align-items:center;gap:2px;}
+.deal-btn:last-child{border-right:none;}
+.deal-btn:active{background:#F2FAF5;}
+.deal-btn-ic{font-size:0.85rem;}
+.deal-btn-name{font-size:0.6rem;color:#88a898;font-weight:400;}
+.deal-disclaimer{font-size:0.6rem;color:#88a898;font-style:italic;text-align:center;padding:5px 12px 8px;background:#F8FCF9;border-top:1px solid #D0EAD8;}
 </style>
 </head>
 <body>
@@ -246,7 +288,7 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
       <div class="city-dd" id="cityDD"></div>
     </div>
     <div class="sec-lbl">Pick your dates</div>
-    <div class="date-strip" id="homeStrip"></div>
+    <div id="homePickerWrap"></div>
     <div class="sec-lbl">What kind of escape?</div>
     <div class="mc-wrap">
       <div class="mc mc-beach" onclick="goEscape()">
@@ -293,7 +335,7 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
         </div>
       </div>
     </div>
-    <div class="fs"><div class="fs-tt">📅 Pick Your Dates</div><div class="date-scroll" id="eDateScroll"></div></div>
+    <div class="fs"><div class="fs-tt">📅 Your Selected Dates</div><div id="eDateBadge" class="date-badge-wrap"></div></div>
     <div class="fs">
       <div class="fs-tt">🌿 Your Vibes</div>
       <div class="vwrap" id="eVibes">
@@ -319,7 +361,7 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
         <div><label class="fl">Travelers</label><select class="fsel" id="lWho"><option>Solo</option><option>Couple</option><option selected>Family</option><option>Friends</option></select></div>
       </div>
     </div>
-    <div class="fs"><div class="fs-tt">📅 Pick Your Dates</div><div class="date-scroll" id="lDateScroll"></div></div>
+    <div class="fs"><div class="fs-tt">📅 Your Selected Dates</div><div id="lDateBadge" class="date-badge-wrap"></div></div>
     <div class="fs">
       <div class="fs-tt">✨ Interests</div>
       <div class="vwrap" id="lVibes">
@@ -696,12 +738,112 @@ neworleans:[
 };
 
 var LOCAL={
-miami:{days:[{ic:'🌆',lb:'Friday Evening',it:["Sunset cocktails at Brickell rooftop — SkyBar at Shore Club","Walk Wynwood Walls after dark — different energy at night","Late dinner in Little Havana on Calle Ocho"]},{ic:'☀️',lb:'Saturday',it:["8am: Virginia Key Beach — Miami's most beautiful uncrowded beach","Brunch: Zak the Baker in Wynwood — James Beard recognized","Afternoon: Vizcaya Museum & Gardens — feels like Italy, $25","Evening: Coconut Grove for dinner & sunset walk"]},{ic:'🌅',lb:'Sunday',it:["Morning: Coconut Grove Farmers Market","Kayak at Oleta River State Park — $35/day","Bill Baggs Cape Florida State Park + lighthouse climb","Sunset from the lighthouse tower — unforgettable view"]}],hotels:[{n:'The Vagabond Hotel',a:'MiMo District',p:'From $155/night',u:'https://www.booking.com/hotel/us/the-vagabond.html'},{n:'Freehand Miami',a:'Mid-Beach',p:'From $130/night',u:'https://www.booking.com/hotel/us/the-freehand-miami.html'},{n:'EAST Miami',a:'Brickell',p:'From $195/night',u:'https://www.booking.com/hotel/us/east-miami.html'}]},
-nyc:{days:[{ic:'🌆',lb:'Friday Evening',it:["Brooklyn Bridge walk at sunset — free & stunning","Dumbo rooftop bars with Manhattan skyline views","Dinner in Williamsburg — best food scene in NYC"]},{ic:'☀️',lb:'Saturday',it:["Morning: The High Line park walk","Brunch in Chelsea Market","Afternoon: Whitney Museum or MoMA","Evening: West Village restaurants & bar hop"]},{ic:'🌅',lb:'Sunday',it:["Brooklyn Flea Market at Industry City","Smorgasburg outdoor food market (seasonal)","Prospect Park picnic & paddle boat","Sunset at One Vanderbilt Summit"]}],hotels:[{n:'The William Vale',a:'Williamsburg',p:'From $180/night',u:'https://www.booking.com/hotel/us/the-william-vale.html'},{n:'Arlo NoMad',a:'Midtown',p:'From $140/night',u:'https://www.booking.com/hotel/us/arlo-nomad.html'},{n:'The Hoxton Brooklyn',a:'Williamsburg',p:'From $160/night',u:'https://www.booking.com/hotel/us/the-hoxton-williamsburg.html'}]},
-atlanta:{days:[{ic:'🌆',lb:'Friday Evening',it:["Ponce City Market rooftop — best Atlanta views","BeltLine Eastside Trail sunset walk","Dinner in Inman Park — best neighborhood restaurants"]},{ic:'☀️',lb:'Saturday',it:["Krog Street Market brunch","Atlanta BeltLine bike or walk","Piedmont Park afternoon picnic","Little Five Points neighborhood"]},{ic:'🌅',lb:'Sunday',it:["Brunch at Fox Bros Bar-B-Q","Grant Park Farmers Market","Oakland Cemetery historic walk","Virginia-Highland neighborhood stroll"]}],hotels:[{n:'Hotel Clermont',a:'Poncey-Highland',p:'From $115/night',u:'https://www.booking.com/hotel/us/hotel-clermont-atlanta.html'},{n:'The Kimpton Sylvan',a:'Buckhead',p:'From $145/night',u:'https://www.booking.com/hotel/us/the-kimpton-sylvan-hotel.html'},{n:'Glenn Hotel',a:'Downtown',p:'From $100/night',u:'https://www.booking.com/hotel/us/the-glenn-hotel.html'}]}
+miami:{
+  days:[
+    {ic:'🌆',lb:'Friday Evening',it:["Sunset cocktails at Brickell rooftop — SkyBar at Shore Club","Walk Wynwood Walls after dark — different energy at night","Late dinner in Little Havana on Calle Ocho"]},
+    {ic:'☀️',lb:'Saturday',it:["8am: Virginia Key Beach — Miami's most beautiful uncrowded beach","Brunch: Zak the Baker in Wynwood — James Beard recognized","Afternoon: Vizcaya Museum & Gardens — feels like Italy, $25","Evening: Coconut Grove for dinner & sunset walk"]},
+    {ic:'🌅',lb:'Sunday',it:["Morning: Coconut Grove Farmers Market","Kayak at Oleta River State Park — $35/day","Bill Baggs Cape Florida State Park + lighthouse climb","Sunset from the lighthouse tower — unforgettable view"]}
+  ],
+  acts:[
+    {name:'Little Havana Food & Culture Tour',desc:'Eat your way through Calle Ocho with a local guide',price:'From $55',url:'https://www.viator.com/searchResults/all?text=Little+Havana+Food+Tour+Miami'},
+    {name:'Biscayne Bay Boat Tour',desc:'See Miami skyline & celebrity homes from the water',price:'From $35',url:'https://www.viator.com/searchResults/all?text=Biscayne+Bay+Boat+Tour+Miami'},
+    {name:'Wynwood Walls Art Tour',desc:'Guided street art walk through the famous art district',price:'From $25',url:'https://www.viator.com/searchResults/all?text=Wynwood+Art+Tour+Miami'},
+    {name:'South Beach Bike Ride',desc:'Guided cycling tour of Art Deco South Beach',price:'From $30',url:'https://www.viator.com/searchResults/all?text=South+Beach+Bike+Tour+Miami'},
+    {name:'Everglades Day Trip',desc:'Airboat + wildlife from Miami — full day',price:'From $50',url:'https://www.viator.com/searchResults/all?text=Everglades+Day+Trip+Miami'},
+    {name:'Sunset Sailing Cruise',desc:'2-hour sail around Biscayne Bay at golden hour',price:'From $65',url:'https://www.viator.com/searchResults/all?text=Sunset+Sailing+Miami'},
+    {name:'Miami Street Food Tour',desc:'Hidden local eats from Wynwood to Design District',price:'From $45',url:'https://www.viator.com/searchResults/all?text=Miami+Food+Tour'},
+    {name:'Kayak Oleta River Park',desc:'Paddle through mangroves in North Miami Beach',price:'From $35',url:'https://www.viator.com/searchResults/all?text=Kayak+Miami+Mangroves'}
+  ],
+  evCats:[
+    {name:'🎵 Music & Concerts',cat:'music',q:'music+concerts'},
+    {name:'🍽️ Food & Drink Events',cat:'food',q:'food+festival+dining'},
+    {name:'🎨 Art & Culture',cat:'arts',q:'art+gallery+culture'},
+    {name:'🎪 Family Events',cat:'family',q:'family+kids'},
+    {name:'🌿 Outdoor & Nature',cat:'outdoor',q:'outdoor+nature+park'},
+    {name:'🎉 Nightlife & Entertainment',cat:'nightlife',q:'nightlife+party+entertainment'}
+  ],
+  city:'Miami, FL'
+},
+nyc:{
+  days:[
+    {ic:'🌆',lb:'Friday Evening',it:["Brooklyn Bridge walk at sunset — free & stunning","Dumbo rooftop bars with Manhattan skyline views","Dinner in Williamsburg — best food scene in NYC"]},
+    {ic:'☀️',lb:'Saturday',it:["Morning: The High Line park walk","Brunch in Chelsea Market","Afternoon: Whitney Museum or MoMA","Evening: West Village restaurants & bar hop"]},
+    {ic:'🌅',lb:'Sunday',it:["Brooklyn Flea Market at Industry City","Smorgasburg outdoor food market (seasonal)","Prospect Park picnic & paddle boat","Sunset at One Vanderbilt Summit"]}
+  ],
+  acts:[
+    {name:'NYC Food Tour — Best Neighborhoods',desc:'Eat through Chelsea, West Village & SoHo',price:'From $65',url:'https://www.viator.com/searchResults/all?text=NYC+Food+Tour'},
+    {name:'Central Park Bike Tour',desc:'Guided cycling through Central Park & surroundings',price:'From $40',url:'https://www.viator.com/searchResults/all?text=Central+Park+Bike+Tour'},
+    {name:'Brooklyn Bridge Walking Tour',desc:'Historic guided walk across the iconic bridge',price:'From $25',url:'https://www.viator.com/searchResults/all?text=Brooklyn+Bridge+Walking+Tour'},
+    {name:'NYC Skyline Boat Cruise',desc:'See Manhattan from the water — stunning views',price:'From $35',url:'https://www.viator.com/searchResults/all?text=NYC+Skyline+Cruise'},
+    {name:'High Line & Hudson Yards Tour',desc:'Art, architecture & the famous elevated park',price:'From $30',url:'https://www.viator.com/searchResults/all?text=High+Line+Tour+NYC'},
+    {name:'Statue of Liberty & Ellis Island',desc:'Ferry + guided tour of America\'s most iconic landmark',price:'From $45',url:'https://www.viator.com/searchResults/all?text=Statue+of+Liberty+Tour'},
+    {name:'NYC Ghost & History Tour',desc:'Evening walking tour of Manhattan\'s haunted past',price:'From $25',url:'https://www.viator.com/searchResults/all?text=NYC+Ghost+Tour'},
+    {name:'Comedy Night in NYC',desc:'Stand-up comedy at a famous NYC comedy club',price:'From $30',url:'https://www.viator.com/searchResults/all?text=NYC+Comedy+Show'}
+  ],
+  evCats:[
+    {name:'🎵 Music & Concerts',cat:'music',q:'music+concerts'},
+    {name:'🍽️ Food & Drink Events',cat:'food',q:'food+festival+dining'},
+    {name:'🎨 Art & Culture',cat:'arts',q:'art+gallery+culture'},
+    {name:'🎪 Family Events',cat:'family',q:'family+kids'},
+    {name:'🌿 Outdoor & Markets',cat:'outdoor',q:'outdoor+market+park'},
+    {name:'🎉 Nightlife',cat:'nightlife',q:'nightlife+comedy+entertainment'}
+  ],
+  city:'New York, NY'
+},
+atlanta:{
+  days:[
+    {ic:'🌆',lb:'Friday Evening',it:["Ponce City Market rooftop — best Atlanta views","BeltLine Eastside Trail sunset walk","Dinner in Inman Park — best neighborhood restaurants"]},
+    {ic:'☀️',lb:'Saturday',it:["Krog Street Market brunch","Atlanta BeltLine bike or walk","Piedmont Park afternoon picnic","Little Five Points neighborhood"]},
+    {ic:'🌅',lb:'Sunday',it:["Brunch at Fox Bros Bar-B-Q","Grant Park Farmers Market","Oakland Cemetery historic walk","Virginia-Highland neighborhood stroll"]}
+  ],
+  acts:[
+    {name:'Atlanta BeltLine Guided Tour',desc:'Walk or bike the famous 22-mile trail with a local',price:'From $35',url:'https://www.viator.com/searchResults/all?text=Atlanta+BeltLine+Tour'},
+    {name:'Atlanta Food Tour',desc:'Taste your way through Inman Park & Krog Street',price:'From $55',url:'https://www.viator.com/searchResults/all?text=Atlanta+Food+Tour'},
+    {name:'CNN Studio Tour',desc:'Go behind the scenes at the world\'s largest news network',price:'From $16',url:'https://www.viator.com/searchResults/all?text=CNN+Studio+Tour+Atlanta'},
+    {name:'Georgia Aquarium Visit',desc:'World\'s largest aquarium — whale sharks & more',price:'From $40',url:'https://www.viator.com/searchResults/all?text=Georgia+Aquarium+Atlanta'},
+    {name:'Martin Luther King Jr. Historic Tour',desc:'Walk the neighborhood where MLK was born & preached',price:'From $20',url:'https://www.viator.com/searchResults/all?text=MLK+Historic+Tour+Atlanta'},
+    {name:'Cycling the Silver Comet Trail',desc:'Scenic rail trail bike ride through Atlanta suburbs',price:'From $30',url:'https://www.viator.com/searchResults/all?text=Cycling+Atlanta'},
+    {name:'Stone Mountain Park',desc:'Carving, gondola ride & hike — classic Atlanta day out',price:'From $25',url:'https://www.viator.com/searchResults/all?text=Stone+Mountain+Atlanta'},
+    {name:'Atlanta Ghost Tour',desc:'Evening haunted history walk through downtown',price:'From $20',url:'https://www.viator.com/searchResults/all?text=Atlanta+Ghost+Tour'}
+  ],
+  evCats:[
+    {name:'🎵 Music & Concerts',cat:'music',q:'music+concerts'},
+    {name:'🍽️ Food & Drink Events',cat:'food',q:'food+festival+dining'},
+    {name:'🎨 Art & Culture',cat:'arts',q:'art+gallery+culture'},
+    {name:'🏈 Sports Events',cat:'sports',q:'sports+games'},
+    {name:'🌿 Outdoor Events',cat:'outdoor',q:'outdoor+park+festival'},
+    {name:'🎉 Nightlife & Comedy',cat:'nightlife',q:'nightlife+comedy'}
+  ],
+  city:'Atlanta, GA'
+}
 };
 
-var DEFAULT_LOCAL={days:[{ic:'🌆',lb:'Friday Evening',it:["Find your city's best rooftop bar for sunset drinks","Explore the downtown arts or entertainment district","Dinner at a locally-owned neighborhood restaurant"]},{ic:'☀️',lb:'Saturday',it:["Visit the local farmers market in the morning","Explore a neighborhood most tourists miss","Visit a local museum or art gallery","Try the city's most-loved local restaurant"]},{ic:'🌅',lb:'Sunday',it:["Morning coffee at a beloved local café","Explore a nearby park or nature area","Visit the city's iconic landmark","Great brunch spot before heading home"]}],hotels:[{n:'Search All Hotels',a:'Best prices with your dates',p:'Tap to see live prices',u:'https://www.booking.com/index.html'}]};
+var DEFAULT_LOCAL={
+  days:[
+    {ic:'🌆',lb:'Friday Evening',it:["Find your city's best rooftop bar for sunset drinks","Explore the downtown arts or entertainment district","Dinner at a locally-owned neighborhood restaurant"]},
+    {ic:'☀️',lb:'Saturday',it:["Visit the local farmers market in the morning","Explore a neighborhood most tourists miss","Visit a local museum or art gallery","Try the city's most-loved local restaurant"]},
+    {ic:'🌅',lb:'Sunday',it:["Morning coffee at a beloved local café","Explore a nearby park or nature area","Visit the city's iconic landmark","Great brunch spot before heading home"]}
+  ],
+  acts:[
+    {name:'City Food Tour',desc:'Taste the best local eats with a knowledgeable guide',price:'From $45',url:'https://www.viator.com/searchResults/all?text=food+tour'},
+    {name:'City Walking Tour',desc:'Explore the history & hidden gems on foot',price:'From $25',url:'https://www.viator.com/searchResults/all?text=city+walking+tour'},
+    {name:'Kayaking or Paddleboarding',desc:'Get out on the water for a peaceful paddle',price:'From $35',url:'https://www.viator.com/searchResults/all?text=kayak+paddleboard'},
+    {name:'Bike Tour of the City',desc:'See more of the city in less time on two wheels',price:'From $30',url:'https://www.viator.com/searchResults/all?text=city+bike+tour'},
+    {name:'Local Brewery or Winery Tour',desc:'Behind-the-scenes tour with tastings',price:'From $30',url:'https://www.viator.com/searchResults/all?text=brewery+winery+tour'},
+    {name:'Sunset Cruise',desc:'See your city from the water at golden hour',price:'From $45',url:'https://www.viator.com/searchResults/all?text=sunset+cruise'},
+    {name:'Art Museum Visit',desc:'World-class art in the heart of the city',price:'From $20',url:'https://www.viator.com/searchResults/all?text=art+museum'},
+    {name:'Evening Ghost Tour',desc:'Discover your city\'s haunted history after dark',price:'From $20',url:'https://www.viator.com/searchResults/all?text=ghost+tour'}
+  ],
+  evCats:[
+    {name:'🎵 Music & Concerts',cat:'music',q:'music+concerts'},
+    {name:'🍽️ Food & Drink Events',cat:'food',q:'food+festival+dining'},
+    {name:'🎨 Art & Culture',cat:'arts',q:'art+gallery+culture'},
+    {name:'🎪 Family Events',cat:'family',q:'family+kids'},
+    {name:'🌿 Outdoor Events',cat:'outdoor',q:'outdoor+park+festival'},
+    {name:'🎉 Nightlife & Entertainment',cat:'nightlife',q:'nightlife+entertainment'}
+  ],
+  city:''
+};
 
 var HOLIDAYS=[
   {name:'Memorial Day',emoji:'🇺🇸',ci:'2026-05-23',co:'2026-05-26'},
@@ -731,72 +873,176 @@ function getNearbyHoliday(fri){
   return null;
 }
 
-function getAllDates(){
-  var opts=[],now=new Date();
-  // upcoming holidays within 90 days
+// ══ 2-STEP DATE PICKER ══
+// Step 1: Pick which weekend
+// Step 2: Pick duration (Sat only / Sun only / Full / Full 3-day)
+
+var selWeekIdx = 0; // which weekend chip is selected
+var selDurIdx = 0;  // which duration button is selected
+var selDates = null, selCity = null, tipIv = null;
+var MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function pad(n){return String(n).padStart(2,'0');}
+function toYMD(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function fmt(d){return MO[d.getMonth()]+' '+d.getDate();}
+function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
+
+// Returns upcoming holidays within 90 days
+function getHolidays(){
+  var now=new Date(),out=[];
   HOLIDAYS.forEach(function(h){
     var s=new Date(h.ci+'T12:00:00');
-    var diff=(s-now)/(1000*60*60*24);
-    if(diff>-1&&diff<90){
-      var e=new Date(h.co+'T12:00:00');
-      var nights=Math.round((e-s)/(1000*60*60*24));
-      opts.push({type:'holiday',label:h.emoji+' '+h.name,sub:fmt(s)+' \u2013 '+fmt(e),ci:h.ci,co:h.co,holiday:h.name,nights:nights,isHol:true});
-    }
+    if((s-now)/(86400000)>-1&&(s-now)/(86400000)<90) out.push(h);
   });
-  // next 5 weekends with custom options
-  var d=new Date(now);
-  while(d.getDay()!==5)d.setDate(d.getDate()+1);
-  for(var w=0;w<5;w++){
-    var fri=new Date(d),sat=addDays(d,1),sun=addDays(d,2),mon=addDays(d,3);
-    var lw=getNearbyHoliday(fri);
-    var wlbl=w===0?'This Weekend':w===1?'Next Weekend':'Weekend '+(w+1);
-    // check not already added as holiday
-    var already=false;
-    if(lw){opts.forEach(function(o){if(o.holiday===lw.name)already=true;});}
-    if(!already){
-      opts.push({type:'weekend',label:wlbl,sub:fmt(fri)+' \u2013 '+fmt(sun),ci:toYMD(fri),co:toYMD(sun),nights:2,isHol:false});
-    }
-    // Saturday only
-    opts.push({type:'day',label:'Sat '+fmt(sat),sub:'Sat night only',ci:toYMD(sat),co:toYMD(sun),nights:1,isHol:false});
-    // Sunday-Monday
-    opts.push({type:'day',label:'Sun '+fmt(sun),sub:'Sun night, back Mon',ci:toYMD(sun),co:toYMD(mon),nights:1,isHol:false});
+  return out;
+}
+
+// Get all weekends as simple objects
+function getWeekendList(){
+  var list=[],now=new Date(),d=new Date(now);
+  var upcomingHols=getHolidays();
+  // Find next upcoming Saturday
+  while(d.getDay()!==6) d.setDate(d.getDate()+1);
+  // If today IS Saturday but afternoon — next weekend is more useful
+  if(now.getDay()===6 && now.getHours()>=14) d.setDate(d.getDate()+7);
+  for(var w=0;w<6;w++){
+    var sat=new Date(d);
+    var hol=null;
+    upcomingHols.forEach(function(h){
+      var hs=new Date(h.ci+'T12:00:00'),he=new Date(h.co+'T12:00:00');
+      if(sat>=hs&&sat<=he) hol=h;
+    });
+    // Clear labels: This / Next / then "Weekend · Jun 6"
+    var satFmt=MO[sat.getMonth()]+' '+sat.getDate();
+    var label=w===0?'This Weekend':w===1?'Next Weekend':('Weekend \u00b7 '+satFmt);
+    list.push({sat:new Date(sat),label:label,shortLabel:satFmt,hol:hol});
     d.setDate(d.getDate()+7);
   }
-  return opts;
+  return list;
+}
+
+// Given a weekend + durIdx, compute ci/co/nights/label
+function computeDates(wk,durIdx){
+  var sat=wk.sat,sun=addDays(sat,1),mon=addDays(sat,2);
+  var isHol=!!wk.hol;
+  var opts=isHol
+    ?[ // Long weekend options
+        {label:'Sat · '+fmt(sat),sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1},
+        {label:'Sun · '+fmt(sun),sub:'1 night · back Mon',ci:toYMD(sun),co:toYMD(mon),nights:1},
+        {label:'Full Weekend',sub:'2 nights · '+fmt(sat)+' – '+fmt(sun),ci:toYMD(sat),co:toYMD(sun),nights:2},
+        {label:'Full '+wk.hol.name,sub:'3 nights · '+fmt(sat)+' – '+fmt(mon),ci:toYMD(sat),co:toYMD(mon),nights:3}
+      ]
+    :[ // Regular weekend options
+        {label:'Sat · '+fmt(sat),sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1},
+        {label:'Sun · '+fmt(sun),sub:'1 night · back Mon',ci:toYMD(sun),co:toYMD(mon),nights:1},
+        {label:'Full Weekend',sub:'2 nights · '+fmt(sat)+' – '+fmt(sun),ci:toYMD(sat),co:toYMD(sun),nights:2}
+      ];
+  var idx=Math.min(durIdx,opts.length-1);
+  var o=opts[idx];
+  return {ci:o.ci,co:o.co,nights:o.nights,label:wk.label,sub:o.sub,durLabel:o.label,isHol:isHol,hol:wk.hol,opts:opts};
+}
+
+function buildPicker(wrapId,isHome){
+  var el=document.getElementById(wrapId);
+  if(!el)return;
+  var weeks=getWeekendList();
+  // clamp indices
+  if(selWeekIdx>=weeks.length)selWeekIdx=0;
+  var wk=weeks[selWeekIdx];
+  var isHol=!!wk.hol;
+  var dates=computeDates(wk,selDurIdx);
+  selDates=dates;
+
+  var html='<div class="pk-wrap">';
+
+  // STEP 1 — Weekend chips
+  html+='<div class="pk-step1-lbl">Step 1 · Pick a weekend</div>';
+  html+='<div class="'+(isHome?'hs-weeks':'pk-weeks')+'">';
+  weeks.forEach(function(w,i){
+    var h=!!w.hol;
+    var cls=(isHome?'hs-wk':'pk-wk')+(i===selWeekIdx?' on':'')+(h?' hol':'');
+    var satFmt=fmt(w.sat);
+    // Show main label + sat date only for first 2 (avoids redundancy for "Weekend · Jun 13")
+    var showDate=(i<2);
+    html+='<div class="'+cls+'" data-wi="'+i+'" onclick="wkClick(\''+wrapId+'\','+i+')">';
+    html+='<div style="font-weight:700">'+w.label+'</div>';
+    if(showDate) html+='<div class="'+(isHome?'hs-wk-d':'pk-wk-date')+'">'+satFmt+'</div>';
+    if(h)html+='<div class="'+(isHome?'hs-wk-h':'pk-wk-hol')+'">'+w.hol.emoji+' Long Weekend!</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+
+  // STEP 2 — Duration buttons
+  var durOpts=computeDates(wk,0).opts; // get all opts for this weekend
+  html+='<div class="pk-step2-lbl">Step 2 · How long?</div>';
+  html+='<div class="pk-dur">';
+  durOpts.forEach(function(o,i){
+    var sel=(i===Math.min(selDurIdx,durOpts.length-1));
+    var hcls=isHol?' hol-d':'';
+    html+='<div class="pk-d'+hcls+(sel?' on':'')+'" onclick="durClick(\''+wrapId+'\','+i+')">';
+    html+='<div>'+o.label+'</div>';
+    html+='<div class="pk-d-sub">'+o.sub+'</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+
+  // RESULT
+  var rCls=isHol?'pk-result hol-res':'pk-result';
+  html+='<div class="'+rCls+'">';
+  html+='<div class="pk-result-ic">'+(isHol?wk.hol.emoji:'📅')+'</div>';
+  html+='<div><div class="pk-result-txt">'+dates.durLabel+'</div>';
+  html+='<div class="pk-result-sub">'+dates.sub+(isHol?' · '+wk.hol.name+' weekend':'')+'</div></div>';
+  html+='</div>';
+  html+='</div>';
+  el.innerHTML=html;
+}
+
+function wkClick(wrapId,wi){
+  selWeekIdx=wi;
+  selDurIdx=0; // reset duration when weekend changes
+  buildPicker(wrapId,wrapId==='homePickerWrap');
+  // also update other pickers if home
+  if(wrapId==='homePickerWrap'){
+    // just update selDates — forms will rebuild on open
+  }
+}
+
+function durClick(wrapId,di){
+  selDurIdx=di;
+  buildPicker(wrapId,wrapId==='homePickerWrap');
 }
 
 function buildHomeStrip(){
-  var opts=getAllDates(),el=document.getElementById('homeStrip');
-  if(!el)return;
-  el.innerHTML='';
-  var first=true;
-  opts.slice(0,8).forEach(function(o){
-    var btn=document.createElement('div');
-    var isH=(o.type==='holiday');
-    btn.className='ds-btn'+(first?' on':'')+(isH?' hldy':'');
-    btn.innerHTML='<div style="font-weight:600">'+o.label+'</div><div class="ds-date">'+o.sub+'</div>'+(isH?'<div class="ds-hol">Long Weekend!</div>':'');
-    btn.onclick=function(){document.querySelectorAll('#homeStrip .ds-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');selDates=o;};
-    if(first){selDates=opts[0];first=false;}
-    el.appendChild(btn);
-  });
+  buildPicker('homePickerWrap',true);
 }
 
-function buildFormDates(id){
-  var opts=getAllDates(),el=document.getElementById(id);
-  if(!el)return;
-  el.innerHTML='';
-  var selIdx=0;
-  if(selDates){opts.forEach(function(o,i){if(o.ci===selDates.ci&&o.co===selDates.co)selIdx=i;});}
-  opts.slice(0,10).forEach(function(o,i){
-    var btn=document.createElement('div');
-    var isH=(o.type==='holiday');
-    btn.className='dc-btn'+(i===selIdx?' on':'')+(isH?' hbtn':'');
-    btn.innerHTML='<div style="font-weight:600;font-size:0.72rem">'+o.label+'</div><div class="dc-lbl">'+o.sub+'</div>'+(isH?'<div class="dc-hol">'+o.holiday+'</div>':'');
-    btn.onclick=function(){el.querySelectorAll('.dc-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');selDates=o;};
-    el.appendChild(btn);
-  });
+function buildFormDates(escId,locId){
+  if(escId)buildPicker(escId,false);
+  if(locId)buildPicker(locId,false);
 }
 
+function getSelDates(){
+  // Always recompute from current state
+  var weeks=getWeekendList();
+  var wk=weeks[Math.min(selWeekIdx,weeks.length-1)];
+  return computeDates(wk,selDurIdx);
+}
+
+
+function buildDateBadge(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var wk=getSelDates();
+  var isHol=wk.isHol||false;
+  var ic=isHol?(wk.hol?wk.hol.emoji:'🇺🇸'):'📅';
+  var holTxt=isHol?' · '+wk.hol.name+' Weekend':'';
+  el.innerHTML='<div class="date-badge'+(isHol?' hol':'')+'">'+
+    '<div class="date-badge-left"><span class="date-badge-ic">'+ic+'</span>'+
+    '<div><div class="date-badge-txt">'+wk.durLabel+'</div>'+
+    '<div class="date-badge-sub">'+wk.sub+holTxt+'</div></div></div>'+
+    '<button class="date-badge-change" onclick="goHome()">✏️ Change</button>'+
+    '</div>';
+}
 function filterCities(val){
   var dd=document.getElementById('cityDD');
   if(!val.trim()){dd.classList.remove('show');return;}
@@ -832,7 +1078,7 @@ function goEscape(){
     return;
   }
   document.getElementById('eCity').value=selCity.name;
-  buildFormDates('eDateScroll');show('escapeForm');
+  buildDateBadge('eDateBadge');show('escapeForm');
 }
 
 function goLocal(){
@@ -843,7 +1089,7 @@ function goLocal(){
     return;
   }
   document.getElementById('lCity').value=selCity.name;
-  buildFormDates('lDateScroll');show('localForm');
+  buildDateBadge('lDateBadge');show('localForm');
 }
 
 var TE=['Scanning real hotel options for your dates…','Finding 3 price tiers per destination…','Sorting cheapest first…','Checking activity prices on Viator…','Finding events on Eventbrite…','Building your personalized plan…'];
@@ -874,22 +1120,40 @@ function goHome(){
 }
 
 // Booking.com search — correct format that always works
-function bkUrl(hotelName,location,ci,co){
-  var dest=hotelName?hotelName+', '+location:location;
-  var d=dest.replace(/\s+/g,'+');
-  return 'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(dest)+'&checkin_year='+ci.split('-')[0]+'&checkin_month='+parseInt(ci.split('-')[1])+'&checkin_monthday='+parseInt(ci.split('-')[2])+'&checkout_year='+co.split('-')[0]+'&checkout_month='+parseInt(co.split('-')[1])+'&checkout_monthday='+parseInt(co.split('-')[2])+'&group_adults=2&no_rooms=1';
+// ── BEST SINGLE PLATFORM PER CATEGORY ──
+// Hotels → Google Hotels (compares all + shows direct prices)
+// ── DIRECT BEST PLATFORM — NO MIDDLEMAN ──
+
+// 🏨 Hotels → Booking.com (direct, dates + star filter pre-filled)
+// nflt: class=1,2 = budget | class=3 = mid | class=4,5 = premium
+function hotelUrl(dest,ci,co,nflt){
+  var bp='&checkin_year='+ci.split('-')[0]+'&checkin_month='+parseInt(ci.split('-')[1])+'&checkin_monthday='+parseInt(ci.split('-')[2])+'&checkout_year='+co.split('-')[0]+'&checkout_month='+parseInt(co.split('-')[1])+'&checkout_monthday='+parseInt(co.split('-')[2])+'&group_adults=2&no_rooms=1';
+  var filter=nflt?'&nflt='+nflt+'&order=price':'&order=price';
+  return 'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(dest)+bp+filter;
 }
-// Viator search — works reliably
-function viatorUrl(query,location){
-  return 'https://www.viator.com/searchResults/all?text='+encodeURIComponent(query);
-}
-// Skyscanner flights
-function flUrl(iata,ci,co){
+
+// ✈️ Flights → Skyscanner (compares all airlines, direct to cheapest)
+function flightUrl(iata,ci,co){
   return 'https://www.skyscanner.com/flights/'+iata.toLowerCase()+'/anywhere/?outboundDate='+ci+'&inboundDate='+co+'&adultsv2=2&cabinclass=economy';
 }
-// Generic Booking.com search
+
+// 🎟️ Activities → Viator (direct, largest US inventory, free cancellation)
+function actUrl(query,dest){
+  return 'https://www.viator.com/searchResults/all?text='+encodeURIComponent(query+' '+dest);
+}
+
+// 🎪 Events → Eventbrite (direct, date-filtered, category-specific)
+function eventUrl(dest,ci,co,cat){
+  var city=dest.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/-+/g,'-');
+  var base='https://www.eventbrite.com/d/'+encodeURIComponent(dest)+'/';
+  var catPath=(cat&&cat!=='events')?cat+'/':'events/';
+  return base+catPath+'?start_date='+ci+'&end_date='+co;
+}
+
+// Generic Booking.com search (used in local)
 function bkSearch(term,ci,co){
-  return 'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(term)+'&checkin_year='+ci.split('-')[0]+'&checkin_month='+parseInt(ci.split('-')[1])+'&checkin_monthday='+parseInt(ci.split('-')[2])+'&checkout_year='+co.split('-')[0]+'&checkout_month='+parseInt(co.split('-')[1])+'&checkout_monthday='+parseInt(co.split('-')[2])+'&group_adults=2&no_rooms=1';
+  var bp='&checkin_year='+ci.split('-')[0]+'&checkin_month='+parseInt(ci.split('-')[1])+'&checkin_monthday='+parseInt(ci.split('-')[2])+'&checkout_year='+co.split('-')[0]+'&checkout_month='+parseInt(co.split('-')[1])+'&checkout_monthday='+parseInt(co.split('-')[2])+'&group_adults=2&no_rooms=1&order=price';
+  return 'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(term)+bp;
 }
 
 function runEscape(){
@@ -897,9 +1161,7 @@ function runEscape(){
   var who=document.getElementById('eWho').value;
   var dl={1:'1 hr',2:'2 hrs',3:'3 hrs',5:'5 hrs',7:'7 hrs',10:'10 hrs'}[drive]||drive+' hrs';
   // get selected dates from form
-  var activeDc=document.querySelector('#eDateScroll .dc-btn.on');
-  if(activeDc){var opts=getAllDates();var lbl=activeDc.querySelectorAll('div')[0].textContent;opts.forEach(function(o){if(o.label===lbl)selDates=o;});}
-  var wk=selDates||getAllDates()[0];
+  var wk=getSelDates();
   var nights=wk.nights||2;
   var isHol=wk.isHol||false;
   var cc=selCity?selCity.code:'miami',cn=selCity?selCity.name:'Miami, FL';
@@ -936,44 +1198,62 @@ function runEscape(){
       html+='<div class="dc-state">\ud83d\udccd '+d.st+' \u00b7 \ud83d\udee1\ufe0f '+d.safe+'</div>';
       html+='<div class="dc-desc">'+d.desc+'</div>';
 
-      // 3 HOTEL TIERS — search URL always works!
-      html+='<div class="hotel-section">';
-      html+='<div class="hotel-section-title">🏨 Hotels · 3 Options · '+wk.sub+'</div>';
-      html+='<div class="hotel-cards">';
-      d.hotels.forEach(function(h){
-        var total=parseInt(h.price.replace('$',''))*nights;
-        // Use search URL with hotel name + location — ALWAYS works on Booking.com
-        var bookLink=bkUrl(h.name, d.n+' '+d.st, wk.ci, wk.co);
-        html+='<div class="hotel-card">';
-        html+='<div class="hotel-card-top">';
-        html+='<div><div class="hotel-name">'+h.tag+' '+h.name+'</div><div class="hotel-stars">'+h.stars+'</div></div>';
-        html+='<div class="hotel-price-wrap"><div class="hotel-price">'+h.price+'</div><div class="hotel-price-note">per night</div></div>';
+      // 3 LIVE SEARCH TIERS — only shows available hotels!
+      // ── HOTELS: 3 tiers, each with 1 best button → Google Hotels ──
+      var destStr=d.n+', '+d.st;
+      var tiers=[
+        {label:'💚 Budget Hotels',sub:'1-2 Star · Most affordable',p:d.hotels[0].price,nflt:'class%3D1%3Bclass%3D2'},
+        {label:'⭐ Mid-Range Hotels',sub:'3 Star · Best value for money',p:d.hotels[1].price,nflt:'class%3D3'},
+        {label:'🏆 Premium Hotels',sub:'4-5 Star · Top rated',p:d.hotels[2].price,nflt:'class%3D4%3Bclass%3D5'}
+      ];
+      html+='<div class="hotel-section"><div class="hotel-section-title">🏨 Hotels · Book on Booking.com · Cheapest first</div><div class="hotel-cards">';
+      tiers.forEach(function(t){
+        var hUrl=hotelUrl(destStr,wk.ci,wk.co,t.nflt);
+        var total=parseInt(t.p.replace('$',''))*(wk.nights||2);
+        html+='<div class="hotel-card"><div class="hotel-card-top">';
+        html+='<div><div class="hotel-name">'+t.label+'</div><div class="hotel-stars">'+t.sub+'</div></div>';
+        html+='<div class="hotel-price-wrap"><div class="hotel-price">'+t.p+'</div><div class="hotel-price-note">est. per night</div></div>';
         html+='</div>';
-        html+='<button class="hotel-book-btn" onclick="window.open(\''+bookLink+'\',\'_blank\')">🏨 See on Booking.com · ~$'+total+' total ('+nights+' night'+(nights>1?'s':'')+')</button>';
+        html+='<button class="hotel-book-btn" onclick="window.open(\''+hUrl+'\',\'_blank\')">🏨 Book on Booking.com · ~$'+total+' total ('+nights+' night'+(nights>1?'s':'')+')</button>';
         html+='</div>';
       });
-      html+='</div>';
-      html+='<div class="price-disclaimer">Starting rates shown. Tap any hotel to see live price for your exact dates on Booking.com.</div>';
-      html+='</div>';
+      html+='<div class="price-disclaimer">✅ Opens Booking.com with your exact dates · Only available hotels shown · Sorted cheapest first</div>';
+      html+='</div></div>';
 
-      // FLIGHT: Only show if drive > 5 hours
+      // ── FLIGHTS: Only if drive > 5 hrs → Google Flights ──
       if(d.dr>5){
-        html+='<button class="flight-btn" onclick="window.open(\''+flUrl(d.fl,wk.ci,wk.co)+'\',\'_blank\')">✈️ Find Cheapest Flights on Skyscanner</button>';
+        var fUrl=flightUrl(d.fl,wk.ci,wk.co);
+        html+='<button class="flight-btn" onclick="window.open(\''+fUrl+'\',\'_blank\')">✈️ Find Cheapest Flights on Skyscanner · All airlines compared</button>';
       }
 
-      // Activities — Viator search always works
-      html+='<div class="acts-title">Activities · Book Each Separately</div>';
+      // ── ACTIVITIES: Each → Viator (largest marketplace + price match) ──
+      html+='<div class="acts-title">🎫 Activities · Book on Viator</div>';
       html+='<div class="act-list">';
       d.acts.forEach(function(a){
-        // Use Viator search URL for the activity name — always works
-        var actLink=viatorUrl(a.name, d.n);
-        html+='<div class="act-item"><div class="act-left"><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div><div class="act-right"><div class="act-price">'+a.price+'</div><button class="act-book" onclick="window.open(\''+actLink+'\',\'_blank\')">Book</button></div></div>';
+        var aUrl=actUrl(a.name,d.n);
+        html+='<div class="act-item"><div class="act-left"><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div>';
+        html+='<div class="act-right"><div class="act-price">'+a.price+'</div>';
+        html+='<button class="act-book" onclick="window.open(\''+aUrl+'\',\'_blank\')">Book →</button></div></div>';
       });
       html+='</div>';
 
-      // Events
-      html+='<button class="ev-btn" onclick="window.open(\''+d.ev+'?start_date='+wk.ci+'&end_date='+wk.co+'\',\'_blank\')">\ud83c\udfa4 Find Events This Weekend on Eventbrite</button>';
-      html+='</div></div>';
+      // ── EVENTS: Categories → Google Events (aggregates everything) ──
+      var evCatList=[
+        {name:'🎵 Music & Concerts',q:'music'},
+        {name:'🍽️ Food & Drink Events',q:'food-and-drink'},
+        {name:'🎨 Art & Culture',q:'arts'},
+        {name:'👪 Family Events',q:'family-and-education'},
+        {name:'🌳 Outdoor & Nature',q:'outdoors-and-adventure'},
+        {name:'🎉 All Events',q:'events'}
+      ];
+      html+='<div class="dc-acts-title" style="margin-top:13px">🎪 Events This Weekend · '+d.n+'</div>';
+      html+='<div class="act-list">';
+      evCatList.forEach(function(ev){
+        var evUrl=eventUrl(d.n+' '+d.st,wk.ci,wk.co,ev.q);
+        html+='<div class="act-item"><div class="act-left"><div class="act-name">'+ev.name+'</div><div class="act-desc">'+d.n+' · '+wk.sub+'</div></div>';
+        html+='<div class="act-right"><button class="act-book" style="background:linear-gradient(135deg,#5B3FA0,#3a2478)" onclick="window.open(\''+evUrl+'\',\'_blank\')">See</button></div></div>';
+      });
+      html+='</div>';
     });
     html+='</div>';
     document.getElementById('rBody').innerHTML=html;
@@ -982,32 +1262,79 @@ function runEscape(){
 }
 
 function runLocal(){
-  var activeDc=document.querySelector('#lDateScroll .dc-btn.on');
-  if(activeDc){var opts=getAllDates();var lbl=activeDc.querySelectorAll('div')[0].textContent;opts.forEach(function(o){if(o.label===lbl)selDates=o;});}
-  var wk=selDates||getAllDates()[0];
+  var wk=getSelDates();
   var isHol=wk.isHol||false;
+  var nights=wk.nights||2;
   var cc=selCity?selCity.code:'miami',cn=selCity?selCity.name:'Miami, FL';
   var data=LOCAL[cc]||DEFAULT_LOCAL;
+  var cityName=cn.split(',')[0];
   startLoad(TL);
   setTimeout(function(){
     document.getElementById('rNT').textContent='Local Weekend';
-    document.getElementById('rEy').textContent='\u2726 Your Local Weekend Plan';
-    document.getElementById('rTt').innerHTML='<em>'+cn.split(',')[0]+'</em> Insider Weekend';
-    document.getElementById('rSb').textContent='Hidden gems \u00b7 Local favorites \u00b7 No tourist traps';
+    document.getElementById('rEy').textContent='\u2726 '+cityName+' Insider Weekend';
+    document.getElementById('rTt').innerHTML='<em>'+cityName+'</em> Local Guide';
+    document.getElementById('rSb').textContent='Activities \u00b7 Events \u00b7 Hidden gems \u00b7 '+nights+' night'+(nights>1?'s':'');
     document.getElementById('rDt').textContent='\ud83d\udcc5 '+wk.label+(isHol?' \u00b7 Long Weekend \ud83c\udf89':'')+' \u00b7 '+wk.sub;
 
+    var bp='&checkin_year='+wk.ci.split('-')[0]+'&checkin_month='+parseInt(wk.ci.split('-')[1])+'&checkin_monthday='+parseInt(wk.ci.split('-')[2])+'&checkout_year='+wk.co.split('-')[0]+'&checkout_month='+parseInt(wk.co.split('-')[1])+'&checkout_monthday='+parseInt(wk.co.split('-')[2])+'&group_adults=2&no_rooms=1';
+    var lc=encodeURIComponent(cityName);
     var html='<div class="lrc">';
-    data.days.forEach(function(d,i){
-      html+='<div class="lr-day" style="animation-delay:'+i*0.09+'s"><div class="lr-dh"><span class="lr-dic">'+d.ic+'</span><span class="lr-dlb">'+d.lb+'</span></div><div class="lr-dit">'+d.it.map(function(it){return '<div class="lr-di"><div class="lr-dd"></div>'+it+'</div>';}).join('')+'</div></div>';
+
+    // ITINERARY — only show days matching selection
+    if(nights===1 && wk.ci){
+      var d=new Date(wk.ci+'T12:00:00');
+      var dow=d.getDay(); // 6=Sat, 0=Sun
+      var dayData=null;
+      if(dow===6) dayData=data.days.find(function(x){return x.lb.toLowerCase().indexOf('saturday')>-1;})||data.days[1];
+      else if(dow===0) dayData=data.days.find(function(x){return x.lb.toLowerCase().indexOf('sunday')>-1;})||data.days[2];
+      if(dayData){
+        html+='<div class="lr-day" style="animation-delay:0s"><div class="lr-dh"><span class="lr-dic">'+dayData.ic+'</span><span class="lr-dlb">'+dayData.lb+' Plan</span></div><div class="lr-dit">'+dayData.it.map(function(it){return '<div class="lr-di"><div class="lr-dd"></div>'+it+'</div>';}).join('')+'</div></div>';
+      }
+    } else {
+      data.days.forEach(function(d,i){
+        html+='<div class="lr-day" style="animation-delay:'+i*0.09+'s"><div class="lr-dh"><span class="lr-dic">'+d.ic+'</span><span class="lr-dlb">'+d.lb+'</span></div><div class="lr-dit">'+d.it.map(function(it){return '<div class="lr-di"><div class="lr-dd"></div>'+it+'</div>';}).join('')+'</div></div>';
+      });
+    }
+
+
+    // ── HOTELS: 3 tiers → Google Hotels (best price comparison) ──
+    if(isHol) html+='<div style="background:#fff9f5;border:1px solid #f0c090;border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:0.72rem;color:#c05000;font-weight:500;">⚠️ Long weekend — book hotels early, prices rise fast!</div>';
+    var ltiers=[
+      {label:'💚 Budget Hotels',sub:'1-2 Star · Most affordable',nflt:'class%3D1%3Bclass%3D2'},
+      {label:'⭐ Mid-Range Hotels',sub:'3 Star · Best value for money',nflt:'class%3D3'},
+      {label:'🏆 Premium Hotels',sub:'4-5 Star · Top rated',nflt:'class%3D4%3Bclass%3D5'}
+    ];
+    html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏨 Hotels · Booking.com · '+wk.sub+'</div></div><div class="lr-cl">';
+    ltiers.forEach(function(t){
+      var lhUrl=hotelUrl(cityName,wk.ci,wk.co,t.nflt);
+      html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div>';
+      html+='<div><button class="lr-hb" onclick="window.open(\''+lhUrl+'\',\'_blank\')">🏨 Book</button></div></div>';
     });
-    html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfe8 Best Hotels \u00b7 '+wk.sub+(isHol?' \u00b7 '+wk.holiday:'')+'</div></div><div class="lr-cl">';
-    data.hotels.forEach(function(h){
-      html+='<div class="lr-h"><div><div class="lr-hn">'+h.n+'</div><div class="lr-ha">\ud83d\udccd '+h.a+'</div></div><div><div class="lr-hp">'+h.p+'</div><button class="lr-hb" onclick="window.open(\''+bkSearch(h.n+' '+cn.split(',')[0],wk.ci,wk.co)+'\',\'_blank\')">Book \u2192</button></div></div>';
-    });
-    html+='<div class="price-disclaimer" style="margin-top:8px">Tap to see live prices with your exact dates on Booking.com</div>';
+    html+='<div class="price-disclaimer" style="margin-top:6px">✅ Booking.com · Exact dates pre-filled · Only available hotels · Cheapest first</div>';
     html+='</div></div>';
-    html+='<div class="lr-card" style="animation-delay:.15s"><div class="lr-ch"><div class="lr-clb">\ud83c\udfa8 Activities & Tours</div></div><div class="lr-cl"><div class="lr-h"><div><div class="lr-hn">Viator Tours & Experiences</div><div class="lr-ha">Day tours, food tours & adventures</div></div><div><button class="lr-hb" onclick="window.open(\'https://www.viator.com/searchResults/all?text='+encodeURIComponent(cn)+'\',\'_blank\')">Explore \u2192</button></div></div></div></div>';
-    html+='<div class="lr-card" style="animation-delay:.25s"><div class="lr-ch"><div class="lr-clb">\ud83c\udfa4 Events \u00b7 '+wk.sub+(isHol?' \u00b7 '+wk.holiday:'')+'</div></div><div class="lr-cl"><div class="lr-h"><div><div class="lr-hn">Eventbrite Local Events</div><div class="lr-ha">Concerts, festivals, food events & more</div></div><div><button class="lr-hb" onclick="window.open(\'https://www.eventbrite.com/d/local/events/?start_date='+wk.ci+'&end_date='+wk.co+'\',\'_blank\')">See Events \u2192</button></div></div></div></div>';
+
+    // ── ACTIVITIES: Each → Viator (largest + price match) ──
+    var acts=data.acts||DEFAULT_LOCAL.acts;
+    html+='<div class="lr-card" style="animation-delay:.1s"><div class="lr-ch"><div class="lr-clb">🎫 Activities · Viator · Free Cancellation on Most</div></div><div class="lr-cl">';
+    acts.forEach(function(a){
+      var aUrl=actUrl(a.name,cityName);
+      html+='<div class="lr-h"><div><div class="lr-hn">'+a.name+'</div><div class="lr-ha">'+a.desc+'</div></div>';
+      html+='<div style="text-align:right;flex-shrink:0"><div style="font-size:0.72rem;font-weight:700;color:#1E7A52;margin-bottom:4px">'+a.price+'</div>';
+      html+='<button class="lr-hb" onclick="window.open(\''+aUrl+'\',\'_blank\')">🎫 Book on Viator</button></div></div>';
+    });
+    html+='</div></div>';
+
+    // ── EVENTS: Categories → Google Events (aggregates all platforms) ──
+    var evCats=data.evCats||DEFAULT_LOCAL.evCats;
+    html+='<div class="lr-card" style="animation-delay:.2s"><div class="lr-ch"><div class="lr-clb">🎪 Events on Eventbrite · '+wk.sub+(isHol&&wk.hol?' · '+wk.hol.name:'')+'</div></div><div class="lr-cl">';
+    evCats.forEach(function(ev){
+      var evUrl=eventUrl(cityName,wk.ci,wk.co,ev.q||ev.cat);
+      html+='<div class="lr-h"><div><div class="lr-hn">'+ev.name+'</div><div class="lr-ha">'+cityName+' · '+wk.sub+'</div></div>';
+      html+='<div><button class="lr-hb" onclick="window.open(\''+evUrl+'\',\'_blank\')">🎪 See</button></div></div>';
+    });
+    html+='<div class="price-disclaimer" style="margin-top:6px">✅ Opens Eventbrite with your exact dates · Free + paid events · Direct booking</div>';
+    html+='</div></div>';
+
     html+='</div>';
     document.getElementById('rBody').innerHTML=html;
     showRes();
