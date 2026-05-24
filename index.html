@@ -85,6 +85,14 @@ html,body{background:#EDF5F0;font-family:'DM Sans',sans-serif;color:#1a2e22;over
 .hs-wk-h{font-size:0.55rem;font-weight:700;color:#e8720c;margin-top:1px;}
 .hs-wk.on .hs-wk-h{color:rgba(255,255,255,.82);}
 .hs-dur{display:flex;gap:6px;flex-wrap:wrap;}
+.pk-wk.today{border-color:#1E7A52;color:#1E7A52;background:#EDF5F0;font-weight:700;}
+.pk-wk.today.on{background:#1E7A52;border-color:#1E7A52;color:#fff;}
+.pk-wk.thisweek{border-color:#2D8C6A;color:#2D8C6A;background:#F2FAF5;}
+.pk-wk.thisweek.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
+.hs-wk.today{border-color:#1E7A52;color:#1E7A52;background:#EDF5F0;font-weight:700;}
+.hs-wk.today.on{background:#1E7A52;border-color:#1E7A52;color:#fff;}
+.hs-wk.thisweek{border-color:#2D8C6A;color:#2D8C6A;background:#F2FAF5;}
+.hs-wk.thisweek.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
 .mc-wrap{display:flex;flex-direction:column;gap:10px;margin-bottom:18px;}
 .mc{border-radius:20px;overflow:hidden;position:relative;height:130px;cursor:pointer;transition:transform .18s;box-shadow:0 6px 28px rgba(0,0,0,.2);}
 .mc:active{transform:scale(.975);}
@@ -901,38 +909,51 @@ function getHolidays(){
 function getWeekendList(){
   var list=[],now=new Date(),d=new Date(now);
   var upcomingHols=getHolidays();
-  // Find next upcoming Saturday
-  while(d.getDay()!==6) d.setDate(d.getDate()+1);
-  // If today IS Saturday but afternoon — next weekend is more useful
-  if(now.getDay()===6 && now.getHours()>=14) d.setDate(d.getDate()+7);
+
+  // Find the Saturday of the CURRENT or upcoming weekend
+  // Key: if we're Mon-Sun of a weekend, show THIS weekend first
+  var wd=new Date(now);
+
+  // Go back to find the Saturday of current week
+  // If today is Sun(0), Mon(1)...Fri(5) → find last Saturday
+  // If today is Sat(6) → use today
+  var todayDay=now.getDay();
+  if(todayDay===0){
+    // Sunday — still part of this weekend, go back to Saturday
+    wd.setDate(wd.getDate()-1);
+  } else if(todayDay!==6){
+    // Weekday — find next Saturday
+    while(wd.getDay()!==6) wd.setDate(wd.getDate()+1);
+  }
+
   for(var w=0;w<6;w++){
-    var sat=new Date(d);
+    var sat=new Date(wd);
     var hol=null;
     upcomingHols.forEach(function(h){
       var hs=new Date(h.ci+'T12:00:00'),he=new Date(h.co+'T12:00:00');
       if(sat>=hs&&sat<=he) hol=h;
     });
-    // Clear labels: This / Next / then "Weekend · Jun 6"
     var satFmt=MO[sat.getMonth()]+' '+sat.getDate();
-    var label=w===0?'This Weekend':w===1?'Next Weekend':('Weekend \u00b7 '+satFmt);
+    var label=w===0?'This Weekend':w===1?'Next Weekend':('Weekend · '+satFmt);
     list.push({sat:new Date(sat),label:label,shortLabel:satFmt,hol:hol});
-    d.setDate(d.getDate()+7);
+    wd.setDate(wd.getDate()+7);
   }
   return list;
 }
 
 // Given a weekend + durIdx, compute ci/co/nights/label
 function computeDates(wk,durIdx){
+  // Regular / Holiday weekend
   var sat=wk.sat,sun=addDays(sat,1),mon=addDays(sat,2);
   var isHol=!!wk.hol;
   var opts=isHol
-    ?[ // Long weekend options
+    ?[
         {label:'Sat · '+fmt(sat),sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1},
         {label:'Sun · '+fmt(sun),sub:'1 night · back Mon',ci:toYMD(sun),co:toYMD(mon),nights:1},
         {label:'Full Weekend',sub:'2 nights · '+fmt(sat)+' – '+fmt(sun),ci:toYMD(sat),co:toYMD(sun),nights:2},
         {label:'Full '+wk.hol.name,sub:'3 nights · '+fmt(sat)+' – '+fmt(mon),ci:toYMD(sat),co:toYMD(mon),nights:3}
       ]
-    :[ // Regular weekend options
+    :[
         {label:'Sat · '+fmt(sat),sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1},
         {label:'Sun · '+fmt(sun),sub:'1 night · back Mon',ci:toYMD(sun),co:toYMD(mon),nights:1},
         {label:'Full Weekend',sub:'2 nights · '+fmt(sat)+' – '+fmt(sun),ci:toYMD(sat),co:toYMD(sun),nights:2}
@@ -962,12 +983,11 @@ function buildPicker(wrapId,isHome){
     var h=!!w.hol;
     var cls=(isHome?'hs-wk':'pk-wk')+(i===selWeekIdx?' on':'')+(h?' hol':'');
     var satFmt=fmt(w.sat);
-    // Show main label + sat date only for first 2 (avoids redundancy for "Weekend · Jun 13")
     var showDate=(i<2);
     html+='<div class="'+cls+'" data-wi="'+i+'" onclick="wkClick(\''+wrapId+'\','+i+')">';
     html+='<div style="font-weight:700">'+w.label+'</div>';
     if(showDate) html+='<div class="'+(isHome?'hs-wk-d':'pk-wk-date')+'">'+satFmt+'</div>';
-    if(h)html+='<div class="'+(isHome?'hs-wk-h':'pk-wk-hol')+'">'+w.hol.emoji+' Long Weekend!</div>';
+    if(h) html+='<div class="'+(isHome?'hs-wk-h':'pk-wk-hol')+'">'+w.hol.emoji+' Long Weekend!</div>';
     html+='</div>';
   });
   html+='</div>';
@@ -1299,16 +1319,22 @@ function runLocal(){
 
     // ── HOTELS: 3 tiers → Google Hotels (best price comparison) ──
     if(isHol) html+='<div style="background:#fff9f5;border:1px solid #f0c090;border-radius:14px;padding:10px 14px;margin-bottom:10px;font-size:0.72rem;color:#c05000;font-weight:500;">⚠️ Long weekend — book hotels early, prices rise fast!</div>';
+    // City-specific realistic price ranges per tier
+    var lp={
+      budget:  cc==='nyc'?'$120':cc==='sf'?'$110':cc==='la'?'$100':cc==='chicago'?'$90':cc==='miami'?'$95':cc==='boston'?'$105':'$80',
+      mid:     cc==='nyc'?'$200':cc==='sf'?'$190':cc==='la'?'$170':cc==='chicago'?'$150':cc==='miami'?'$160':cc==='boston'?'$160':'$130',
+      premium: cc==='nyc'?'$380':cc==='sf'?'$360':cc==='la'?'$320':cc==='chicago'?'$280':cc==='miami'?'$300':cc==='boston'?'$290':'$250'
+    };
     var ltiers=[
-      {label:'💚 Budget Hotels',sub:'1-2 Star · Most affordable',nflt:'class%3D1%3Bclass%3D2'},
-      {label:'⭐ Mid-Range Hotels',sub:'3 Star · Best value for money',nflt:'class%3D3'},
-      {label:'🏆 Premium Hotels',sub:'4-5 Star · Top rated',nflt:'class%3D4%3Bclass%3D5'}
+      {label:'💚 Budget Hotels',sub:'1-2 Star · Most affordable',nflt:'class%3D1%3Bclass%3D2',p:lp.budget},
+      {label:'⭐ Mid-Range Hotels',sub:'3 Star · Best value for money',nflt:'class%3D3',p:lp.mid},
+      {label:'🏆 Premium Hotels',sub:'4-5 Star · Top rated',nflt:'class%3D4%3Bclass%3D5',p:lp.premium}
     ];
     html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏨 Hotels · Booking.com · '+wk.sub+'</div></div><div class="lr-cl">';
     ltiers.forEach(function(t){
       var lhUrl=hotelUrl(cityName,wk.ci,wk.co,t.nflt);
       html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div>';
-      html+='<div><button class="lr-hb" onclick="window.open(\''+lhUrl+'\',\'_blank\')">🏨 Book</button></div></div>';
+      html+='<div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898;font-weight:400">/night</span></div><button class="lr-hb" onclick="window.open(\''+lhUrl+'\',\'_blank\')">🏨 Book</button></div></div>';
     });
     html+='<div class="price-disclaimer" style="margin-top:6px">✅ Booking.com · Exact dates pre-filled · Only available hotels · Cheapest first</div>';
     html+='</div></div>';
