@@ -397,36 +397,50 @@ function hotelUrl(dest,ci,co,nflt){
 // STAY URL FUNCTIONS — Best site per category with price sort + dates
 function getStayUrl(stayType, cityName, stateName, ci, co){
   var dest=cityName+(stateName?', '+stateName:'');
-  var citySlug=cityName.toLowerCase().split(' ').join('-');
-  var stateSlug=stateName?stateName.toLowerCase().split(' ').join('-'):'';
-  
+  var stateSlug=stateName?stateName.toLowerCase().replace(/ /g,'-'):'';
+  var adults=(typeof selPeople!=='undefined'?selPeople:'2');
+
+  // VRBO correct URL - uses destination param for location lock
+  function vrboUrl(keywords){
+    return 'https://www.vrbo.com/search?destination='+encodeURIComponent(dest)
+      +'&startDate='+ci+'&endDate='+co
+      +'&adults='+adults
+      +'&filterByKeywords='+encodeURIComponent(keywords)
+      +'&sort=PRICE_ASC';
+  }
+
+  // Airbnb correct URL - uses location search
+  function airbnbUrl(propertyType){
+    var url='https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes'
+      +'?checkin='+ci+'&checkout='+co+'&adults='+adults;
+    if(propertyType) url+='&property_type_id%5B%5D='+propertyType;
+    url+='&sort_order=PRICE_LTE';
+    return url;
+  }
+
+  // Hipcamp correct URL
+  function hipcampUrl(category){
+    return 'https://www.hipcamp.com/en-US/search?q='
+      +encodeURIComponent(cityName+(stateName?' '+stateName:''))
+      +'&start='+ci+'&end='+co
+      +(category?'&category='+category:'');
+  }
+
   switch(stayType){
     case 'treehouse':
-      // Airbnb - best treehouse inventory, sort by price
-      return 'https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes?checkin='+ci+'&checkout='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&amenities%5B%5D=8&sort_order=PRICE_LTE&price_max=300';
-    
-    case 'farmhouse':
-      // VRBO - private homes specialist, farm/ranch category
-      return 'https://www.vrbo.com/search/keywords:'+encodeURIComponent(cityName+' farmhouse')+'?startDate='+ci+'&endDate='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&maxNightlyPrice=200&sort=PRICE_ASC';
-    
-    case 'camping':
-      // Hipcamp - #1 camping app USA, best prices
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=camping';
-    
+      return airbnbUrl('treehouses');
     case 'cabin':
-      // Hipcamp for nature cabins, sorted by price
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=cabins';
-    
+      return airbnbUrl('cabins');
     case 'glamping':
-      // Hipcamp glamping - luxury outdoor stays
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=glamping';
-    
+      return airbnbUrl('glamping');
+    case 'farmhouse':
+      return vrboUrl('farmhouse');
     case 'lakefront':
-      // VRBO - best for lakefront/waterfront private homes
-      return 'https://www.vrbo.com/search/keywords:'+encodeURIComponent(cityName+' lakefront')+'?startDate='+ci+'&endDate='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&sort=PRICE_ASC';
-    
+      return vrboUrl('lakefront waterfront');
+    case 'camping':
+      return hipcampUrl('camping');
     default:
-      return 'https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes?checkin='+ci+'&checkout='+co+'&adults=2';
+      return airbnbUrl('');
   }
 }
 // India Hotels: Goibibo - ALWAYS INR, never USD
