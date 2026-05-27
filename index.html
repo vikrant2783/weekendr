@@ -358,6 +358,15 @@ function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
 // Country
 var selPeople='2';
 var selPeople='2';
+function goTo(url){
+  var a=document.createElement('a');
+  a.href=url;
+  a.target='_blank';
+  a.rel='noopener noreferrer';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
 function setCountry(c){
   curCountry=c;
   var bu=document.getElementById('btnUSA');
@@ -780,9 +789,9 @@ function runEscape(){
         html+='<div class="wts-icon">🏨</div><div class="wts-name">Hotels</div>';
         html+='<div class="wts-desc">Booking.com · USD · Dates pre-filled</div>';
         html+='<div class="wts-hotel-tiers">';
-        if(h0)html+='<button class="wts-hotel-tier" onclick="window.open(\''+hUrl0+'\',\'wkndo_book\')">💰 Budget · '+h0+'</button>';
-        if(h1)html+='<button class="wts-hotel-tier" onclick="window.open(\''+hUrl1+'\',\'wkndo_book\')">⭐ Mid · '+h1+'</button>';
-        if(h2)html+='<button class="wts-hotel-tier" onclick="window.open(\''+hUrl2+'\',\'wkndo_book\')">🏆 Premium · '+h2+'</button>';
+        if(h0)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl0+'\')">💰 Budget · '+h0+'</button>';
+        if(h1)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl1+'\')">⭐ Mid · '+h1+'</button>';
+        if(h2)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl2+'\')">🏆 Premium · '+h2+'</button>';
         html+='</div></div></div>';
         
         // Unique stays - smart curated instantly
@@ -790,7 +799,7 @@ function runEscape(){
         html+='<div id="'+_safeId+'" class="ai-stays-grid">';
         _avail.forEach(function(s){
           var _u=getStayUrl(s.type,d.n,d.st,wk.ci,wk.co);
-          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="window.open(\''+_u+'\',\'wkndo_book\')">';
+          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_u+'\')">';
           html+='<div class="ai-stay-icon">'+s.icon+'</div>';
           html+='<div class="ai-stay-name">'+s.label+'</div>';
           html+='<div class="ai-stay-desc">'+s.why+'</div>';
@@ -821,7 +830,7 @@ function runEscape(){
               aiAvail.forEach(function(s){
                 var meta=staysMeta.find(function(m){return m.type===s.type;})||{icon:'🏠',color:'135deg,#1a3d1a,#2D6A2D'};
                 var u=getStayUrl(s.type,destName,destSt,ci,co);
-                newHtml+='<div class="ai-stay-card" style="background:linear-gradient('+meta.color+');" onclick="window.open(\''+u+'\',\'wkndo_book\')">';
+                newHtml+='<div class="ai-stay-card" style="background:linear-gradient('+meta.color+');" onclick="goTo(\''+u+'\')">';
                 newHtml+='<div class="ai-stay-icon">'+meta.icon+'</div>';
                 newHtml+='<div class="ai-stay-name">'+meta.label+'</div>';
                 newHtml+='<div class="ai-stay-desc">'+s.why+'</div>';
@@ -840,7 +849,7 @@ function runEscape(){
         for(var ai=0;ai<d.acts.length;ai++){
           var a=d.acts[ai];
           var aUrl=isIndia?indiaActUrl(a.name,d.n,wk.ci,wk.co):actUrl(a.name,d.n+' '+d.st,wk.ci,wk.co);
-          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div><div class="act-right"><div class="act-price">'+a.price+'</div><button class="act-book" onclick="window.open(\''+aUrl+'\',\'_blank\')">Book</button></div></div>';
+          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div><div class="act-right"><div class="act-price">'+a.price+'</div><button class="act-book" onclick="goTo(\''+aUrl+'\')">Book</button></div></div>';
         }
         html+='</div>';
         // Events
@@ -854,7 +863,7 @@ function runEscape(){
         for(var ei=0;ei<evs.length;ei++){
           var ev=evs[ei];
           var evUrl=isIndia?indiaEventUrl(d.n,wk.ci,wk.co,ev.q):eventUrl(d.n+' '+d.st,wk.ci,wk.co,ev.q);
-          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+ev.name+'</div><div class="act-desc">'+d.n+' \u00b7 '+wk.sub+'</div></div><div class="act-right"><button class="act-book-ev" onclick="window.open(\''+evUrl+'\',\'_blank\')">Book</button></div></div>';
+          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+ev.name+'</div><div class="act-desc">'+d.n+' \u00b7 '+wk.sub+'</div></div><div class="act-right"><button class="act-book-ev" onclick="goTo(\''+evUrl+'\')">Book</button></div></div>';
         }
         html+='</div></div>';
       }
@@ -908,7 +917,7 @@ function runLocal(){
       var t=ltiers[li];
       var lTier=t.p.includes('800')||t.p.includes('2,500')||t.p.includes('$80')||t.p.includes('$95')||t.p.includes('$90')?'budget':t.p.includes('5,000')||t.p.includes('4,500')||t.p.includes('$150')||t.p.includes('$160')?'mid':'premium';
       var lhUrl=isIndia?indiaHotelUrl(cityName,wk.ci,wk.co,lTier):hotelUrl(cityName,wk.ci,wk.co,t.nflt);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="window.open(\''+lhUrl+'\',\'_blank\')">\ud83c\udfe8 Book</button></div></div>';
+      html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="goTo(\''+lhUrl+'\')">\ud83c\udfe8 Book</button></div></div>';
     }
     html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Goibibo \u00b7 \u20b9 INR always':'Booking.com \u00b7 Dates pre-filled \u00b7 No popup')+'</div></div></div>';
     // Activities - India=Thrillophilia, USA=Viator
@@ -917,7 +926,7 @@ function runLocal(){
     for(var ai=0;ai<acts.length;ai++){
       var a=acts[ai];
       var aUrl=isIndia?indiaActUrl(a.name,cityName,wk.ci,wk.co):actUrl(a.name,cityName,wk.ci,wk.co);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+a.name+'</div><div class="lr-ha">'+a.desc+'</div></div><div style="text-align:right;flex-shrink:0"><div style="font-size:0.72rem;font-weight:700;color:#1E7A52;margin-bottom:4px">'+a.price+'</div><button class="lr-hb" onclick="window.open(\''+aUrl+'\',\'_blank\')">\ud83c\udfab Book</button></div></div>';
+      html+='<div class="lr-h"><div><div class="lr-hn">'+a.name+'</div><div class="lr-ha">'+a.desc+'</div></div><div style="text-align:right;flex-shrink:0"><div style="font-size:0.72rem;font-weight:700;color:#1E7A52;margin-bottom:4px">'+a.price+'</div><button class="lr-hb" onclick="goTo(\''+aUrl+'\')">\ud83c\udfab Book</button></div></div>';
     }
     html+='</div></div>';
     // Events - India=Eventbrite, USA=Eventbrite - BOOK button
@@ -926,7 +935,7 @@ function runLocal(){
     for(var ei=0;ei<evCats.length;ei++){
       var ev=evCats[ei];
       var evUrl=isIndia?indiaEventUrl(cityName,wk.ci,wk.co,ev.q||ev.cat):eventUrl(cityName,wk.ci,wk.co,ev.q||ev.cat);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+ev.name+'</div><div class="lr-ha">'+cityName+' \u00b7 '+wk.sub+'</div></div><div><button class="lr-hb-ev" onclick="window.open(\''+evUrl+'\',\'_blank\')">\ud83c\udfa4 Book</button></div></div>';
+      html+='<div class="lr-h"><div><div class="lr-hn">'+ev.name+'</div><div class="lr-ha">'+cityName+' \u00b7 '+wk.sub+'</div></div><div><button class="lr-hb-ev" onclick="goTo(\''+evUrl+'\')">\ud83c\udfa4 Book</button></div></div>';
     }
     html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Eventbrite \u00b7 Direct booking':'Eventbrite \u00b7 Direct booking')+'</div></div></div>';
     html+='</div>';
