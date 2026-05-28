@@ -402,28 +402,27 @@ function hotelUrl(dest,ci,co,nflt){
 // STAY URL FUNCTIONS — Best site per category with price sort + dates
 function getStayUrl(stayType, cityName, stateName, ci, co){
   var dest=cityName+(stateName?', '+stateName:'');
-  var stateSlug=stateName?stateName.toLowerCase().replace(/ /g,'-'):'';
   var adults=(typeof selPeople!=='undefined'?selPeople:'2');
 
-  // VRBO correct URL - uses destination param for location lock
-  function vrboUrl(keywords){
-    return 'https://www.vrbo.com/search?destination='+encodeURIComponent(dest)
-      +'&startDate='+ci+'&endDate='+co
-      +'&adults='+adults
-      +'&filterByKeywords='+encodeURIComponent(keywords)
-      +'&sort=PRICE_ASC';
-  }
-
-  // Airbnb correct URL - uses location search
-  function airbnbUrl(propertyType){
+  function airbnbUrl(propertyType, amenityId){
     var url='https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes'
       +'?checkin='+ci+'&checkout='+co+'&adults='+adults;
     if(propertyType) url+='&property_type_id%5B%5D='+propertyType;
+    if(amenityId) url+='&amenities%5B%5D='+amenityId;
     url+='&sort_order=PRICE_LTE';
     return url;
   }
 
-  // Hipcamp correct URL
+  function vrboUrl(keyword){
+    return 'https://www.vrbo.com/search/keywords:'+
+      cityName.replace(/ /g,'+')+
+      (stateName?'+'+stateName.replace(/ /g,'+'):'')
+      +'+'+keyword
+      +'?startDate='+ci+'&endDate='+co
+      +'&adultsCount='+adults
+      +'&sort=PRICE_ASCENDING';
+  }
+
   function hipcampUrl(category){
     return 'https://www.hipcamp.com/en-US/search?q='
       +encodeURIComponent(cityName+(stateName?' '+stateName:''))
@@ -432,20 +431,14 @@ function getStayUrl(stayType, cityName, stateName, ci, co){
   }
 
   switch(stayType){
-    case 'treehouse':
-      return airbnbUrl('treehouses');
-    case 'cabin':
-      return airbnbUrl('cabins');
-    case 'glamping':
-      return airbnbUrl('glamping');
-    case 'farmhouse':
-      return vrboUrl('farmhouse');
-    case 'lakefront':
-      return vrboUrl('lakefront waterfront');
-    case 'camping':
-      return hipcampUrl('camping');
-    default:
-      return airbnbUrl('');
+    case 'treehouse':  return airbnbUrl('treehouses');
+    case 'cabin':      return airbnbUrl('cabins');
+    case 'glamping':   return airbnbUrl('glamping');
+    case 'beachfront': return airbnbUrl('','4'); // Airbnb waterfront amenity
+    case 'farmhouse':  return vrboUrl('farmhouse');
+    case 'lakefront':  return airbnbUrl('','4'); // Airbnb waterfront amenity
+    case 'camping':    return hipcampUrl('camping');
+    default:           return airbnbUrl('');
   }
 }
 // India Hotels: Goibibo - ALWAYS INR, never USD
@@ -788,7 +781,7 @@ function runEscape(){
         var _isDesert=_tags.indexOf('desert')>=0||_tags.indexOf('canyon')>=0||_tags.indexOf('arid')>=0;
         var _isWine=_tags.indexOf('wine')>=0||_tags.indexOf('winer')>=0||_tags.indexOf('vineyard')>=0;
         var _isRural=_isWine||_tags.indexOf('charm')>=0||_tags.indexOf('farm')>=0||_tags.indexOf('ranch')>=0||_tags.indexOf('whiskey')>=0||_tags.indexOf('historic')>=0||_tags.indexOf('rural')>=0;
-        var _isLake=_tags.indexOf('lake')>=0||_tags.indexOf('river')>=0||_tags.indexOf('water')>=0;
+        var _isLake=_tags.indexOf('lake')>=0||_tags.indexOf('river')>=0||_tags.indexOf('water')>=0||_n.indexOf('lake')>=0||_n.indexOf('crater')>=0||_n.indexOf('tahoe')>=0;
         var _isNature=_tags.indexOf('nature')>=0||_tags.indexOf('wildlife')>=0||_tags.indexOf('park')>=0||_tags.indexOf('scenic')>=0;
         var _isAdventure=_tags.indexOf('adventure')>=0||_tags.indexOf('family')>=0;
         // Hotel price base for stay pricing
@@ -821,12 +814,16 @@ function runEscape(){
             ok:true,
             from:_glamFrom,to:_glamTo,
             why:_isBeach?'Luxury coastal glamping':_isDesert?'Desert glamping tents':_isMtn?'Mountain glamping':'Outdoor glamping nearby'},
+          {type:'beachfront',icon:'🏖️',label:'Beachfront',color:'135deg,#1a3d4a,#1a6a8a',
+            ok:_isBeach,
+            from:Math.round(_hLow*0.9/10)*10,to:Math.round(_hBase*2.0/10)*10,
+            why:'Beachfront homes & condos'},
           {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',
             ok:_isWine||(_isRural&&!_isMtn&&!_isBeach&&!_isDesert),
             from:_farmFrom,to:_farmTo,
             why:_isWine?'Wine country farm stays':'Countryside farmhouse retreats'},
           {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',
-            ok:_isMtn||_isNature||_isLake||_isAdventure||_isRural,
+            ok:(_isMtn||_isNature||_isLake||_isAdventure||_isRural)&&!_isBeach,
             from:_campFrom,to:_campTo,
             why:_isMtn?'National forest camping':_isLake?'Lakeside camping':'State park camping'},
           {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',
@@ -861,10 +858,10 @@ function runEscape(){
         var _display=_avail.slice();
         // Priority order for padding extras
         // Hard rules for padding - strictly respect geography
-        var _neverBeach=['treehouse','cabin','farmhouse','lakefront'];
+        var _neverBeach=(_isBeach&&_isWine)?['cabin','lakefront']:['treehouse','cabin','farmhouse','lakefront','camping'];
         var _neverDesert=['treehouse','cabin','lakefront'];
         var _padExclude=_isBeach?_neverBeach:_isDesert?_neverDesert:[];
-        var _padOrder=_isBeach?['camping','glamping']:
+        var _padOrder=_isBeach&&_isWine?['farmhouse','beachfront','glamping','treehouse']:_isBeach?['beachfront','glamping']:
                       _isDesert?['camping','glamping']:
                       _isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:
                       _isWine?['farmhouse','treehouse','camping','cabin','lakefront']:
