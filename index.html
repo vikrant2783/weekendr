@@ -147,16 +147,18 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .wts-hotel-tiers{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
 .wts-hotel-tier{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:4px 10px;font-size:0.68rem;color:#fff;cursor:pointer;font-weight:600;}
 .wts-hotel-tier:active{background:rgba(255,255,255,0.3);}
-.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 8px;}
-.ai-stay-card{border-radius:14px;padding:12px 11px;cursor:pointer;border:1.5px solid rgba(0,0,0,0.06);transition:transform 0.15s;}
-.ai-stay-card:active{transform:scale(0.96);}
-.ai-stay-icon{font-size:1.4rem;margin-bottom:4px;}
-.ai-stay-name{font-size:0.8rem;font-weight:700;color:#fff;margin-bottom:2px;}
-.ai-stay-desc{font-size:0.63rem;color:rgba(255,255,255,0.85);margin-bottom:6px;line-height:1.3;}
-.ai-stay-bottom{display:flex;justify-content:space-between;align-items:center;}
-.ai-stay-price{font-size:0.68rem;font-weight:700;color:#fff;background:rgba(0,0,0,0.2);border-radius:100px;padding:2px 7px;}
-.ai-stay-site{font-size:0.6rem;color:rgba(255,255,255,0.75);}
-.ai-stays-note{font-size:0.62rem;color:#88a898;text-align:center;padding:2px 14px 8px;}
+.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px 4px;align-items:stretch;}
+.ai-stays-grid.single-tile{grid-template-columns:1fr;}
+.ai-stay-card{border-radius:14px;padding:13px 12px 11px;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;box-sizing:border-box;height:100%;min-height:120px;}
+.ai-stay-card:active{transform:scale(0.97);}
+.ai-stay-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.ai-stay-icon{font-size:1.25rem;line-height:1;flex-shrink:0;}
+.ai-stay-name{font-size:0.83rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-stay-desc{font-size:0.62rem;color:rgba(255,255,255,0.85);line-height:1.3;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;}
+.ai-stay-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-shrink:0;}
+.ai-stay-price{font-size:0.7rem;font-weight:700;color:#fff;white-space:nowrap;}
+.ai-stay-book{font-size:0.6rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.ai-stays-note{font-size:0.6rem;color:#88a898;text-align:center;padding:6px 14px 10px;}
 .wts-disclaimer{font-size:0.6rem;color:#88a898;text-align:center;padding:4px 0 10px;}
 .unique-stay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 14px;}
 .us-card{background:#F0FBF5;border:1.5px solid #C8E4D4;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all 0.2s;}
@@ -359,13 +361,16 @@ function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
 var selPeople='2';
 var selPeople='2';
 function goTo(url){
-  var a=document.createElement('a');
-  a.href=url;
-  a.target='_blank';
-  a.rel='noopener noreferrer';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  // Most reliable cross-browser/mobile link opener
+  try {
+    var w=window.open(url,'_blank');
+    if(!w||w.closed||typeof w.closed=='undefined'){
+      // Popup blocked - fallback to location
+      window.location.href=url;
+    }
+  } catch(e){
+    window.location.href=url;
+  }
 }
 function setCountry(c){
   curCountry=c;
@@ -771,24 +776,66 @@ function runEscape(){
         for(var ci=0;ci<d.ch.length;ci++)html+='<span class="dcc '+d.ch[ci].c+'">'+d.ch[ci].t+'</span>';
         html+='</div></div>';
         // WHERE TO STAY - Hotels + Unique Stays in one beautiful grid
-        // WHERE TO STAY - Smart + AI upgrade
+        // WHERE TO STAY - Tag-based detection using dest's actual tags
         var wtsAdults=(typeof selPeople!=='undefined'?selPeople:'2');
         var _n=d.n.toLowerCase(),_st=(d.st||'').toLowerCase();
-        var _isBeach=['beach','coast','key west','key largo','miami','fort lauderdale','naples','clearwater','gulf shores','pensacola'].some(function(w){return _n.indexOf(w)>=0;})||_st==='hawaii';
-        var _isMtn=['colorado','utah','wyoming','vermont','new hampshire','montana','tennessee','north carolina','washington','oregon'].indexOf(_st)>=0||['mountain','aspen','vail','breckenridge','sedona','tahoe','big bear','bend','smoky','jackson'].some(function(w){return _n.indexOf(w)>=0;});
-        var _isDesert=['arizona','nevada','new mexico'].indexOf(_st)>=0||['desert','canyon','moab','palm springs','joshua tree','scottsdale','phoenix','tucson'].some(function(w){return _n.indexOf(w)>=0;});
-        var _isRural=['wine','napa','sonoma','fredericksburg','galena','catskills','woodstock','hamptons','cape cod','door county'].some(function(w){return _n.indexOf(w)>=0;});
-        var _isLake=['tahoe','michigan','geneva','arrowhead','crater','ozark','travis'].some(function(w){return _n.indexOf(w)>=0;});
+        // Use dest's actual tags for accurate detection
+        var _tags=d.ch?d.ch.map(function(_ct){return (_ct.t||'').toLowerCase();}).join(' '):'';
+        var _allText=_n+' '+_st+' '+_tags;
+        // Tag-based detection
+        var _isBeach=_tags.indexOf('beach')>=0||_tags.indexOf('coast')>=0||_tags.indexOf('snorkel')>=0||_tags.indexOf('surf')>=0||_tags.indexOf('island')>=0||_tags.indexOf('shore')>=0;
+        var _isMtn=_tags.indexOf('mountain')>=0||_tags.indexOf('ski')>=0||_tags.indexOf('hiking')>=0||_tags.indexOf('alpine')>=0||_tags.indexOf('rainforest')>=0||_tags.indexOf('outdoor')>=0;
+        var _isDesert=_tags.indexOf('desert')>=0||_tags.indexOf('canyon')>=0||_tags.indexOf('arid')>=0;
+        var _isWine=_tags.indexOf('wine')>=0||_tags.indexOf('winer')>=0||_tags.indexOf('vineyard')>=0;
+        var _isRural=_isWine||_tags.indexOf('charm')>=0||_tags.indexOf('farm')>=0||_tags.indexOf('ranch')>=0||_tags.indexOf('whiskey')>=0||_tags.indexOf('historic')>=0||_tags.indexOf('rural')>=0;
+        var _isLake=_tags.indexOf('lake')>=0||_tags.indexOf('river')>=0||_tags.indexOf('water')>=0;
+        var _isNature=_tags.indexOf('nature')>=0||_tags.indexOf('wildlife')>=0||_tags.indexOf('park')>=0||_tags.indexOf('scenic')>=0;
+        var _isAdventure=_tags.indexOf('adventure')>=0||_tags.indexOf('family')>=0;
+        // Hotel price base for stay pricing
+        var _hBase=d.hotels&&d.hotels[1]?parseInt((d.hotels[1].price||'$150').replace(/[^0-9]/g,''))||150:150;
+        var _hLow=d.hotels&&d.hotels[0]?parseInt((d.hotels[0].price||'$90').replace(/[^0-9]/g,''))||90:90;
+        // Prices based on dest's actual hotel prices
+        var _treeFrom=Math.max(70,Math.round(_hLow*0.9/10)*10);
+        var _treeTo=Math.round(_hBase*1.6/10)*10;
+        var _cabFrom=Math.max(55,Math.round(_hLow*0.7/10)*10);
+        var _cabTo=Math.round(_hBase*1.1/10)*10;
+        var _glamFrom=Math.round(_hBase*0.8/10)*10;
+        var _glamTo=Math.round(_hBase*1.8/10)*10;
+        var _farmFrom=Math.max(65,Math.round(_hLow*0.8/10)*10);
+        var _farmTo=Math.round(_hBase*1.2/10)*10;
+        var _campFrom=25;
+        var _campTo=Math.max(60,Math.round(_hLow*0.7/10)*10);
+        var _lakeFrom=Math.round(_hBase*1.0/10)*10;
+        var _lakeTo=Math.round(_hBase*2.2/10)*10;
+
         var _allStays=[
-          {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:_isMtn||_isRural,from:89,to:250,why:'Forest treehouses nearby'},
-          {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:_isMtn||_isLake||_isRural,from:65,to:180,why:_isMtn?'Mountain cabins popular here':'Cozy cabin getaways nearby'},
-          {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_isBeach?120:_isDesert?130:95,to:_isBeach?320:280,why:_isBeach?'Beachside luxury glamping':_isDesert?'Desert glamping popular':'Luxury outdoor stays nearby'},
-          {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_isRural||(!_isBeach&&!_isDesert&&!_isMtn),from:75,to:200,why:'Farm stays in the countryside'},
-          {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:_isMtn||_isRural||_isLake,from:25,to:75,why:_isMtn?'National forest camping nearby':'State parks and campgrounds nearby'},
-          {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',ok:_isLake||(_isMtn&&!_isBeach&&!_isDesert),from:110,to:350,why:_isLake?'Prime lakefront properties':'Mountain waterfront nearby'}
+          {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',
+            ok:(_isMtn||_isRural)&&!_isBeach&&!_isDesert,
+            from:_treeFrom,to:_treeTo,
+            why:_isMtn?'Mountain forest treehouses':_isRural?'Countryside treehouses':'Scenic treehouses nearby'},
+          {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',
+            ok:(_isMtn||_isLake)&&!_isBeach&&!_isDesert&&!_isNature,
+            from:_cabFrom,to:_cabTo,
+            why:_isMtn?'Mountain cabins & lodges':_isLake?'Lakeside cabin retreats':'Cozy cabin getaways'},
+          {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',
+            ok:true,
+            from:_glamFrom,to:_glamTo,
+            why:_isBeach?'Luxury coastal glamping':_isDesert?'Desert glamping tents':_isMtn?'Mountain glamping':'Outdoor glamping nearby'},
+          {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',
+            ok:_isWine||(_isRural&&!_isMtn&&!_isBeach&&!_isDesert),
+            from:_farmFrom,to:_farmTo,
+            why:_isWine?'Wine country farm stays':'Countryside farmhouse retreats'},
+          {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',
+            ok:_isMtn||_isNature||_isLake||_isAdventure||_isRural,
+            from:_campFrom,to:_campTo,
+            why:_isMtn?'National forest camping':_isLake?'Lakeside camping':'State park camping'},
+          {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',
+            ok:_isLake&&!_isBeach,
+            from:_lakeFrom,to:_lakeTo,
+            why:'Waterfront homes on the lake'}
         ];
         var _avail=_allStays.filter(function(s){return s.ok;});
-        if(_avail.length<3){_allStays.forEach(function(s){if(_avail.length<3&&!s.ok){_avail.push(s);}});}
+        // No min-3 override - padding below handles this with strict rules
         
         // Build WHERE TO STAY HTML
         html+='<div class="wts-section"><div class="wts-title">🏡 WHERE TO STAY</div><div class="wts-grid">';
@@ -810,19 +857,49 @@ function runEscape(){
         
         // Unique stays - smart curated instantly
         var _safeId='ws'+d.n.replace(/[^a-zA-Z0-9]/g,'');
-        html+='<div id="'+_safeId+'" class="ai-stays-grid">';
-        _avail.forEach(function(s){
+        // Always even tiles - smart padding respects geography
+        var _display=_avail.slice();
+        // Priority order for padding extras
+        // Hard rules for padding - strictly respect geography
+        var _neverBeach=['treehouse','cabin','farmhouse','lakefront'];
+        var _neverDesert=['treehouse','cabin','lakefront'];
+        var _padExclude=_isBeach?_neverBeach:_isDesert?_neverDesert:[];
+        var _padOrder=_isBeach?['camping','glamping']:
+                      _isDesert?['camping','glamping']:
+                      _isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:
+                      _isWine?['farmhouse','treehouse','camping','cabin','lakefront']:
+                      _isLake?['lakefront','cabin','camping','treehouse','farmhouse']:
+                      ['treehouse','camping','cabin','farmhouse','lakefront'];
+        if(_display.length%2!==0){
+          // Add one more tile - STRICT: never add excluded types for beach/desert
+          var _padded=false;
+          for(var _pi=0;_pi<_padOrder.length;_pi++){
+            var _pt=_padOrder[_pi];
+            if(_padExclude.indexOf(_pt)>=0)continue; // skip excluded types
+            if(!_display.some(function(s){return s.type===_pt;})){
+              var _ps=_allStays.find(function(s){return s.type===_pt;});
+              if(_ps){_display.push(_ps);_padded=true;break;}
+            }
+          }
+          // If still odd (beach has nothing to pad with), just show odd count
+          // Better odd than wrong tile
+        }
+        // Cap at 6 tiles max (3 rows)
+        _display=_display.slice(0,6);
+        var _gridCls=_display.length===1?'ai-stays-grid single-tile':'ai-stays-grid';
+        html+='<div id="'+_safeId+'" class="'+_gridCls+'">';
+        _display.forEach(function(s){
           var _u=getStayUrl(s.type,d.n,d.st,wk.ci,wk.co);
           html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_u+'\')">';
-          html+='<div class="ai-stay-icon">'+s.icon+'</div>';
-          html+='<div class="ai-stay-name">'+s.label+'</div>';
+          html+='<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>';
           html+='<div class="ai-stay-desc">'+s.why+'</div>';
-          html+='<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-site">↗ Book</div></div>';
+          html+='<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-book">Book ↗</div></div>';
           html+='</div>';
         });
         html+='</div>';
-        html+='<div class="ai-stays-note" id="note'+_safeId+'">📍 Curated for '+d.n+'</div>';
-        html+='<div class="wts-disclaimer">✅ Hotels: Booking.com · Stays: Smart-curated · Dates pre-filled</div></div>';
+        html+='<div class="ai-stays-note" id="note'+_safeId+'">✨ '+_display.length+' unique stays near '+d.n+'</div>';
+        
+html+='</div>';
         
         // AI upgrade in background - updates tiles silently after render
         (function(destName,destSt,ci,co,adults,elId,noteId,staysMeta){
@@ -842,7 +919,7 @@ function runEscape(){
               if(!el)return;
               var newHtml='';
               aiAvail.forEach(function(s){
-                var meta=staysMeta.find(function(m){return m.type===s.type;})||{icon:'🏠',color:'135deg,#1a3d1a,#2D6A2D'};
+                var meta=staysMeta.find(function(_sm){return _sm.type===s.type;})||{icon:'🏠',label:s.type,color:'135deg,#1a3d1a,#2D6A2D'};
                 var u=getStayUrl(s.type,destName,destSt,ci,co);
                 newHtml+='<div class="ai-stay-card" style="background:linear-gradient('+meta.color+');" onclick="goTo(\''+u+'\')">';
                 newHtml+='<div class="ai-stay-icon">'+meta.icon+'</div>';
@@ -934,6 +1011,47 @@ function runLocal(){
       html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="goTo(\''+lhUrl+'\')">\ud83c\udfe8 Book</button></div></div>';
     }
     html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Goibibo \u00b7 \u20b9 INR always':'Booking.com \u00b7 Dates pre-filled \u00b7 No popup')+'</div></div></div>';
+    
+    // WHERE TO STAY - Unique Stays tiles for Local mode
+    if(!isIndia){
+      var _lcn=cityName.toLowerCase(), _lst=(selCity&&selCity.state?selCity.state:'').toLowerCase();
+      var _lBeach=['beach','coast','miami','angeles','san diego','honolulu','malibu'].some(function(w){return _lcn.indexOf(w)>=0;});
+      var _lMtn=['denver','seattle','portland','salt lake','boulder','asheville','chattanooga','flagstaff'].some(function(w){return _lcn.indexOf(w)>=0;})||['colorado','utah','washington','oregon','montana','vermont','tennessee','north carolina'].indexOf(_lst)>=0;
+      var _lDesert=['phoenix','tucson','las vegas','albuquerque','el paso'].some(function(w){return _lcn.indexOf(w)>=0;})||['arizona','nevada','new mexico'].indexOf(_lst)>=0;
+      var _lRural=['wine','napa','austin','nashville','new orleans','savannah','charleston'].some(function(w){return _lcn.indexOf(w)>=0;});
+      var _lStays=[
+        {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:_lMtn||_lRural,from:89,to:250,why:_lMtn?'Mountain forest treehouses':'Countryside treehouses'},
+        {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:_lMtn,from:65,to:180,why:'Cozy mountain cabins nearby'},
+        {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_lBeach?110:_lDesert?120:90,to:_lBeach?300:280,why:_lBeach?'Luxury coastal glamping':_lDesert?'Desert glamping tents':'Outdoor glamping nearby'},
+        {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_lRural,from:75,to:200,why:'Farm stays near the city'},
+        {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:_lMtn||_lRural,from:25,to:75,why:_lMtn?'Mountain camping nearby':'State park camping nearby'},
+        {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',ok:false,from:110,to:350,why:'Lakefront properties nearby'}
+      ];
+      var _lAvail=_lStays.filter(function(s){return s.ok;});
+      var _lPad=_lBeach?['glamping','treehouse','camping','cabin']:_lMtn?['treehouse','cabin','camping','glamping']:['glamping','treehouse','cabin','camping'];
+      if(_lAvail.length%2!==0){
+        for(var _lpi=0;_lpi<_lPad.length;_lpi++){
+          var _lpt=_lPad[_lpi];
+          if(!_lAvail.some(function(s){return s.type===_lpt;})){
+            var _lps=_lStays.find(function(s){return s.type===_lpt;});
+            if(_lps){_lAvail.push(_lps);break;}
+          }
+        }
+      }
+      if(_lAvail.length>=2){
+        html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏕️ UNIQUE STAYS · Near '+cityName+'</div></div>';
+        html+='<div class="ai-stays-grid" style="padding:10px 10px 4px;">';
+        _lAvail.slice(0,6).forEach(function(s){
+          var _lu=getStayUrl(s.type,cityName,selCity&&selCity.state?selCity.state:'',wk.ci,wk.co);
+          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_lu+'\')">'+
+            '<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>'+
+            '<div class="ai-stay-desc">'+s.why+'</div>'+
+            '<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-book">Book ↗</div></div>'+
+          '</div>';
+        });
+        html+='</div><div class="ai-stays-note">✨ '+_lAvail.slice(0,6).length+' unique stays near '+cityName+'</div></div>';
+      }
+    }
     // Activities - India=Thrillophilia, USA=Viator
     var acts=data.acts||DEFAULT_LOCAL.acts;
     html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfab Activities \u00b7 '+(isIndia?'Viator':'Viator')+'</div></div><div class="lr-cl">';
