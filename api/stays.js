@@ -20,14 +20,25 @@ export default async function handler(req, res) {
     return res.status(200).json({ stays: getSmartFallback(destName, destState), fallback: true });
   }
 
-  const prompt = `For ${destName}, ${destState}, USA - which unique stays are genuinely available? Return ONLY JSON array, no other text:
-[{"type":"treehouse","available":true,"priceFrom":89,"priceTo":250,"why":"one sentence reason"},
-{"type":"cabin","available":true,"priceFrom":65,"priceTo":180,"why":"one sentence reason"},
-{"type":"glamping","available":true,"priceFrom":95,"priceTo":280,"why":"one sentence reason"},
-{"type":"farmhouse","available":false,"priceFrom":0,"priceTo":0,"why":"one sentence reason"},
-{"type":"camping","available":false,"priceFrom":0,"priceTo":0,"why":"one sentence reason"},
-{"type":"lakefront","available":false,"priceFrom":0,"priceTo":0,"why":"one sentence reason"}]
-Rules: Beach city=no farmhouse/cabin. Mountain=cabin+camping+treehouse. Desert=glamping. Wine/rural=farmhouse. Lake=lakefront.`;
+  const prompt = `You are a travel accommodation expert. For ${destName}, ${destState}, USA analyze which unique stay types are genuinely available and popular for weekend trips.
+
+Return ONLY a valid JSON array with exactly 6 items in this order. No markdown, no explanation:
+[
+{"type":"treehouse","available":true,"priceFrom":89,"priceTo":250,"why":"Short reason max 5 words"},
+{"type":"cabin","available":true,"priceFrom":65,"priceTo":180,"why":"Short reason max 5 words"},
+{"type":"glamping","available":true,"priceFrom":95,"priceTo":280,"why":"Short reason max 5 words"},
+{"type":"farmhouse","available":false,"priceFrom":0,"priceTo":0,"why":"Short reason max 5 words"},
+{"type":"camping","available":false,"priceFrom":0,"priceTo":0,"why":"Short reason max 5 words"},
+{"type":"lakefront","available":false,"priceFrom":0,"priceTo":0,"why":"Short reason max 5 words"}
+]
+
+Geography rules:
+- Beach/coastal: glamping=yes, treehouse=rare, cabin=no, farmhouse=no, camping=no, lakefront=no
+- Mountain: treehouse=yes, cabin=yes, camping=yes, glamping=yes, farmhouse=maybe, lakefront=maybe
+- Desert: glamping=yes, camping=maybe, treehouse=rare, cabin=no, farmhouse=no, lakefront=no  
+- Wine/rural: farmhouse=yes, glamping=yes, treehouse=yes, cabin=maybe, camping=maybe
+- Lake area: lakefront=yes, cabin=yes, camping=yes, glamping=yes, treehouse=maybe
+- Price ranges must reflect actual market rates for that specific region.`;
 
   try {
     const response = await fetch('https://api.anthropic.com/v1/messages', {
@@ -38,7 +49,7 @@ Rules: Beach city=no farmhouse/cabin. Mountain=cabin+camping+treehouse. Desert=g
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-haiku-4-5',
+        model: 'claude-haiku-4-5-20251001',
         max_tokens: 500,
         messages: [{ role: 'user', content: prompt }]
       })
