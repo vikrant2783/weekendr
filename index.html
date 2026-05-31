@@ -448,7 +448,7 @@ function getStayUrl(stayType, cityName, stateName, ci, co){
   function hipcampUrl(){
     return 'https://www.hipcamp.com/en-US/search?q=' +
       encodeURIComponent(cityName + (stateName ? ' ' + stateName : '')) +
-      '&start=' + ci + '&end=' + co + '&category=camping';
+      '&start=' + ci + '&end=' + co + '&category=camping&guests=' + adults;
   }
 
   switch(stayType){
@@ -479,8 +479,10 @@ function indiaHotelUrl(dest,ci,co,tier){
 }
 // USA Activities: Viator
 function actUrl(q,dest,ci,co){
+  var adults=(typeof selPeople!=='undefined'?selPeople:'2');
   var u='https://www.viator.com/searchResults/all?text='+encodeURIComponent(q+' '+dest);
   if(ci)u+='&startDate='+ci+'&endDate='+(co||ci);
+  u+='&adults='+adults;
   return u;
 }
 // India Activities: Thrillophilia
@@ -494,9 +496,9 @@ function flightUrl(iata,ci,co){if(!iata)return null;return 'https://www.skyscann
 function indiaFlightUrl(iata,ci,co){return 'https://www.skyscanner.co.in/flights/'+iata.toLowerCase()+'/anywhere/?outboundDate='+ci+'&inboundDate='+co+'&adultsv2=2';}
 // USA Events: Eventbrite - Book button
 function eventUrl(dest,ci,co,cat){
-  // Eventbrite search - most reliable format
   var city=dest.split(',')[0].trim();
-  var q=city+(cat&&cat!=='events'?' '+cat:'');
+  var adults=(typeof selPeople!=='undefined'?selPeople:'2');
+  // Eventbrite with dates
   return 'https://www.eventbrite.com/d/'+encodeURIComponent(city)+'/events/?start_date='+ci+'&end_date='+co;
 }
 // India Events: Eventbrite - Book button
