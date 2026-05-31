@@ -526,9 +526,21 @@ function indiaEventUrl(dest,ci,co,cat){
 // Date Picker
 function getWeekendList(){
   var list=[],now=new Date(),wd=new Date(now),hols=getHolidays();
+  var todayMidnight=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  var isSun=now.getDay()===0;
+  var isSunEvening=isSun&&now.getHours()>=18;
+  // Sunday before 6pm: insert "Today" as first option
+  if(isSun&&!isSunEvening){
+    var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var todayLabel='Today · '+dayNames[now.getDay()]+' '+MO[now.getMonth()]+' '+now.getDate();
+    list.push({sat:new Date(todayMidnight),label:todayLabel,shortLabel:MO[now.getMonth()]+' '+now.getDate(),hol:null,isToday:true});
+  }
+  // Start from today and find next Saturday
   while(wd.getDay()!==6)wd.setDate(wd.getDate()+1);
-  if(now.getDay()===6&&now.getHours()>=14)wd.setDate(wd.getDate()+7);
-  if(now.getDay()===0){wd=new Date(now);wd.setDate(wd.getDate()-1);}
+  // If Saturday is in the past, skip to next
+  if(wd<todayMidnight)wd.setDate(wd.getDate()+7);
+  // If Saturday is today but late, skip to next
+  if(now.getDay()===6&&now.getHours()>=18)wd.setDate(wd.getDate()+7);
   for(var w=0;w<6;w++){
     var sat=new Date(wd),hol=null;
     for(var h=0;h<hols.length;h++){
@@ -536,13 +548,21 @@ function getWeekendList(){
       if(sat>=hs&&sat<=he){hol=hols[h];break;}
     }
     var satFmt=MO[sat.getMonth()]+' '+sat.getDate();
-    list.push({sat:new Date(sat),label:w===0?'This Weekend':w===1?'Next Weekend':'Weekend \u00b7 '+satFmt,shortLabel:satFmt,hol:hol});
+    list.push({sat:new Date(sat),label:w===0?'This Weekend':w===1?'Next Weekend':'Weekend · '+satFmt,shortLabel:satFmt,hol:hol});
     wd.setDate(wd.getDate()+7);
   }
   return list;
 }
 function computeDates(wk,durIdx){
   var sat=wk.sat,sun=addDays(sat,1),mon=addDays(sat,2),isHol=!!wk.hol;
+  // Handle "Today" Sunday option - only tonight
+  if(wk.isToday){
+    var todayStr=fmt(sat);
+    var tomorrowStr=fmt(sun);
+    var opts=[{label:'Tonight',sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1,durLabel:'Tonight'}];
+    var sel=opts[Math.min(durIdx,opts.length-1)];
+    return {opts:opts,ci:sel.ci,co:sel.co,nights:sel.nights,durLabel:sel.durLabel||sel.label,sub:todayStr+' · 1 night',label:wk.label,isHol:false,hol:null};
+  }
   var opts=isHol?[
     {label:'Sat \u00b7 '+fmt(sat),sub:'1 night',ci:toYMD(sat),co:toYMD(sun),nights:1},
     {label:'Sun \u00b7 '+fmt(sun),sub:'1 night',ci:toYMD(sun),co:toYMD(mon),nights:1},
@@ -587,6 +607,7 @@ function buildPicker(wrapId){
   if(pkWeeks&&pkOn){
     pkWeeks.scrollLeft=pkOn.offsetLeft-(pkWeeks.offsetWidth/2)+(pkOn.offsetWidth/2);
   }
+
 }
 function wkClick(w,i){
   selWeekIdx=i;
