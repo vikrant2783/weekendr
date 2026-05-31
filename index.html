@@ -699,7 +699,8 @@ function startLoad(){
   var iv=setInterval(function(){ti++;if(ti>=TL.length){clearInterval(iv);return;}document.getElementById('loadTxt').textContent=TL[ti];},700);
   if(_loadTmr)clearTimeout(_loadTmr);
   _loadTmr=setTimeout(function(){
-    if(document.getElementById('loadScreen').style.display!=='none'){
+    var ls=document.getElementById('loadScreen');
+    if(ls&&ls.className&&ls.className.indexOf('on')>=0){
       clearInterval(iv);
       document.getElementById('loadTxt').textContent='Something went wrong';
       document.getElementById('loadSub').textContent='Please try again';
@@ -707,7 +708,7 @@ function startLoad(){
     }
   },8000);
 }
-function showRes(){show('resScreen');}
+function showRes(){if(_loadTmr){clearTimeout(_loadTmr);_loadTmr=null;}show('resScreen');}
 
 // Run Escape
 function runEscape(){
@@ -909,7 +910,7 @@ function runEscape(){
     }
     document.getElementById('rBody').innerHTML=html;
     showRes();
-  },3000);
+  },50);
 }
 
 // Run Local
@@ -959,6 +960,42 @@ function runLocal(){
       html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="goTo(\''+lhUrl+'\')">\ud83c\udfe8 Book</button></div></div>';
     }
     html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Goibibo \u00b7 \u20b9 INR always':'Booking.com \u00b7 Dates pre-filled \u00b7 No popup')+'</div></div></div>';
+        // UNIQUE STAYS for local explore
+    if(!isIndia){
+      var _lcn=cityName.toLowerCase(),_lst=(selCity&&selCity.state?selCity.state:'').toLowerCase();
+      var _lBeach=['beach','miami','fort lauderdale','los angeles','san diego','honolulu','malibu','clearwater','naples'].some(function(w){return _lcn.indexOf(w)>=0;})||_lst==='hawaii';
+      var _lMtn=['denver','seattle','portland','boulder','asheville','flagstaff','breckenridge','vail','aspen'].some(function(w){return _lcn.indexOf(w)>=0;})||['colorado','utah','washington','oregon','montana','vermont','tennessee','north carolina'].indexOf(_lst)>=0;
+      var _lDesert=['phoenix','tucson','las vegas','albuquerque','scottsdale'].some(function(w){return _lcn.indexOf(w)>=0;})||['arizona','nevada','new mexico'].indexOf(_lst)>=0;
+      var _lWine=['napa','sonoma','austin','nashville','savannah','charleston','fredericksburg'].some(function(w){return _lcn.indexOf(w)>=0;});
+      var _lBase=150;
+      var _lStays=[
+        {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:(_lMtn||_lWine)&&!_lBeach&&!_lDesert,from:89,to:250,why:_lMtn?'Mountain forest treehouses':'Countryside treehouses'},
+        {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:_lMtn&&!_lBeach&&!_lDesert,from:75,to:180,why:'Mountain cabins nearby'},
+        {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_lBeach?110:_lDesert?120:90,to:_lBeach?300:280,why:_lBeach?'Luxury coastal glamping':_lDesert?'Desert glamping':'Outdoor glamping nearby'},
+        {type:'beachfront',icon:'🏖️',label:'Beachfront',color:'135deg,#1a3d4a,#1a6a8a',ok:_lBeach,from:120,to:320,why:'Beachfront homes & condos'},
+        {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_lWine&&!_lBeach&&!_lDesert,from:85,to:200,why:'Wine country farm stays'},
+        {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:_lMtn&&!_lBeach,from:25,to:75,why:'Mountain & forest camping'}
+      ];
+      var _lAvail=_lStays.filter(function(s){return s.ok;});
+      if(_lAvail.length%2!==0&&_lAvail.length>0){
+        var _lExtra=_lStays.find(function(s){return !s.ok&&['treehouse','cabin','farmhouse','lakefront'].indexOf(s.type)<0||_lBeach;});
+        if(!_lExtra)_lExtra=_lStays.find(function(s){return !_lAvail.some(function(a){return a.type===s.type;});});
+        if(_lExtra)_lAvail.push(_lExtra);
+      }
+      if(_lAvail.length>=2){
+        html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏕️ UNIQUE STAYS · Near '+cityName+'</div></div>';
+        html+='<div class="ai-stays-grid" style="padding:10px 10px 8px;">';
+        _lAvail.slice(0,6).forEach(function(s){
+          var _lu=getStayUrl(s.type,cityName,selCity&&selCity.state?selCity.state:'',wk.ci,wk.co);
+          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_lu+'\')">'+
+            '<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>'+
+            '<div class="ai-stay-desc">'+s.why+'</div>'+
+            '<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-book">Book ↗</div></div>'+
+          '</div>';
+        });
+        html+='</div></div>';
+      }
+    }
     // Activities - India=Thrillophilia, USA=Viator
     var acts=data.acts||DEFAULT_LOCAL.acts;
     html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfab Activities \u00b7 '+(isIndia?'Viator':'Viator')+'</div></div><div class="lr-cl">';
@@ -980,7 +1017,7 @@ function runLocal(){
     html+='</div>';
     document.getElementById('rBody').innerHTML=html;
     showRes();
-  },3000);
+  },50);
 }
 </script>
 
