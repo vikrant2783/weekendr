@@ -528,11 +528,11 @@ function getWeekendList(){
   var list=[],now=new Date(),wd=new Date(now),hols=getHolidays();
   var todayMidnight=new Date(now.getFullYear(),now.getMonth(),now.getDate());
   var isSun=now.getDay()===0;
-  var isSunEvening=isSun&&now.getHours()>=18;
+  var isSunEvening=isSun&&now.getHours()>=22; // Show Today until 10pm local time
   // Sunday before 6pm: insert "Today" as first option
   if(isSun&&!isSunEvening){
     var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-    var todayLabel='Today · '+dayNames[now.getDay()]+' '+MO[now.getMonth()]+' '+now.getDate();
+    var todayLabel='Today · '+MO[now.getMonth()]+' '+now.getDate();
     list.push({sat:new Date(todayMidnight),label:todayLabel,shortLabel:MO[now.getMonth()]+' '+now.getDate(),hol:null,isToday:true});
   }
   // Start from today and find next Saturday
