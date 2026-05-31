@@ -76,4 +76,4 @@ function getSmartFallback(name, state) {
     if (all[0].available || true) available.push(all[3].available ? all[3] : all[4]);
   }
   return available;
-}
+} 
