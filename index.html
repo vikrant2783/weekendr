@@ -2,8 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
-<title>wkndo.</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>wkndo. — Find Your Perfect Weekend Escape</title>
+<meta name="description" content="Tell us your vibe, we find your weekend. Free weekend getaway planner — hotels, stays and activities near you. No signup needed.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wkndo.com/">
+<meta property="og:title" content="wkndo. — Find Your Perfect Weekend Escape">
+<meta property="og:description" content="Tell us your vibe, we find your weekend. Hotels, glamping, treehouses near you. Free, no signup.">
+<meta property="og:image" content="https://wkndo.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="wkndo. — Find Your Perfect Weekend Escape">
+<meta name="twitter:description" content="Free vibe-based weekend escape finder. No signup needed.">
+<link rel="canonical" href="https://wkndo.com/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
@@ -147,18 +158,6 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .wts-hotel-tiers{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
 .wts-hotel-tier{background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:4px 10px;font-size:0.68rem;color:#fff;cursor:pointer;font-weight:600;}
 .wts-hotel-tier:active{background:rgba(255,255,255,0.3);}
-.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px 4px;align-items:stretch;}
-.ai-stays-grid.single-tile{grid-template-columns:1fr;}
-.ai-stay-card{border-radius:14px;padding:13px 12px 11px;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;box-sizing:border-box;height:100%;min-height:120px;}
-.ai-stay-card:active{transform:scale(0.97);}
-.ai-stay-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
-.ai-stay-icon{font-size:1.25rem;line-height:1;flex-shrink:0;}
-.ai-stay-name{font-size:0.83rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ai-stay-desc{font-size:0.62rem;color:rgba(255,255,255,0.85);line-height:1.3;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;}
-.ai-stay-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-shrink:0;}
-.ai-stay-price{font-size:0.7rem;font-weight:700;color:#fff;white-space:nowrap;}
-.ai-stay-book{font-size:0.6rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:3px 9px;white-space:nowrap;flex-shrink:0;}
-.ai-stays-note{font-size:0.6rem;color:#88a898;text-align:center;padding:6px 14px 10px;}
 .wts-disclaimer{font-size:0.6rem;color:#88a898;text-align:center;padding:4px 0 10px;}
 .unique-stay-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px 14px;}
 .us-card{background:#F0FBF5;border:1.5px solid #C8E4D4;border-radius:14px;padding:12px;cursor:pointer;text-align:center;transition:all 0.2s;}
@@ -202,6 +201,25 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .wftr-lg{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;color:#1a2e22;margin-bottom:4px;}
 .wftr-tg{font-size:0.6rem;color:#4a8a68;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
 .wftr p{font-size:0.7rem;color:#88a898;line-height:1.6;}
+.policy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;padding:20px;box-sizing:border-box;align-items:center;justify-content:center;}
+.policy-modal.open{display:flex;}
+.policy-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
+.policy-close{float:right;background:#F0F7F3;border:none;border-radius:100px;padding:5px 14px;font-size:0.8rem;cursor:pointer;color:#2D8C6A;font-weight:600;}
+.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px 4px;align-items:stretch;}
+.ai-stay-card{border-radius:14px;padding:13px 12px 11px;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;box-sizing:border-box;height:100%;min-height:120px;}
+.ai-stay-card:active{transform:scale(0.97);}
+.ai-stay-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
+.ai-stay-icon{font-size:1.25rem;line-height:1;flex-shrink:0;}
+.ai-stay-name{font-size:0.83rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-stay-desc{font-size:0.62rem;color:rgba(255,255,255,0.85);line-height:1.3;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-stay-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-shrink:0;}
+.ai-stay-price{font-size:0.7rem;font-weight:700;color:#fff;white-space:nowrap;}
+.ai-stay-book{font-size:0.6rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:3px 9px;white-space:nowrap;flex-shrink:0;}
+.ai-stays-note{font-size:0.6rem;color:#88a898;text-align:center;padding:6px 14px 10px;}
+.policy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;padding:20px;box-sizing:border-box;align-items:center;justify-content:center;}
+.policy-modal.open{display:flex;}
+.policy-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
+.policy-close{float:right;background:#F0F7F3;border:none;border-radius:100px;padding:5px 14px;font-size:0.8rem;cursor:pointer;color:#2D8C6A;font-weight:600;}
 </style>
 </head>
 <body>
@@ -216,6 +234,11 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
   <div class="h-tag">&#10022; Your Weekend Getaway</div>
   <div class="h-h1">Your perfect escape<br>is <em>closer than you think.</em></div>
   <div class="h-sub">Hotels · Unique stays · Activities · Always free</div>
+  <div style="font-size:0.6rem;color:rgba(255,255,255,0.4);margin-top:6px;text-align:center;">
+    <span onclick="showPolicy('privacy')" style="cursor:pointer;text-decoration:underline;margin:0 3px;">Privacy</span>·
+    <span onclick="showPolicy('terms')" style="cursor:pointer;text-decoration:underline;margin:0 3px;">Terms</span>·
+    <span onclick="showPolicy('ftc')" style="cursor:pointer;text-decoration:underline;margin:0 3px;">Affiliate Disclosure</span>
+  </div>
 </div>
 <div class="hbody">
 
@@ -243,7 +266,10 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
     <div class="vibe-chip" onclick="pickVibe(this,'roadtrip')">🚗 Road Trip</div>
   </div>
   <div class="vibe-hint" id="vibeHint">Tap one or more — we'll match your vibe ✨</div>
-  <div class="sec-lbl" style="margin-top:14px;">How do you want to explore?</div>
+  <button onclick="surpriseMe()" style="width:100%;padding:14px 20px;background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;border:none;border-radius:16px;font-size:0.9rem;font-weight:700;cursor:pointer;margin-bottom:10px;display:flex;align-items:center;justify-content:center;gap:8px;">
+    🎲 Surprise Me! <span style="font-size:0.72rem;opacity:0.75;font-weight:400;">Pick a random weekend escape</span>
+  </button>
+  <div class="sec-lbl" style="margin-top:8px;">Or choose how to explore:</div>
   <div class="ec-grid">
     <div class="ec-card escape" onclick="goEscape()">
       <div class="ec-glow"></div><div class="ec-arrow">&#8594;</div>
@@ -338,7 +364,10 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
     <div class="rbn-back" onclick="goBack()">&#8592; Back</div>
     <div class="rbn-nt" id="rNT">Results</div>
     <div class="rbn-ey" id="rEy"></div>
-    <div class="rbn-tt" id="rTt"></div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+      <div class="rbn-tt" id="rTt" style="flex:1;"></div>
+      <button onclick="shareResults()" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);color:#fff;border-radius:100px;padding:5px 11px;font-size:0.68rem;font-weight:600;cursor:pointer;flex-shrink:0;margin-top:4px;">📤 Share</button>
+    </div>
     <div class="rbn-sb" id="rSb"></div>
     <div class="rbn-dt" id="rDt"></div>
   </div>
@@ -361,17 +390,10 @@ function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
 var selPeople='2';
 var selPeople='2';
 function goTo(url){
-  // Most reliable cross-browser/mobile link opener
-  try {
-    var w=window.open(url,'_blank');
-    if(!w||w.closed||typeof w.closed=='undefined'){
-      // Popup blocked - fallback to location
-      window.location.href=url;
-    }
-  } catch(e){
-    window.location.href=url;
-  }
+  try{var w=window.open(url,'_blank');if(!w||w.closed||typeof w.closed=='undefined'){window.location.href=url;}}
+  catch(e){window.location.href=url;}
 }
+
 function setCountry(c){
   curCountry=c;
   var bu=document.getElementById('btnUSA');
@@ -400,45 +422,31 @@ function hotelUrl(dest,ci,co,nflt){
   return u;
 }
 // STAY URL FUNCTIONS — Best site per category with price sort + dates
-function getStayUrl(stayType, cityName, stateName, ci, co){
+function getStayUrl(stayType,cityName,stateName,ci,co){
   var dest=cityName+(stateName?', '+stateName:'');
   var adults=(typeof selPeople!=='undefined'?selPeople:'2');
-
-  function airbnbUrl(propertyType, amenityId){
-    var url='https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes'
-      +'?checkin='+ci+'&checkout='+co+'&adults='+adults;
-    if(propertyType) url+='&property_type_id%5B%5D='+propertyType;
-    if(amenityId) url+='&amenities%5B%5D='+amenityId;
+  function airbnbUrl(propType,amenity){
+    var url='https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes?checkin='+ci+'&checkout='+co+'&adults='+adults;
+    if(propType)url+='&property_type_id%5B%5D='+propType;
+    if(amenity)url+='&amenities%5B%5D='+amenity;
     url+='&sort_order=PRICE_LTE';
     return url;
   }
-
-  function vrboUrl(keyword){
-    return 'https://www.vrbo.com/search/keywords:'+
-      cityName.replace(/ /g,'+')+
-      (stateName?'+'+stateName.replace(/ /g,'+'):'')
-      +'+'+keyword
-      +'?startDate='+ci+'&endDate='+co
-      +'&adultsCount='+adults
-      +'&sort=PRICE_ASCENDING';
+  function vrboUrl(kw){
+    return 'https://www.vrbo.com/search/keywords:'+cityName.replace(/ /g,'+')+(stateName?'+'+stateName.replace(/ /g,'+'):'')+'+'+kw+'?startDate='+ci+'&endDate='+co+'&adultsCount='+adults+'&sort=PRICE_ASCENDING';
   }
-
-  function hipcampUrl(category){
-    return 'https://www.hipcamp.com/en-US/search?q='
-      +encodeURIComponent(cityName+(stateName?' '+stateName:''))
-      +'&start='+ci+'&end='+co
-      +(category?'&category='+category:'');
+  function hipcampUrl(cat){
+    return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+(stateName?' '+stateName:''))+'&start='+ci+'&end='+co+(cat?'&category='+cat:'');
   }
-
   switch(stayType){
-    case 'treehouse':  return airbnbUrl('treehouses');
-    case 'cabin':      return airbnbUrl('cabins');
-    case 'glamping':   return airbnbUrl('glamping');
-    case 'beachfront': return airbnbUrl('','4'); // Airbnb waterfront amenity
-    case 'farmhouse':  return vrboUrl('farmhouse');
-    case 'lakefront':  return airbnbUrl('','4'); // Airbnb waterfront amenity
-    case 'camping':    return hipcampUrl('camping');
-    default:           return airbnbUrl('');
+    case 'treehouse':   return airbnbUrl('treehouses');
+    case 'cabin':       return airbnbUrl('cabins');
+    case 'glamping':    return airbnbUrl('glamping');
+    case 'beachfront':  return airbnbUrl('','4');
+    case 'farmhouse':   return vrboUrl('farmhouse');
+    case 'lakefront':   return airbnbUrl('','4');
+    case 'camping':     return hipcampUrl('camping');
+    default:            return airbnbUrl('');
   }
 }
 // India Hotels: Goibibo - ALWAYS INR, never USD
@@ -682,12 +690,22 @@ function goLocal(){if(!selCity){alert('Please select your city first');return;}d
 
 // Loading
 var TL=['Finding best escapes...','Checking hotel prices...','Sorting cheapest first...','Finding activities & events...','Building your plan...'];
+var _loadTmr=null;
 function startLoad(){
   show('loadScreen');
   var ti=0;
   document.getElementById('loadTxt').textContent=TL[0];
-  document.getElementById('loadSub').textContent='Prices updated in real time';
+  document.getElementById('loadSub').textContent='Finding the best escapes near you...';
   var iv=setInterval(function(){ti++;if(ti>=TL.length){clearInterval(iv);return;}document.getElementById('loadTxt').textContent=TL[ti];},700);
+  if(_loadTmr)clearTimeout(_loadTmr);
+  _loadTmr=setTimeout(function(){
+    if(document.getElementById('loadScreen').style.display!=='none'){
+      clearInterval(iv);
+      document.getElementById('loadTxt').textContent='Something went wrong';
+      document.getElementById('loadSub').textContent='Please try again';
+      setTimeout(function(){show('homeScreen');},2500);
+    }
+  },8000);
 }
 function showRes(){show('resScreen');}
 
@@ -769,122 +787,69 @@ function runEscape(){
         for(var ci=0;ci<d.ch.length;ci++)html+='<span class="dcc '+d.ch[ci].c+'">'+d.ch[ci].t+'</span>';
         html+='</div></div>';
         // WHERE TO STAY - Hotels + Unique Stays in one beautiful grid
-        // WHERE TO STAY - Tag-based detection using dest's actual tags
+        // WHERE TO STAY - Tag-based smart tiles
         var wtsAdults=(typeof selPeople!=='undefined'?selPeople:'2');
         var _n=d.n.toLowerCase(),_st=(d.st||'').toLowerCase();
-        // Use dest's actual tags for accurate detection
-        var _tags=d.ch?d.ch.map(function(_ct){return (_ct.t||'').toLowerCase();}).join(' '):'';
-        var _allText=_n+' '+_st+' '+_tags;
-        // Tag-based detection
+        var _tags=d.ch?d.ch.map(function(_ct){return(_ct.t||'').toLowerCase();}).join(' '):'';
         var _isBeach=_tags.indexOf('beach')>=0||_tags.indexOf('coast')>=0||_tags.indexOf('snorkel')>=0||_tags.indexOf('surf')>=0||_tags.indexOf('island')>=0||_tags.indexOf('shore')>=0;
         var _isMtn=_tags.indexOf('mountain')>=0||_tags.indexOf('ski')>=0||_tags.indexOf('hiking')>=0||_tags.indexOf('alpine')>=0||_tags.indexOf('rainforest')>=0||_tags.indexOf('outdoor')>=0;
         var _isDesert=_tags.indexOf('desert')>=0||_tags.indexOf('canyon')>=0||_tags.indexOf('arid')>=0;
         var _isWine=_tags.indexOf('wine')>=0||_tags.indexOf('winer')>=0||_tags.indexOf('vineyard')>=0;
-        var _isRural=_isWine||_tags.indexOf('charm')>=0||_tags.indexOf('farm')>=0||_tags.indexOf('ranch')>=0||_tags.indexOf('whiskey')>=0||_tags.indexOf('historic')>=0||_tags.indexOf('rural')>=0;
-        var _isLake=_tags.indexOf('lake')>=0||_tags.indexOf('river')>=0||_tags.indexOf('water')>=0||_n.indexOf('lake')>=0||_n.indexOf('crater')>=0||_n.indexOf('tahoe')>=0;
+        var _isRural=_isWine||_tags.indexOf('charm')>=0||_tags.indexOf('farm')>=0||_tags.indexOf('ranch')>=0||_tags.indexOf('whiskey')>=0||_tags.indexOf('historic')>=0;
+        var _isLake=_tags.indexOf('lake')>=0||_tags.indexOf('river')>=0||_tags.indexOf('water')>=0||_n.indexOf('lake')>=0||_n.indexOf('crater')>=0;
         var _isNature=_tags.indexOf('nature')>=0||_tags.indexOf('wildlife')>=0||_tags.indexOf('park')>=0||_tags.indexOf('scenic')>=0;
         var _isAdventure=_tags.indexOf('adventure')>=0||_tags.indexOf('family')>=0;
-        // Hotel price base for stay pricing
         var _hBase=d.hotels&&d.hotels[1]?parseInt((d.hotels[1].price||'$150').replace(/[^0-9]/g,''))||150:150;
         var _hLow=d.hotels&&d.hotels[0]?parseInt((d.hotels[0].price||'$90').replace(/[^0-9]/g,''))||90:90;
-        // Prices based on dest's actual hotel prices
         var _treeFrom=Math.max(70,Math.round(_hLow*0.9/10)*10);
         var _treeTo=Math.round(_hBase*1.6/10)*10;
         var _cabFrom=Math.max(55,Math.round(_hLow*0.7/10)*10);
         var _cabTo=Math.round(_hBase*1.1/10)*10;
         var _glamFrom=Math.round(_hBase*0.8/10)*10;
         var _glamTo=Math.round(_hBase*1.8/10)*10;
-        var _farmFrom=Math.max(65,Math.round(_hLow*0.8/10)*10);
-        var _farmTo=Math.round(_hBase*1.2/10)*10;
-        var _campFrom=25;
-        var _campTo=Math.max(60,Math.round(_hLow*0.7/10)*10);
-        var _lakeFrom=Math.round(_hBase*1.0/10)*10;
-        var _lakeTo=Math.round(_hBase*2.2/10)*10;
-
         var _allStays=[
-          {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',
-            ok:(_isMtn||_isRural)&&!_isBeach&&!_isDesert,
-            from:_treeFrom,to:_treeTo,
-            why:_isMtn?'Mountain forest treehouses':_isRural?'Countryside treehouses':'Scenic treehouses nearby'},
-          {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',
-            ok:(_isMtn||_isLake)&&!_isBeach&&!_isDesert&&!_isNature,
-            from:_cabFrom,to:_cabTo,
-            why:_isMtn?'Mountain cabins & lodges':_isLake?'Lakeside cabin retreats':'Cozy cabin getaways'},
-          {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',
-            ok:true,
-            from:_glamFrom,to:_glamTo,
-            why:_isBeach?'Luxury coastal glamping':_isDesert?'Desert glamping tents':_isMtn?'Mountain glamping':'Outdoor glamping nearby'},
-          {type:'beachfront',icon:'🏖️',label:'Beachfront',color:'135deg,#1a3d4a,#1a6a8a',
-            ok:_isBeach,
-            from:Math.round(_hLow*0.9/10)*10,to:Math.round(_hBase*2.0/10)*10,
-            why:'Beachfront homes & condos'},
-          {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',
-            ok:_isWine||(_isRural&&!_isMtn&&!_isBeach&&!_isDesert),
-            from:_farmFrom,to:_farmTo,
-            why:_isWine?'Wine country farm stays':'Countryside farmhouse retreats'},
-          {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',
-            ok:(_isMtn||_isNature||_isLake||_isAdventure||_isRural)&&!_isBeach,
-            from:_campFrom,to:_campTo,
-            why:_isMtn?'National forest camping':_isLake?'Lakeside camping':'State park camping'},
-          {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',
-            ok:_isLake&&!_isBeach,
-            from:_lakeFrom,to:_lakeTo,
-            why:'Waterfront homes on the lake'}
+          {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:(_isMtn||_isRural)&&!_isBeach&&!_isDesert,from:_treeFrom,to:_treeTo,why:_isMtn?'Mountain forest treehouses':_isRural?'Countryside treehouses':'Scenic treehouses nearby'},
+          {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:(_isMtn||_isLake)&&!_isBeach&&!_isDesert,from:_cabFrom,to:_cabTo,why:_isMtn?'Mountain cabins & lodges':_isLake?'Lakeside cabin retreats':'Cozy cabin getaways'},
+          {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_glamFrom,to:_glamTo,why:_isBeach?'Luxury coastal glamping':_isDesert?'Desert glamping tents':_isMtn?'Mountain glamping':'Outdoor glamping nearby'},
+          {type:'beachfront',icon:'🏖️',label:'Beachfront',color:'135deg,#1a3d4a,#1a6a8a',ok:_isBeach,from:Math.round(_hLow*0.9/10)*10,to:Math.round(_hBase*2.0/10)*10,why:'Beachfront homes & condos'},
+          {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_isWine||(_isRural&&!_isMtn&&!_isBeach&&!_isDesert),from:Math.max(65,Math.round(_hLow*0.8/10)*10),to:Math.round(_hBase*1.2/10)*10,why:_isWine?'Wine country farm stays':'Countryside farmhouse retreats'},
+          {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:(_isMtn||_isNature||_isLake||_isAdventure||_isRural)&&!_isBeach,from:25,to:Math.max(60,Math.round(_hLow*0.7/10)*10),why:_isMtn?'National forest camping':_isLake?'Lakeside camping':'State park camping'},
+          {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',ok:_isLake&&!_isBeach,from:Math.round(_hBase/10)*10,to:Math.round(_hBase*2.2/10)*10,why:'Waterfront homes on the lake'}
         ];
         var _avail=_allStays.filter(function(s){return s.ok;});
-        // No min-3 override - padding below handles this with strict rules
-        
+        var _neverBeach=(_isBeach&&_isWine)?['cabin','lakefront']:['treehouse','cabin','farmhouse','lakefront','camping'];
+        var _neverDesert=['treehouse','cabin','lakefront'];
+        var _padExclude=_isBeach?_neverBeach:_isDesert?_neverDesert:[];
+        var _padOrder=_isBeach&&_isWine?['farmhouse','beachfront','glamping','treehouse']:_isBeach?['beachfront','glamping']:_isDesert?['camping','glamping']:_isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:_isWine?['farmhouse','treehouse','camping','cabin','lakefront']:_isLake?['lakefront','cabin','camping','treehouse','farmhouse']:['treehouse','camping','cabin','farmhouse','lakefront'];
+        var _display=_avail.slice();
+        if(_display.length%2!==0){
+          var _padded=false;
+          for(var _pi=0;_pi<_padOrder.length;_pi++){
+            var _pt=_padOrder[_pi];
+            if(_padExclude.indexOf(_pt)>=0)continue;
+            if(!_display.some(function(s){return s.type===_pt;})){
+              var _ps=_allStays.find(function(s){return s.type===_pt;});
+              if(_ps){_display.push(_ps);_padded=true;break;}
+            }
+          }
+        }
+        _display=_display.slice(0,6);
         // Build WHERE TO STAY HTML
         html+='<div class="wts-section"><div class="wts-title">🏡 WHERE TO STAY</div><div class="wts-grid">';
-        // Hotel tile
         var h0=d.hotels[0]?d.hotels[0].price:'';
         var h1=d.hotels[1]?d.hotels[1].price:'';
         var h2=d.hotels[2]?d.hotels[2].price:'';
         var hUrl0=hotelUrl(d.n+', '+d.st,wk.ci,wk.co,'class%3D1%3Bclass%3D2');
         var hUrl1=hotelUrl(d.n+', '+d.st,wk.ci,wk.co,'class%3D3');
         var hUrl2=hotelUrl(d.n+', '+d.st,wk.ci,wk.co,'class%3D4%3Bclass%3D5');
-        html+='<div class="wts-tile wts-tile-hotel">';
-        html+='<div class="wts-icon">🏨</div><div class="wts-name">Hotels</div>';
-        html+='<div class="wts-desc">Booking.com · USD · Dates pre-filled</div>';
-        html+='<div class="wts-hotel-tiers">';
+        html+='<div class="wts-tile wts-tile-hotel"><div class="wts-icon">🏨</div><div class="wts-name">Hotels</div><div class="wts-desc">Booking.com · USD · Dates pre-filled</div><div class="wts-hotel-tiers">';
         if(h0)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl0+'\')">💰 Budget · '+h0+'</button>';
         if(h1)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl1+'\')">⭐ Mid · '+h1+'</button>';
         if(h2)html+='<button class="wts-hotel-tier" onclick="goTo(\''+hUrl2+'\')">🏆 Premium · '+h2+'</button>';
         html+='</div></div></div>';
-        
-        // Unique stays - smart curated instantly
+        // Unique stay tiles
         var _safeId='ws'+d.n.replace(/[^a-zA-Z0-9]/g,'');
-        // Always even tiles - smart padding respects geography
-        var _display=_avail.slice();
-        // Priority order for padding extras
-        // Hard rules for padding - strictly respect geography
-        var _neverBeach=(_isBeach&&_isWine)?['cabin','lakefront']:['treehouse','cabin','farmhouse','lakefront','camping'];
-        var _neverDesert=['treehouse','cabin','lakefront'];
-        var _padExclude=_isBeach?_neverBeach:_isDesert?_neverDesert:[];
-        var _padOrder=_isBeach&&_isWine?['farmhouse','beachfront','glamping','treehouse']:_isBeach?['beachfront','glamping']:
-                      _isDesert?['camping','glamping']:
-                      _isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:
-                      _isWine?['farmhouse','treehouse','camping','cabin','lakefront']:
-                      _isLake?['lakefront','cabin','camping','treehouse','farmhouse']:
-                      ['treehouse','camping','cabin','farmhouse','lakefront'];
-        if(_display.length%2!==0){
-          // Add one more tile - STRICT: never add excluded types for beach/desert
-          var _padded=false;
-          for(var _pi=0;_pi<_padOrder.length;_pi++){
-            var _pt=_padOrder[_pi];
-            if(_padExclude.indexOf(_pt)>=0)continue; // skip excluded types
-            if(!_display.some(function(s){return s.type===_pt;})){
-              var _ps=_allStays.find(function(s){return s.type===_pt;});
-              if(_ps){_display.push(_ps);_padded=true;break;}
-            }
-          }
-          // If still odd (beach has nothing to pad with), just show odd count
-          // Better odd than wrong tile
-        }
-        // Cap at 6 tiles max (3 rows)
-        _display=_display.slice(0,6);
-        var _gridCls=_display.length===1?'ai-stays-grid single-tile':'ai-stays-grid';
-        html+='<div id="'+_safeId+'" class="'+_gridCls+'">';
+        html+='<div id="'+_safeId+'" class="ai-stays-grid">';
         _display.forEach(function(s){
           var _u=getStayUrl(s.type,d.n,d.st,wk.ci,wk.co);
           html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_u+'\')">';
@@ -894,45 +859,31 @@ function runEscape(){
           html+='</div>';
         });
         html+='</div>';
-        html+='<div class="ai-stays-note" id="note'+_safeId+'">✨ '+_display.length+' unique stays near '+d.n+'</div>';
-        
-html+='</div>';
-        
-        // AI upgrade in background - updates tiles silently after render
-        (function(destName,destSt,ci,co,adults,elId,noteId,staysMeta){
+        html+='<div class="ai-stays-note">✨ '+_display.length+' unique stays near '+d.n+'</div>';
+        html+='</div>';
+        // Background AI upgrade
+        (function(dn,ds,ci,co,ad,eid,meta){
           setTimeout(function(){
-            fetch('/api/stays',{
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({destName:destName,destState:destSt,checkIn:ci,checkOut:co,adults:adults})
-            })
+            fetch('/api/stays',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({destName:dn,destState:ds,checkIn:ci,checkOut:co,adults:ad})})
             .then(function(r){if(!r.ok)throw new Error('fail');return r.json();})
             .then(function(data){
               if(!data||!data.stays)return;
               var aiAvail=data.stays.filter(function(s){return s.available;});
               if(aiAvail.length<2)return;
-              var el=document.getElementById(elId);
-              var note=document.getElementById(noteId);
+              var el=document.getElementById(eid);
               if(!el)return;
-              var newHtml='';
+              var nh='';
               aiAvail.forEach(function(s){
-                var meta=staysMeta.find(function(_sm){return _sm.type===s.type;})||{icon:'🏠',label:s.type,color:'135deg,#1a3d1a,#2D6A2D'};
-                var u=getStayUrl(s.type,destName,destSt,ci,co);
-                newHtml+='<div class="ai-stay-card" style="background:linear-gradient('+meta.color+');" onclick="goTo(\''+u+'\')">';
-                newHtml+='<div class="ai-stay-icon">'+meta.icon+'</div>';
-                newHtml+='<div class="ai-stay-name">'+meta.label+'</div>';
-                newHtml+='<div class="ai-stay-desc">'+s.why+'</div>';
-                newHtml+='<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.priceFrom+' – $'+s.priceTo+'/nt</div><div class="ai-stay-site">↗ Book</div></div>';
-                newHtml+='</div>';
+                var m=meta.find(function(t){return t.type===s.type;})||{icon:'🏠',label:s.type,color:'135deg,#1a3d1a,#2D6A2D'};
+                var u=getStayUrl(s.type,dn,ds,ci,co);
+                nh+='<div class="ai-stay-card" style="background:linear-gradient('+m.color+');" onclick="goTo(\''+u+'\')"><div class="ai-stay-top"><div class="ai-stay-icon">'+m.icon+'</div><div class="ai-stay-name">'+m.label+'</div></div><div class="ai-stay-desc">'+s.why+'</div><div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.priceFrom+' – $'+s.priceTo+'/nt</div><div class="ai-stay-book">Book ↗</div></div></div>';
               });
-              el.innerHTML=newHtml;
-              if(note)note.textContent='✨ AI-curated for '+destName+' · '+aiAvail.length+' stay types';
-            })
-            .catch(function(){});
-          },100);
-        })(d.n,d.st,wk.ci,wk.co,wtsAdults,_safeId,'note'+_safeId,_allStays);
+              el.innerHTML=nh;
+            }).catch(function(){});
+          },200);
+        })(d.n,d.st,wk.ci,wk.co,wtsAdults,_safeId,_allStays);
 
-// Activities
+        // Activities
         html+='<div class="sec-title">\ud83c\udfab ACTIVITIES \u00b7 '+(isIndia?'VIATOR':'VIATOR')+'</div><div class="act-list">';
         for(var ai=0;ai<d.acts.length;ai++){
           var a=d.acts[ai];
@@ -1008,47 +959,6 @@ function runLocal(){
       html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="goTo(\''+lhUrl+'\')">\ud83c\udfe8 Book</button></div></div>';
     }
     html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Goibibo \u00b7 \u20b9 INR always':'Booking.com \u00b7 Dates pre-filled \u00b7 No popup')+'</div></div></div>';
-    
-    // WHERE TO STAY - Unique Stays tiles for Local mode
-    if(!isIndia){
-      var _lcn=cityName.toLowerCase(), _lst=(selCity&&selCity.state?selCity.state:'').toLowerCase();
-      var _lBeach=['beach','coast','miami','angeles','san diego','honolulu','malibu'].some(function(w){return _lcn.indexOf(w)>=0;});
-      var _lMtn=['denver','seattle','portland','salt lake','boulder','asheville','chattanooga','flagstaff'].some(function(w){return _lcn.indexOf(w)>=0;})||['colorado','utah','washington','oregon','montana','vermont','tennessee','north carolina'].indexOf(_lst)>=0;
-      var _lDesert=['phoenix','tucson','las vegas','albuquerque','el paso'].some(function(w){return _lcn.indexOf(w)>=0;})||['arizona','nevada','new mexico'].indexOf(_lst)>=0;
-      var _lRural=['wine','napa','austin','nashville','new orleans','savannah','charleston'].some(function(w){return _lcn.indexOf(w)>=0;});
-      var _lStays=[
-        {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:_lMtn||_lRural,from:89,to:250,why:_lMtn?'Mountain forest treehouses':'Countryside treehouses'},
-        {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:_lMtn,from:65,to:180,why:'Cozy mountain cabins nearby'},
-        {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_lBeach?110:_lDesert?120:90,to:_lBeach?300:280,why:_lBeach?'Luxury coastal glamping':_lDesert?'Desert glamping tents':'Outdoor glamping nearby'},
-        {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_lRural,from:75,to:200,why:'Farm stays near the city'},
-        {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:_lMtn||_lRural,from:25,to:75,why:_lMtn?'Mountain camping nearby':'State park camping nearby'},
-        {type:'lakefront',icon:'🏞️',label:'Lakefront',color:'135deg,#1a2d3d,#1a4a6a',ok:false,from:110,to:350,why:'Lakefront properties nearby'}
-      ];
-      var _lAvail=_lStays.filter(function(s){return s.ok;});
-      var _lPad=_lBeach?['glamping','treehouse','camping','cabin']:_lMtn?['treehouse','cabin','camping','glamping']:['glamping','treehouse','cabin','camping'];
-      if(_lAvail.length%2!==0){
-        for(var _lpi=0;_lpi<_lPad.length;_lpi++){
-          var _lpt=_lPad[_lpi];
-          if(!_lAvail.some(function(s){return s.type===_lpt;})){
-            var _lps=_lStays.find(function(s){return s.type===_lpt;});
-            if(_lps){_lAvail.push(_lps);break;}
-          }
-        }
-      }
-      if(_lAvail.length>=2){
-        html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏕️ UNIQUE STAYS · Near '+cityName+'</div></div>';
-        html+='<div class="ai-stays-grid" style="padding:10px 10px 4px;">';
-        _lAvail.slice(0,6).forEach(function(s){
-          var _lu=getStayUrl(s.type,cityName,selCity&&selCity.state?selCity.state:'',wk.ci,wk.co);
-          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_lu+'\')">'+
-            '<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>'+
-            '<div class="ai-stay-desc">'+s.why+'</div>'+
-            '<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-book">Book ↗</div></div>'+
-          '</div>';
-        });
-        html+='</div><div class="ai-stays-note">✨ '+_lAvail.slice(0,6).length+' unique stays near '+cityName+'</div></div>';
-      }
-    }
     // Activities - India=Thrillophilia, USA=Viator
     var acts=data.acts||DEFAULT_LOCAL.acts;
     html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfab Activities \u00b7 '+(isIndia?'Viator':'Viator')+'</div></div><div class="lr-cl">';
@@ -1465,6 +1375,42 @@ var DEFAULT_INDIA_LOCAL={
 
 buildHomeStrip();
 pickCity('miami','Miami, FL','🌴');
+
+function surpriseMe(){
+  var codes=['miami','nyc','chicago','la','houston','phoenix','dallas','seattle','denver','atlanta','lasvegas','orlando','nashville','austin','portland','sf','neworleans','sandiego','dc'];
+  if(!selCity){var rc=codes[Math.floor(Math.random()*codes.length)];selCity={code:rc,name:rc};}
+  var drives=['2','3','5','8'];
+  selDrive=drives[Math.floor(Math.random()*drives.length)];
+  var vibes=['beach','nature','adventure','romantic','food','culture'];
+  var rv=vibes[Math.floor(Math.random()*vibes.length)];
+  selVibes=[rv]; selVibe=rv; selBudget='all';
+  runEscape();
+}
+
+function shareResults(){
+  var city=selCity?selCity.name:'your city';
+  var drive=parseInt(selDrive)>=10||selDrive==='all'?'any distance':'within '+selDrive+'hr';
+  var txt='Found great weekend escapes '+drive+' from '+city+'! Try wkndo.com — free, no signup!';
+  if(navigator.share){navigator.share({title:'wkndo.',text:txt,url:'https://wkndo.com'}).catch(function(){});}
+  else if(navigator.clipboard){navigator.clipboard.writeText(txt+' https://wkndo.com').then(function(){var b=document.querySelector('[onclick="shareResults()"]');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Share';},2000);}}).catch(function(){});}
+}
+
+function showPolicy(type){
+  var h='';
+  if(type==='privacy'){h='<h2 style="font-family:Playfair Display,serif;font-size:1.1rem;color:#1a2e22;margin:0 0 10px">Privacy Policy</h2><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px"><strong>Last updated: May 2026</strong></p><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px">wkndo. does not require account creation. We collect anonymous usage data only. No personal data is sold or shared.</p><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px"><strong>Cookies:</strong> Minimal session cookies to remember your city and preferences.</p><p style="font-size:0.78rem;color:#555;line-height:1.6">Contact: hello@wkndo.com</p>';}
+  else if(type==='terms'){h='<h2 style="font-family:Playfair Display,serif;font-size:1.1rem;color:#1a2e22;margin:0 0 10px">Terms of Use</h2><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px"><strong>Last updated: May 2026</strong></p><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px">wkndo. is a free travel discovery tool. We help find weekend destinations — we do not book travel directly.</p><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px"><strong>No Warranties:</strong> Prices are estimates. Always verify on the booking platform.</p><p style="font-size:0.78rem;color:#555;line-height:1.6">Contact: hello@wkndo.com</p>';}
+  else if(type==='ftc'){h='<h2 style="font-family:Playfair Display,serif;font-size:1.1rem;color:#1a2e22;margin:0 0 10px">Affiliate Disclosure</h2><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px"><strong>FTC Notice</strong></p><p style="font-size:0.78rem;color:#555;line-height:1.6;margin-bottom:8px">wkndo.com participates in affiliate programs. When you book through our links we may earn a small commission at <strong>no extra cost to you</strong>. This keeps wkndo. free for everyone.</p><p style="font-size:0.78rem;color:#555;line-height:1.6">Contact: hello@wkndo.com</p>';}
+  document.getElementById('policyContent').innerHTML=h;
+  document.getElementById('policyModal').className='policy-modal open';
+}
+function closePolicy(){document.getElementById('policyModal').className='policy-modal';}
+
 </script>
+<div class="policy-modal" id="policyModal" onclick="if(event.target===this)closePolicy()">
+  <div class="policy-box">
+    <button class="policy-close" onclick="closePolicy()">✕ Close</button>
+    <div id="policyContent"></div>
+  </div>
+</div>
 </body>
 </html>
