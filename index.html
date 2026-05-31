@@ -203,6 +203,22 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .wftr-lg{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;color:#1a2e22;margin-bottom:4px;}
 .wftr-tg{font-size:0.6rem;color:#4a8a68;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
 .wftr p{font-size:0.7rem;color:#88a898;line-height:1.6;}
+.ev-section{margin:0 0 16px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.ev-loading{display:flex;align-items:center;gap:8px;padding:14px;color:#88a898;font-size:0.78rem;}
+.ev-spinner{width:16px;height:16px;border:2px solid #C8E4D4;border-top-color:#2D8C6A;border-radius:50%;animation:spin 0.8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.ev-item{display:flex;justify-content:space-between;align-items:flex-start;padding:14px;border-bottom:1px solid #F0F7F3;cursor:pointer;gap:8px;}
+.ev-item:last-child{border-bottom:none;}
+.ev-item:active{background:#F8FDF9;}
+.ev-left{flex:1;}
+.ev-cat{font-size:0.62rem;font-weight:700;color:#2D8C6A;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;}
+.ev-name{font-size:0.85rem;font-weight:700;color:#1a2e22;margin-bottom:3px;line-height:1.3;}
+.ev-venue{font-size:0.72rem;color:#4a8a68;margin-bottom:2px;}
+.ev-addr{font-size:0.65rem;color:#88a898;margin-bottom:2px;}
+.ev-date{font-size:0.65rem;color:#88a898;}
+.ev-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
+.ev-price{font-size:0.75rem;font-weight:700;color:#2D8C6A;}
+.ev-book{background:#2D8C6A;color:#fff;border:none;border-radius:100px;padding:6px 12px;font-size:0.72rem;font-weight:600;cursor:pointer;white-space:nowrap;}
 .policy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;padding:20px;box-sizing:border-box;align-items:center;justify-content:center;}
 .policy-modal.open{display:flex;}
 .policy-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
@@ -390,6 +406,12 @@ function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
 
 // Country
 var selPeople='2';
+function getCatIcon(cat){
+  var icons={'Market':'🌾','Farmers Market':'🌾','Museum':'🏛️','Art Gallery':'🎨','Rooftop Bar':'🍸','Rooftop':'🍸','Nightlife':'🎉','Music':'🎵','Concert':'🎵','Food':'🍽️','Festival':'🎪','Outdoor':'🌿','Nature':'🌿','Sports':'⚽','Comedy':'😂','Theater':'🎭','Family':'👨‍👩‍👧','Wellness':'🧘','Workshop':'🛠️','Tour':'🗺️','Event':'📅'};
+  if(!cat)return '📅';
+  for(var k in icons){if(cat.toLowerCase().indexOf(k.toLowerCase())>=0)return icons[k];}
+  return '📅';
+}
 function goTo(url){
   try{var w=window.open(url,'_blank');if(!w||w.closed||typeof w.closed=='undefined'){window.location.href=url;}}
   catch(e){window.location.href=url;}
@@ -947,6 +969,51 @@ function runEscape(){
           html+='<div class="act-item"><div class="act-left"><div class="act-name">'+ev.name+'</div><div class="act-desc">'+d.n+' \u00b7 '+wk.sub+'</div></div><div class="act-right"><button class="act-book-ev" onclick="goTo(\''+evUrl+'\')">Book</button></div></div>';
         }
         html+='</div></div>';
+
+        // Specific Events & Venues section - loaded from API
+        var _evId='ev'+d.n.replace(/[^a-zA-Z0-9]/g,'');
+        html+='<div class="ev-section" id="'+_evId+'">';
+        html+='<div class="sec-title">📍 LOCAL EVENTS & VENUES</div>';
+        html+='<div class="ev-loading"><div class="ev-spinner"></div><span>Finding specific venues...</span></div>';
+        html+='</div>';
+
+        // Load specific events from Eventbrite API
+        (function(destName, destState, ci, co, vibe, elId){
+          setTimeout(function(){
+            fetch('/api/events',{
+              method:'POST',
+              headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({cityName:destName, stateName:destState, startDate:ci, endDate:co, vibe:vibe})
+            })
+            .then(function(r){return r.json();})
+            .then(function(data){
+              var el=document.getElementById(elId);
+              if(!el||!data.events||data.events.length===0)return;
+              var nh='<div class="sec-title">📍 LOCAL EVENTS & VENUES'+(data.fallback?' · Curated':' · Live')+'</div>';
+              data.events.forEach(function(ev){
+                var dateStr=ev.date?ev.date.replace('T',' ').slice(0,16):'';
+                nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">';
+                nh+='<div class="ev-left">';
+                nh+='<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+'</div>';
+                nh+='<div class="ev-name">'+ev.name+'</div>';
+                nh+='<div class="ev-venue">📍 '+ev.venue+'</div>';
+                if(ev.address)nh+='<div class="ev-addr">'+ev.address+'</div>';
+                if(dateStr)nh+='<div class="ev-date">🗓 '+ev.date+'</div>';
+                nh+='</div>';
+                nh+='<div class="ev-right">';
+                nh+='<div class="ev-price">'+(ev.price||'')+'</div>';
+                nh+='<button class="ev-book">Book ↗</button>';
+                nh+='</div></div>';
+              });
+              el.innerHTML=nh;
+            })
+            .catch(function(){
+              var el=document.getElementById(elId);
+              if(el)el.style.display='none';
+            });
+          },300);
+        })(d.n, d.st, wk.ci, wk.co, selVibe, _evId);
+
       }
     }
     document.getElementById('rBody').innerHTML=html;
