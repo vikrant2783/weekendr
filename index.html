@@ -57,7 +57,7 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .pk-d{flex:1;min-width:calc(33% - 5px);padding:10px 6px;border-radius:11px;border:1.5px solid #C8E4D4;font-size:0.74rem;font-weight:600;color:#4a8a68;background:#F4FAF7;cursor:pointer;text-align:center;}
 .pk-d.on{background:#2D8C6A;border-color:#2D8C6A;color:#fff;}
 .pk-d-sub{font-size:0.6rem;opacity:.78;margin-top:2px;font-weight:400;}
-.pk-result{background:#F2FAF5;border:1.5px solid #C8E4D4;border-radius:12px;padding:10px 14px;display:flex;align-items:center;gap:9px;margin-bottom:4px;}
+.pk-result{background:#E8F5EE;border:2px solid #2D8C6A;border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:9px;margin-bottom:4px;}
 .pk-result-ic{font-size:1.1rem;}
 .pk-result-txt{font-size:0.82rem;font-weight:600;color:#1a2e22;}
 .pk-result-sub{font-size:0.68rem;color:#4a8a68;margin-top:2px;}
@@ -446,9 +446,10 @@ function getStayUrl(stayType, cityName, stateName, ci, co){
   }
 
   function hipcampUrl(){
-    return 'https://www.hipcamp.com/en-US/search?q=' +
-      encodeURIComponent(cityName + (stateName ? ' ' + stateName : '')) +
-      '&start=' + ci + '&end=' + co + '&category=camping&guests=' + adults;
+    // Hipcamp correct URL params: arrive/depart/adults
+    var q=encodeURIComponent(cityName+(stateName?' '+stateName:''));
+    return 'https://www.hipcamp.com/en-US/search?q='+q+
+      '&arrive='+ci+'&depart='+co+'&adults='+adults+'&category=camping';
   }
 
   switch(stayType){
@@ -565,7 +566,7 @@ function buildPicker(wrapId){
     var w=weeks[i];
     html+='<div class="pk-wk'+(i===selWeekIdx?' on':'')+'" onclick="wkClick(\''+wrapId+'\','+i+')">';
     html+='<div>'+w.label+'</div>';
-    if(i<2)html+='<div class="pk-wk-date">'+fmt(w.sat)+'</div>';
+    html+='<div class="pk-wk-date">'+fmt(w.sat)+'</div>';
     if(w.hol)html+='<div style="font-size:0.56rem;font-weight:700;color:'+(i===selWeekIdx?'rgba(255,255,255,.85)':'#e8720c')+'">'+w.hol.emoji+' Long Weekend!</div>';
     html+='</div>';
   }
@@ -577,11 +578,35 @@ function buildPicker(wrapId){
     html+='<div>'+opts[j].label+'</div><div class="pk-d-sub">'+opts[j].sub+'</div></div>';
   }
   html+='</div><div class="pk-result"><div class="pk-result-ic">'+(isHol?wk.hol.emoji:'\ud83d\udcc5')+'</div>';
-  html+='<div><div class="pk-result-txt">'+dates.durLabel+'</div>';
-  html+='<div class="pk-result-sub">'+dates.sub+(isHol?' \u00b7 '+wk.hol.name:'')+'</div></div></div></div>';
+  html+='<div><div class="pk-result-txt">'+dates.sub+'</div>';
+  html+='<div class="pk-result-sub">'+dates.durLabel+(isHol?' \u00b7 '+wk.hol.name:'')+'</div></div></div></div>';
   el.innerHTML=html;
+  // Auto-scroll to show selected chip centered
+  var pkWeeks=el.querySelector('.pk-weeks');
+  var pkOn=el.querySelector('.pk-wk.on');
+  if(pkWeeks&&pkOn){
+    pkWeeks.scrollLeft=pkOn.offsetLeft-(pkWeeks.offsetWidth/2)+(pkOn.offsetWidth/2);
+  }
 }
-function wkClick(w,i){selWeekIdx=i;selDurIdx=0;buildPicker(w);}
+function wkClick(w,i){
+  selWeekIdx=i;
+  selDurIdx=0;
+  buildPicker(w);
+  // Scroll selected chip into center of pk-weeks container
+  setTimeout(function(){
+    var wrap=document.getElementById(w);
+    if(!wrap)return;
+    var container=wrap.querySelector('.pk-weeks');
+    var chip=wrap.querySelector('.pk-wk.on');
+    if(container&&chip){
+      // Scroll the container so selected chip is centered
+      var chipLeft=chip.offsetLeft;
+      var chipWidth=chip.offsetWidth;
+      var containerWidth=container.offsetWidth;
+      container.scrollTo({left:chipLeft-(containerWidth/2)+(chipWidth/2),behavior:'smooth'});
+    }
+  },80);
+}
 function durClick(w,i){selDurIdx=i;buildPicker(w);}
 function buildHomeStrip(){buildPicker('homePickerWrap');}
 function getSelDates(){var wks=getWeekendList();return computeDates(wks[Math.min(selWeekIdx,wks.length-1)],selDurIdx);}
