@@ -178,7 +178,7 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .act-price{font-size:0.75rem;font-weight:700;color:#1E7A52;margin-bottom:5px;}
 .act-book{padding:6px 13px;background:#2D8C6A;color:#fff;border:none;border-radius:100px;font-size:0.72rem;font-weight:600;cursor:pointer;}
 .act-book-ev{padding:6px 13px;background:#5B3FA0;color:#fff;border:none;border-radius:100px;font-size:0.72rem;font-weight:600;cursor:pointer;}
-.sec-title{font-size:0.6rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#88a898;margin:14px 14px 8px;}
+.sec-title{font-size:0.65rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:#2D8C6A;margin:14px 14px 8px;}
 .lrc{display:flex;flex-direction:column;gap:14px;}
 .lr-day{background:#fff;border-radius:16px;overflow:hidden;}
 .lr-dh{background:linear-gradient(135deg,#0d2015,#1a3d28);padding:12px 16px;display:flex;align-items:center;gap:8px;}
@@ -203,22 +203,27 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .wftr-lg{font-family:'Playfair Display',serif;font-weight:900;font-size:1.4rem;color:#1a2e22;margin-bottom:4px;}
 .wftr-tg{font-size:0.6rem;color:#4a8a68;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:10px;}
 .wftr p{font-size:0.7rem;color:#88a898;line-height:1.6;}
-.ev-section{margin:0 0 16px;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+.ev-section{margin:0 0 14px;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 2px 14px rgba(0,0,0,0.07);border:1px solid rgba(0,0,0,0.04);}
 .ev-loading{display:flex;align-items:center;gap:8px;padding:14px;color:#88a898;font-size:0.78rem;}
 .ev-spinner{width:16px;height:16px;border:2px solid #C8E4D4;border-top-color:#2D8C6A;border-radius:50%;animation:spin 0.8s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.ev-item{display:flex;justify-content:space-between;align-items:flex-start;padding:14px;border-bottom:1px solid #F0F7F3;cursor:pointer;gap:8px;}
+.ev-item{display:flex;justify-content:space-between;align-items:flex-start;padding:13px 14px;border-bottom:1px solid #F0F7F3;cursor:pointer;gap:10px;transition:background 0.1s;}
 .ev-item:last-child{border-bottom:none;}
 .ev-item:active{background:#F8FDF9;}
 .ev-left{flex:1;}
-.ev-cat{font-size:0.62rem;font-weight:700;color:#2D8C6A;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;}
-.ev-name{font-size:0.85rem;font-weight:700;color:#1a2e22;margin-bottom:3px;line-height:1.3;}
+.ev-cat{font-size:0.6rem;font-weight:700;color:#4a8a68;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:3px;}
+.ev-name{font-size:0.88rem;font-weight:700;color:#1a2e22;margin-bottom:4px;line-height:1.3;}
 .ev-venue{font-size:0.72rem;color:#4a8a68;margin-bottom:2px;}
 .ev-addr{font-size:0.65rem;color:#88a898;margin-bottom:2px;}
+.ev-desc-sm{font-size:0.68rem;color:#4a8a68;margin-bottom:2px;}
 .ev-date{font-size:0.65rem;color:#88a898;}
+.ev-subhead{padding:11px 14px 9px;font-size:0.78rem;font-weight:800;color:#1a2e22;letter-spacing:0.06em;text-transform:uppercase;background:linear-gradient(90deg,#EEF8F2,#fff);border-left:3px solid #2D8C6A;margin:0;}
+.ev-subhead-sm{padding:8px 14px 6px;font-size:0.65rem;font-weight:700;color:#4a8a68;letter-spacing:0.06em;text-transform:uppercase;background:#F8FDF9;border-left:2px solid #88c4a4;margin:0;}
 .ev-right{display:flex;flex-direction:column;align-items:flex-end;gap:6px;flex-shrink:0;}
-.ev-price{font-size:0.75rem;font-weight:700;color:#2D8C6A;}
+.ev-price{font-size:0.78rem;font-weight:800;color:#2D8C6A;margin-bottom:5px;}
 .ev-book{background:#2D8C6A;color:#fff;border:none;border-radius:100px;padding:6px 12px;font-size:0.72rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+.ev-tag{background:#F0F7F3;color:#2D8C6A;border:1.5px solid #C8E4D4;border-radius:100px;padding:5px 12px;font-size:0.7rem;font-weight:600;cursor:pointer;white-space:nowrap;}
+.ev-tag:active{background:#2D8C6A;color:#fff;}
 .policy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;padding:20px;box-sizing:border-box;align-items:center;justify-content:center;}
 .policy-modal.open{display:flex;}
 .policy-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
@@ -417,6 +422,162 @@ function goTo(url){
   catch(e){window.location.href=url;}
 }
 
+
+var CURATED_VENUES={
+  'fort lauderdale':[
+    {cat:'Farmers Market',icon:'🌾',name:'Las Olas Farmers Market',venue:'Las Olas Blvd',addr:'Las Olas Blvd, Fort Lauderdale, FL',date:'Every Sunday 8am–2pm',price:'Free',url:'https://www.google.com/maps/search/Las+Olas+Farmers+Market+Fort+Lauderdale'},
+    {cat:'Museum',icon:'🏛️',name:'NSU Art Museum',venue:'NSU Art Museum',addr:'1 E Las Olas Blvd, Fort Lauderdale',date:'Tue–Sun 11am–5pm',price:'From $10',url:'https://nsuartmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Rooftop @ The Dalmar',venue:'The Dalmar Hotel',addr:'299 N Federal Hwy, Fort Lauderdale',date:'Daily 4pm–2am',price:'Free entry',url:'https://www.thedalmar.com'},
+    {cat:'Beach',icon:'🏖️',name:'Fort Lauderdale Beach',venue:'Fort Lauderdale Beach',addr:'Ft Lauderdale Beach Blvd',date:'Open daily',price:'Free',url:'https://www.google.com/maps/search/Fort+Lauderdale+Beach'}
+  ],
+  'miami':[
+    {cat:'Farmers Market',icon:'🌾',name:'Wynwood Farmers Market',venue:'Wynwood Walls',addr:'2520 NW 2nd Ave, Miami',date:'Every Saturday 10am–4pm',price:'Free',url:'https://www.google.com/maps/search/Wynwood+Farmers+Market+Miami'},
+    {cat:'Museum',icon:'🏛️',name:'Pérez Art Museum Miami',venue:'PAMM',addr:'1103 Biscayne Blvd, Miami',date:'Daily 11am–6pm',price:'From $16',url:'https://pamm.org'},
+    {cat:'Art District',icon:'🎨',name:'Wynwood Walls',venue:'Wynwood Arts District',addr:'2520 NW 2nd Ave, Miami',date:'Mon–Thu 10:30am–11:30pm',price:'From $10',url:'https://www.thewynwoodwalls.com'},
+    {cat:'Nightlife',icon:'🎉',name:'E11EVEN Miami',venue:'E11EVEN',addr:'29 NE 11th St, Miami',date:'Fri–Sun 11pm+',price:'Varies',url:'https://11miami.com'}
+  ],
+  'savannah':[
+    {cat:'Farmers Market',icon:'🌾',name:'Forsyth Farmers Market',venue:'Forsyth Park',addr:'Forsyth Park, Savannah, GA',date:'Every Saturday 9am–1pm',price:'Free',url:'https://www.google.com/maps/search/Forsyth+Farmers+Market+Savannah'},
+    {cat:'Museum',icon:'🏛️',name:'Telfair Museums',venue:'Telfair Academy',addr:'121 Barnard St, Savannah',date:'Daily 10am–5pm',price:'From $12',url:'https://www.telfair.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Rooftop at Bohemian Hotel',venue:'Bohemian Hotel',addr:'102 W Bay St, Savannah',date:'Daily 4pm–midnight',price:'Free entry',url:'https://www.bohemianhotelsavannah.com'},
+    {cat:'Historic Site',icon:'🏰',name:'Forsyth Park',venue:'Forsyth Park',addr:'Forsyth Pl, Savannah, GA',date:'Open daily',price:'Free',url:'https://www.google.com/maps/search/Forsyth+Park+Savannah'}
+  ],
+  'nashville':[
+    {cat:'Farmers Market',icon:'🌾',name:'Nashville Farmers Market',venue:'Nashville Farmers Market',addr:'900 Rosa L Parks Blvd, Nashville',date:'Daily 8am–6pm',price:'Free',url:'https://nashvillefarmersmarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Frist Art Museum',venue:'Frist Art Museum',addr:'919 Broadway, Nashville',date:'Mon–Sat 10am–5pm',price:'From $15',url:'https://fristartmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'L27 Rooftop Bar',venue:'Loews Vanderbilt',addr:'2100 West End Ave, Nashville',date:'Daily 4pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/L27+Rooftop+Nashville'},
+    {cat:'Music Venue',icon:'🎵',name:'Ryman Auditorium',venue:'Ryman Auditorium',addr:'116 5th Ave N, Nashville',date:'Tours daily 9am–4pm',price:'From $25',url:'https://ryman.com'}
+  ],
+  'seattle':[
+    {cat:'Market',icon:'🌾',name:'Pike Place Market',venue:'Pike Place Market',addr:'85 Pike St, Seattle, WA',date:'Daily 9am–6pm',price:'Free',url:'https://www.pikeplacemarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Seattle Art Museum',venue:'SAM',addr:'1300 1st Ave, Seattle',date:'Wed–Sun 10am–5pm',price:'From $30',url:'https://www.seattleartmuseum.org'},
+    {cat:'Rooftop',icon:'🍸',name:'HiLine Lounge @ Graduate',venue:'Graduate Seattle',addr:'4507 Brooklyn Ave NE, Seattle',date:'Daily 4pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Graduate+Hotel+Seattle+Rooftop'},
+    {cat:'Nature',icon:'🌿',name:'Mount Rainier Day Trip',venue:'Mount Rainier NP',addr:'Ashford, WA',date:'Open daily',price:'From $30',url:'https://www.nps.gov/mora'}
+  ],
+  'chicago':[
+    {cat:'Farmers Market',icon:'🌾',name:'Green City Market',venue:'Lincoln Park',addr:'1817 N Clark St, Chicago, IL',date:'Sat 7am–1pm',price:'Free',url:'https://greencitymarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Art Institute of Chicago',venue:'Art Institute',addr:'111 S Michigan Ave, Chicago',date:'Daily 11am–5pm',price:'From $25',url:'https://www.artic.edu'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Raised Bar',venue:'Hyatt Regency Chicago',addr:'151 E Wacker Dr, Chicago',date:'Daily 11am–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Raised+Bar+Chicago'},
+    {cat:'Architecture',icon:'🏙️',name:'Chicago Architecture Boat Tour',venue:'Chicago River',addr:'112 W Wacker Dr, Chicago',date:'Daily departures',price:'From $47',url:'https://www.architecturetours.com'}
+  ],
+  'new york':[
+    {cat:'Farmers Market',icon:'🌾',name:'Union Square Greenmarket',venue:'Union Square Park',addr:'E 17th St & Union Square W, NYC',date:'Mon/Wed/Fri/Sat 8am–6pm',price:'Free',url:'https://www.grownyc.org/greenmarket/manhattan-union-square-m'},
+    {cat:'Museum',icon:'🏛️',name:'The Metropolitan Museum',venue:'The Met',addr:'1000 5th Ave, New York, NY',date:'Daily 10am–5pm',price:'From $30',url:'https://www.metmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'230 Fifth Rooftop',venue:'230 Fifth',addr:'230 5th Ave, New York, NY',date:'Daily 4pm–4am',price:'Free entry',url:'https://230-fifth.com'},
+    {cat:'Experience',icon:'🎭',name:'Brooklyn Flea Market',venue:'Brooklyn Flea',addr:'80 Pearl St, Brooklyn, NY',date:'Sat–Sun 10am–5pm',price:'Free',url:'https://brooklynflea.com'}
+  ],
+  'los angeles':[
+    {cat:'Farmers Market',icon:'🌾',name:'Original Farmers Market',venue:'The Original Farmers Market',addr:'6333 W 3rd St, Los Angeles',date:'Daily 9am–9pm',price:'Free',url:'https://www.farmersmarketla.com'},
+    {cat:'Museum',icon:'🏛️',name:'LACMA',venue:'LA County Museum of Art',addr:'5905 Wilshire Blvd, LA',date:'Mon–Fri 11am–6pm',price:'From $20',url:'https://www.lacma.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Perch LA',venue:'Perch',addr:'448 S Hill St, Los Angeles',date:'Daily 11:30am–2am',price:'Free entry',url:'https://perchla.com'},
+    {cat:'Art',icon:'🎨',name:'The Getty Center',venue:'The Getty',addr:'1200 Getty Center Dr, LA',date:'Tue–Sun 10am–5:30pm',price:'Free',url:'https://www.getty.edu'}
+  ],
+  'austin':[
+    {cat:'Farmers Market',icon:'🌾',name:'SFC Farmers Market',venue:'Republic Square',addr:'422 W 4th St, Austin, TX',date:'Sat 9am–1pm',price:'Free',url:'https://www.sfcfarmersmarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Blanton Museum of Art',venue:'Blanton Museum',addr:'200 E MLK Jr Blvd, Austin',date:'Tue–Sun 10am–5pm',price:'From $12',url:'https://blantonmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Speakeasy Rooftop',venue:'Speakeasy Austin',addr:'412 Congress Ave, Austin',date:'Daily 4pm–2am',price:'Free entry',url:'https://www.speakeasyaustin.com'},
+    {cat:'Music',icon:'🎵',name:'6th Street Live Music',venue:'6th Street, Austin',addr:'6th St, Austin, TX',date:'Nightly from 9pm',price:'Varies',url:'https://www.google.com/maps/search/6th+Street+Austin+Live+Music'}
+  ],
+  'denver':[
+    {cat:'Farmers Market',icon:'🌾',name:'Cherry Creek Farmers Market',venue:'Cherry Creek',addr:'E 1st Ave & Milwaukee St, Denver',date:'Sat 8am–1pm',price:'Free',url:'https://www.google.com/maps/search/Cherry+Creek+Farmers+Market+Denver'},
+    {cat:'Museum',icon:'🏛️',name:'Denver Art Museum',venue:'Denver Art Museum',addr:'100 W 14th Ave Pkwy, Denver',date:'Tue–Sun 10am–5pm',price:'From $15',url:'https://www.denverartmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'ViewHouse Centennial',venue:'ViewHouse',addr:'7101 S Clinton St, Denver',date:'Daily 11am–midnight',price:'Free entry',url:'https://www.viewhouse.com'},
+    {cat:'Nature',icon:'🌿',name:'Rocky Mountain Day Hike',venue:'Rocky Mountain NP',addr:'Estes Park, CO',date:'Open daily',price:'From $25',url:'https://www.nps.gov/romo'}
+  ],
+  'san diego':[
+    {cat:'Farmers Market',icon:'🌾',name:'Little Italy Mercato',venue:'Little Italy',addr:'Date St & India St, San Diego',date:'Sat 8am–2pm',price:'Free',url:'https://www.littleitalysd.com/events/mercato'},
+    {cat:'Museum',icon:'🏛️',name:'San Diego Museum of Art',venue:'SDMA',addr:'1450 El Prado, Balboa Park',date:'Mon/Tue/Thu–Sun 10am–5pm',price:'From $15',url:'https://www.sdmart.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'The Nolen Rooftop',venue:'Marriott Gaslamp',addr:'660 K St, San Diego',date:'Daily 5pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Nolen+Rooftop+San+Diego'},
+    {cat:'Beach',icon:'🏖️',name:'La Jolla Cove',venue:'La Jolla Cove',addr:'1100 Coast Blvd, La Jolla',date:'Open daily',price:'Free',url:'https://www.google.com/maps/search/La+Jolla+Cove'}
+  ],
+  'portland':[
+    {cat:'Market',icon:'🌾',name:'Portland Saturday Market',venue:'Portland Saturday Market',addr:'2 SW Naito Pkwy, Portland',date:'Sat 10am–5pm',price:'Free',url:'https://www.portlandsaturdaymarket.com'},
+    {cat:'Museum',icon:'🏛️',name:'Portland Art Museum',venue:'Portland Art Museum',addr:'1219 SW Park Ave, Portland',date:'Wed–Sun 10am–5pm',price:'From $20',url:'https://portlandartmuseum.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Departure Rooftop',venue:'Departure Portland',addr:'525 SW Morrison St, Portland',date:'Daily 4pm–midnight',price:'Free entry',url:'https://departureportland.com'},
+    {cat:'Nature',icon:'🌿',name:'Columbia River Gorge',venue:'Columbia Gorge',addr:'Historic Columbia River Hwy, OR',date:'Open daily',price:'Free',url:'https://www.google.com/maps/search/Columbia+River+Gorge'}
+  ],
+  'new orleans':[
+    {cat:'Farmers Market',icon:'🌾',name:'Crescent City Farmers Market',venue:'Crescent City Market',addr:'700 Magazine St, New Orleans',date:'Sat 8am–noon',price:'Free',url:'https://www.crescentcityfarmersmarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'New Orleans Museum of Art',venue:'NOMA',addr:'1 Collins Diboll Cir, New Orleans',date:'Wed–Sun 11am–5pm',price:'From $15',url:'https://noma.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Hot Tin Rooftop Bar',venue:'Pontchartrain Hotel',addr:'2031 St Charles Ave, New Orleans',date:'Daily 4pm–midnight',price:'Free entry',url:'https://www.thepontchartrainhotel.com'},
+    {cat:'Music',icon:'🎵',name:'Frenchmen Street Jazz',venue:'Frenchmen Street',addr:'Frenchmen St, New Orleans, LA',date:'Nightly from 8pm',price:'Free–$10',url:'https://www.google.com/maps/search/Frenchmen+Street+New+Orleans'}
+  ],
+  'atlanta':[
+    {cat:'Farmers Market',icon:'🌾',name:'Freedom Farmers Market',venue:'The Carter Center',addr:'453 Freedom Pkwy NE, Atlanta',date:'Sat 9am–noon',price:'Free',url:'https://www.freedomfarmersmkt.org'},
+    {cat:'Museum',icon:'🏛️',name:'High Museum of Art',venue:'High Museum',addr:'1280 Peachtree St NE, Atlanta',date:'Tue–Sun 10am–5pm',price:'From $20',url:'https://www.high.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Polaris Bar',venue:'Hyatt Regency Atlanta',addr:'265 Peachtree St NE, Atlanta',date:'Daily 5pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Polaris+Bar+Atlanta'},
+    {cat:'History',icon:'🏛️',name:'Martin Luther King Jr NHS',venue:'MLK National Historic Site',addr:'450 Auburn Ave NE, Atlanta',date:'Daily 9am–5pm',price:'Free',url:'https://www.nps.gov/malu'}
+  ],
+  'washington':[
+    {cat:'Farmers Market',icon:'🌾',name:'FRESHFARM DuPont Market',venue:'DuPont Circle',addr:'1500 20th St NW, Washington DC',date:'Sun 8:30am–1:30pm',price:'Free',url:'https://www.freshfarm.org'},
+    {cat:'Museum',icon:'🏛️',name:'National Gallery of Art',venue:'National Gallery',addr:'Constitution Ave NW, DC',date:'Daily 10am–5pm',price:'Free',url:'https://www.nga.gov'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'POV Rooftop Terrace',venue:'W Washington DC',addr:'515 15th St NW, DC',date:'Daily 11:30am–midnight',price:'Free entry',url:'https://www.gpov.com'},
+    {cat:'Monument',icon:'🏛️',name:'Lincoln Memorial',venue:'National Mall',addr:'2 Lincoln Memorial Cir NW, DC',date:'Open 24hrs',price:'Free',url:'https://www.nps.gov/linc'}
+  ],
+  'las vegas':[
+    {cat:'Art',icon:'🎨',name:'The Neon Museum',venue:'Neon Museum',addr:'770 Las Vegas Blvd N, Las Vegas',date:'Daily tours from 8am',price:'From $20',url:'https://www.neonmuseum.org'},
+    {cat:'Show',icon:'🎭',name:'Cirque du Soleil O',venue:'Bellagio Hotel',addr:'3600 S Las Vegas Blvd',date:'Wed–Sun 7pm & 9:30pm',price:'From $99',url:'https://www.cirquedusoleil.com/o'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'The Apex Social Club',venue:'Palms Casino Resort',addr:'4321 W Flamingo Rd, Las Vegas',date:'Daily 9pm–4am',price:'Varies',url:'https://www.google.com/maps/search/Apex+Social+Club+Las+Vegas'},
+    {cat:'Experience',icon:'⛺',name:'Red Rock Canyon',venue:'Red Rock Canyon NCA',addr:'1000 Scenic Loop Dr, Las Vegas',date:'Open daily 6am–7pm',price:'From $15',url:'https://www.blm.gov/programs/national-conservation-lands/nevada/red-rock-canyon'}
+  ],
+  'orlando':[
+    {cat:'Market',icon:'🌾',name:'Orlando Farmers Market',venue:'Lake Eola Park',addr:'195 N Rosalind Ave, Orlando',date:'Sunday 10am–4pm',price:'Free',url:'https://www.orlandofarmersmarket.com'},
+    {cat:'Museum',icon:'🏛️',name:'Orlando Museum of Art',venue:'OMA',addr:'2416 N Mills Ave, Orlando',date:'Tue–Sun 10am–4pm',price:'From $15',url:'https://omart.org'},
+    {cat:'Experience',icon:'🎢',name:'Walt Disney World',venue:'Disney World',addr:'Orlando, FL',date:'Daily from 9am',price:'From $109',url:'https://www.disneyworld.disney.go.com'},
+    {cat:'Nature',icon:'🌿',name:'Everglades Airboat Tour',venue:'Everglades',addr:'Near Miami, FL',date:'Daily departures',price:'From $35',url:'https://www.google.com/maps/search/Everglades+Airboat+Tour'}
+  ],
+  'houston':[
+    {cat:'Farmers Market',icon:'🌾',name:'Urban Harvest Farmers Market',venue:'Eastside',addr:'3000 Richmond Ave, Houston',date:'Sat 8am–noon',price:'Free',url:'https://www.urbanharvest.org/farmers-market'},
+    {cat:'Museum',icon:'🏛️',name:'Museum of Fine Arts Houston',venue:'MFAH',addr:'1001 Bissonnet St, Houston',date:'Wed–Sun 11am–5pm',price:'From $15',url:'https://www.mfah.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Bar 1000 Houston',venue:'JW Marriott Houston',addr:'806 Main St, Houston',date:'Daily 4pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Bar+1000+Houston'},
+    {cat:'Space',icon:'🚀',name:'Space Center Houston',venue:'Space Center Houston',addr:'1601 E NASA Pkwy, Houston',date:'Daily 10am–5pm',price:'From $35',url:'https://www.spacecenter.org'}
+  ],
+  'dallas':[
+    {cat:'Farmers Market',icon:'🌾',name:'Dallas Farmers Market',venue:'Dallas Farmers Market',addr:'920 S Harwood St, Dallas',date:'Sat–Sun 8am–5pm',price:'Free',url:'https://www.dallasfarmersmarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Dallas Museum of Art',venue:'DMA',addr:'1717 N Harwood St, Dallas',date:'Tue–Sun 11am–5pm',price:'Free',url:'https://www.dma.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'The Exchange Rooftop',venue:'The Exchange',addr:'400 N Olive St, Dallas',date:'Daily 4pm–2am',price:'Free entry',url:'https://www.google.com/maps/search/Exchange+Rooftop+Dallas'},
+    {cat:'Entertainment',icon:'🎭',name:'Deep Ellum',venue:'Deep Ellum District',addr:'Deep Ellum, Dallas, TX',date:'Nightly from 7pm',price:'Free–Varies',url:'https://www.google.com/maps/search/Deep+Ellum+Dallas'}
+  ],
+  'phoenix':[
+    {cat:'Farmers Market',icon:'🌾',name:'Old Town Scottsdale Market',venue:'Scottsdale Farmers Market',addr:'3806 N Brown Ave, Scottsdale',date:'Sat 8am–1pm',price:'Free',url:'https://www.scottsdalefarmersmarket.org'},
+    {cat:'Museum',icon:'🏛️',name:'Heard Museum',venue:'Heard Museum',addr:'2301 N Central Ave, Phoenix',date:'Daily 10am–5pm',price:'From $15',url:'https://heard.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Weft & Warp Rooftop',venue:'Andaz Scottsdale',addr:'6114 N Scottsdale Rd, Scottsdale',date:'Daily 5pm–10pm',price:'Free entry',url:'https://www.google.com/maps/search/Weft+Warp+Rooftop+Scottsdale'},
+    {cat:'Nature',icon:'🌵',name:'Sedona Red Rock Trail',venue:'Sedona, AZ',addr:'Sedona, AZ',date:'Open daily',price:'From $5',url:'https://www.google.com/maps/search/Sedona+Red+Rock+Trail'}
+  ],
+  'sf':[
+    {cat:'Farmers Market',icon:'🌾',name:'Ferry Plaza Farmers Market',venue:'Ferry Building',addr:'1 Ferry Building, San Francisco',date:'Sat 8am–2pm',price:'Free',url:'https://www.ferrybuildingmarketplace.com/farmers-market'},
+    {cat:'Museum',icon:'🏛️',name:'San Francisco MOMA',venue:'SFMOMA',addr:'151 3rd St, San Francisco',date:'Mon/Tue/Fri–Sun 10am–5pm',price:'From $25',url:'https://www.sfmoma.org'},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Charmaineâs Rooftop Bar',venue:'Proper Hotel SF',addr:'1100 Market St, San Francisco',date:'Daily 5pm–midnight',price:'Free entry',url:'https://www.google.com/maps/search/Charmaines+Rooftop+San+Francisco'},
+    {cat:'Experience',icon:'🌉',name:'Golden Gate Bridge Walk',venue:'Golden Gate Bridge',addr:'Golden Gate Bridge, SF',date:'Open daily',price:'Free',url:'https://www.goldengate.org'}
+  ]
+};
+
+function getCuratedVenues(destName){
+  var n=(destName||'').toLowerCase();
+  // Direct match
+  for(var key in CURATED_VENUES){
+    if(n.indexOf(key)>=0||key.indexOf(n.split(' ')[0])>=0){
+      return CURATED_VENUES[key];
+    }
+  }
+  // No match - return Google Maps search fallback for this specific city
+  var enc=encodeURIComponent(destName);
+  return [
+    {cat:'Farmers Market',icon:'🌾',name:'Local Farmers Market',venue:destName,
+     addr:'Downtown '+destName,date:'Weekends - check local listings',price:'Free',
+     url:'https://www.google.com/maps/search/farmers+market+'+enc},
+    {cat:'Museum',icon:'🏛️',name:'Local Museum & Galleries',venue:destName,
+     addr:destName,date:'Check hours online',price:'Varies',
+     url:'https://www.google.com/maps/search/museum+art+gallery+'+enc},
+    {cat:'Rooftop Bar',icon:'🍸',name:'Rooftop Bars & Restaurants',venue:destName,
+     addr:destName,date:'Daily evenings',price:'Free entry',
+     url:'https://www.google.com/maps/search/rooftop+bar+restaurant+'+enc},
+    {cat:'Things To Do',icon:'🎭',name:'Weekend Activities',venue:destName,
+     addr:destName,date:'This weekend',price:'Varies',
+     url:'https://www.eventbrite.com/d/'+encodeURIComponent(destName.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'/events/'}
+  ];
+}
+
 function setCountry(c){
   curCountry=c;
   var bu=document.getElementById('btnUSA');
@@ -503,9 +664,11 @@ function indiaHotelUrl(dest,ci,co,tier){
 // USA Activities: Viator
 function actUrl(q,dest,ci,co){
   var adults=(typeof selPeople!=='undefined'?selPeople:'2');
+  // Viator with exact location, dates and guests
   var u='https://www.viator.com/searchResults/all?text='+encodeURIComponent(q+' '+dest);
-  if(ci)u+='&startDate='+ci+'&endDate='+(co||ci);
+  u+='&startDate='+ci+'&endDate='+(co||ci);
   u+='&adults='+adults;
+  u+='&sortOrder=TRAVELER_RATING';
   return u;
 }
 // India Activities: Thrillophilia
@@ -520,9 +683,12 @@ function indiaFlightUrl(iata,ci,co){return 'https://www.skyscanner.co.in/flights
 // USA Events: Eventbrite - Book button
 function eventUrl(dest,ci,co,cat){
   var city=dest.split(',')[0].trim();
-  var adults=(typeof selPeople!=='undefined'?selPeople:'2');
-  // Eventbrite with dates
-  return 'https://www.eventbrite.com/d/'+encodeURIComponent(city)+'/events/?start_date='+ci+'&end_date='+co;
+  var citySlug=city.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  // Eventbrite with precise city + dates + category
+  var u='https://www.eventbrite.com/d/'+citySlug+'/events/';
+  u+='?start_date='+ci+'T00%3A00%3A00&end_date='+co+'T23%3A59%3A59';
+  if(cat&&cat!=='events')u+='&q='+encodeURIComponent(cat);
+  return u;
 }
 // India Events: Eventbrite - Book button
 function indiaEventUrl(dest,ci,co,cat){
@@ -947,73 +1113,90 @@ function runEscape(){
         html+='</div>';
         // AI upgrade disabled - geographic rules are accurate
 
-        // Activities
-        html+='<div class="sec-title">\ud83c\udfab ACTIVITIES \u00b7 '+(isIndia?'VIATOR':'VIATOR')+'</div><div class="act-list">';
+        // ═══ UNIFIED: LOCAL GUIDE ═══
+        html+='<div class="ev-section" id="ev'+d.n.replace(/[^a-zA-Z0-9]/g,'')+'">';
+        html+='<div class="sec-title">📍 '+d.n+' · LOCAL GUIDE</div>';
+
+        // EVENTS & RECOMMENDATIONS subhead
+        html+='<div class="ev-subhead">📅 EVENTS & RECOMMENDATIONS</div>';
+
+        // Curated venues shown immediately
+        var _curated=getCuratedVenues(d.n);
+        if(_curated&&_curated.length>0){
+          _curated.forEach(function(v){
+            html+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
+              '<div class="ev-left">'+
+                '<div class="ev-cat">'+v.icon+' '+v.cat+'</div>'+
+                '<div class="ev-name">'+v.name+'</div>'+
+                '<div class="ev-venue">📍 '+v.addr+'</div>'+
+                '<div class="ev-date">🗓 '+v.date+'</div>'+
+              '</div>'+
+              '<div class="ev-right">'+
+                '<div class="ev-price">'+v.price+'</div>'+
+                '<button class="ev-book">Visit ↗</button>'+
+              '</div></div>';
+          });
+        }
+
+        // Live events slot - filled by API
+        var _liveId='live'+d.n.replace(/[^a-zA-Z0-9]/g,'');
+        html+='<div id="'+_liveId+'"></div>';
+
+        // ACTIVITIES subhead
+        html+='<div class="ev-subhead">🎯 ACTIVITIES</div>';
         for(var ai=0;ai<d.acts.length;ai++){
           var a=d.acts[ai];
-          var aUrl=isIndia?indiaActUrl(a.name,d.n,wk.ci,wk.co):actUrl(a.name,d.n+' '+d.st,wk.ci,wk.co);
-          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+a.name+'</div><div class="act-desc">'+a.desc+'</div></div><div class="act-right"><div class="act-price">'+a.price+'</div><button class="act-book" onclick="goTo(\''+aUrl+'\')">Book</button></div></div>';
+          var aUrl=isIndia?indiaActUrl(a.name,d.n,wk.ci,wk.co):actUrl(a.name,d.n+', '+d.st,wk.ci,wk.co);
+          html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
+            '<div class="ev-left">'+
+              '<div class="ev-cat">🎯 Bookable Tour · Viator</div>'+
+              '<div class="ev-name">'+a.name+'</div>'+
+              '<div class="ev-desc-sm">'+a.desc+'</div>'+
+              '<div class="ev-venue">📍 '+d.n+', '+d.st+'</div>'+
+              '<div class="ev-date">🗓 '+wk.sub+' · '+wtsAdults+' guest'+(parseInt(wtsAdults)>1?'s':'')+'</div>'+
+            '</div>'+
+            '<div class="ev-right">'+
+              '<div class="ev-price">'+a.price+'</div>'+
+              '<button class="ev-book">Book ↗</button>'+
+            '</div></div>';
         }
         html+='</div>';
-        // Events
-        var evs=[
-          {name:'\ud83c\udfb5 Music & Concerts',q:'music'},
-          {name:'\ud83c\udf7d\ufe0f Food & Drink',q:'food-and-drink'},
-          {name:'\ud83c\udfa8 Art & Culture',q:'arts'},
-          {name:'\ud83c\udf89 All Events',q:'events'}
-        ];
-        html+='<div class="sec-title">\ud83c\udfa4 EVENTS \u00b7 '+(isIndia?'EVENTBRITE':'EVENTBRITE')+'</div><div class="act-list">';
-        for(var ei=0;ei<evs.length;ei++){
-          var ev=evs[ei];
-          var evUrl=isIndia?indiaEventUrl(d.n,wk.ci,wk.co,ev.q):eventUrl(d.n+' '+d.st,wk.ci,wk.co,ev.q);
-          html+='<div class="act-item"><div class="act-left"><div class="act-name">'+ev.name+'</div><div class="act-desc">'+d.n+' \u00b7 '+wk.sub+'</div></div><div class="act-right"><button class="act-book-ev" onclick="goTo(\''+evUrl+'\')">Book</button></div></div>';
-        }
-        html+='</div></div>';
 
-        // Specific Events & Venues section - loaded from API
-        var _evId='ev'+d.n.replace(/[^a-zA-Z0-9]/g,'');
-        html+='<div class="ev-section" id="'+_evId+'">';
-        html+='<div class="sec-title">📍 LOCAL EVENTS & VENUES</div>';
-        html+='<div class="ev-loading"><div class="ev-spinner"></div><span>Finding specific venues...</span></div>';
-        html+='</div>';
-
-        // Load specific events from Eventbrite API
-        (function(destName, destState, ci, co, vibe, elId){
+        // Load LIVE events from Eventbrite API in background
+        (function(dn,ds,ci,co,vibe,liveId){
           setTimeout(function(){
-            fetch('/api/events',{
-              method:'POST',
-              headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({cityName:destName, stateName:destState, startDate:ci, endDate:co, vibe:vibe})
+            fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
+              body:JSON.stringify({cityName:dn,stateName:ds,startDate:ci,endDate:co,vibe:vibe})
             })
             .then(function(r){return r.json();})
             .then(function(data){
-              var el=document.getElementById(elId);
-              if(!el||!data.events||data.events.length===0)return;
-              var nh='<div class="sec-title">📍 LOCAL EVENTS & VENUES'+(data.fallback?' · Curated':' · Live')+'</div>';
-              data.events.forEach(function(ev){
-                var dateStr=ev.date?ev.date.replace('T',' ').slice(0,16):'';
-                nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">';
-                nh+='<div class="ev-left">';
-                nh+='<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+'</div>';
-                nh+='<div class="ev-name">'+ev.name+'</div>';
-                nh+='<div class="ev-venue">📍 '+ev.venue+'</div>';
-                if(ev.address)nh+='<div class="ev-addr">'+ev.address+'</div>';
-                if(dateStr)nh+='<div class="ev-date">🗓 '+ev.date+'</div>';
-                nh+='</div>';
-                nh+='<div class="ev-right">';
-                nh+='<div class="ev-price">'+(ev.price||'')+'</div>';
-                nh+='<button class="ev-book">Book ↗</button>';
-                nh+='</div></div>';
+              if(!data||!data.events||data.events.length===0)return;
+              var el=document.getElementById(liveId);
+              if(!el)return;
+              var label=data.fallback?'🎟️ EVENTS THIS WEEKEND · EVENTBRITE':'🎟️ LIVE THIS WEEKEND · EVENTBRITE';
+              var nh='<div class="ev-subhead-sm">'+label+'</div>';
+              data.events.slice(0,4).forEach(function(ev){
+                // Format date nicely
+                var d=new Date(ev.date);
+                var dStr=isNaN(d)?ev.date:d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+                nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
+                  '<div class="ev-left">'+
+                    '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+' · Eventbrite</div>'+
+                    '<div class="ev-name">'+ev.name+'</div>'+
+                    '<div class="ev-venue">📍 '+ev.venue+'</div>'+
+                    (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
+                    '<div class="ev-date">🗓 '+dStr+'</div>'+
+                  '</div>'+
+                  '<div class="ev-right">'+
+                    '<div class="ev-price">'+(ev.price||'')+'</div>'+
+                    '<button class="ev-book">Book ↗</button>'+
+                  '</div></div>';
               });
               el.innerHTML=nh;
             })
-            .catch(function(){
-              var el=document.getElementById(elId);
-              if(el)el.style.display='none';
-            });
-          },300);
-        })(d.n, d.st, wk.ci, wk.co, selVibe, _evId);
-
+            .catch(function(){});
+          },600);
+        })(d.n,d.st,wk.ci,wk.co,selVibe,_liveId);
       }
     }
     document.getElementById('rBody').innerHTML=html;
@@ -1104,25 +1287,149 @@ function runLocal(){
         html+='</div></div>';
       }
     }
-    // Activities - India=Thrillophilia, USA=Viator
+    // THINGS TO DO - unified section for local mode
     var acts=data.acts||DEFAULT_LOCAL.acts;
-    html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfab Activities \u00b7 '+(isIndia?'Viator':'Viator')+'</div></div><div class="lr-cl">';
+    var _lEvId='lev'+cityName.replace(/[^a-zA-Z0-9]/g,'');
+    html+='<div class="ev-section" id="'+_lEvId+'">';
+    html+='<div class="sec-title">📍 THINGS TO DO · '+cityName+'</div>';
+
+    // Viator activities with direct booking
     for(var ai=0;ai<acts.length;ai++){
       var a=acts[ai];
       var aUrl=isIndia?indiaActUrl(a.name,cityName,wk.ci,wk.co):actUrl(a.name,cityName,wk.ci,wk.co);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+a.name+'</div><div class="lr-ha">'+a.desc+'</div></div><div style="text-align:right;flex-shrink:0"><div style="font-size:0.72rem;font-weight:700;color:#1E7A52;margin-bottom:4px">'+a.price+'</div><button class="lr-hb" onclick="goTo(\''+aUrl+'\')">\ud83c\udfab Book</button></div></div>';
+      html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
+        '<div class="ev-left">'+
+          '<div class="ev-cat">🎯 Activity</div>'+
+          '<div class="ev-name">'+a.name+'</div>'+
+          '<div class="ev-venue">📍 '+cityName+'</div>'+
+          '<div class="ev-date">🗓 '+wk.sub+'</div>'+
+        '</div>'+
+        '<div class="ev-right">'+
+          '<div class="ev-price">'+a.price+'</div>'+
+          '<button class="ev-book">Book ↗</button>'+
+        '</div>'+
+      '</div>';
     }
-    html+='</div></div>';
-    // Events - India=Eventbrite, USA=Eventbrite - BOOK button
-    var evCats=data.evCats||DEFAULT_LOCAL.evCats;
-    html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfa4 Events \u00b7 '+(isIndia?'Viator':'Eventbrite')+' \u00b7 '+wk.sub+'</div></div><div class="lr-cl">';
-    for(var ei=0;ei<evCats.length;ei++){
-      var ev=evCats[ei];
-      var evUrl=isIndia?indiaEventUrl(cityName,wk.ci,wk.co,ev.q||ev.cat):eventUrl(cityName,wk.ci,wk.co,ev.q||ev.cat);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+ev.name+'</div><div class="lr-ha">'+cityName+' \u00b7 '+wk.sub+'</div></div><div><button class="lr-hb-ev" onclick="goTo(\''+evUrl+'\')">\ud83c\udfa4 Book</button></div></div>';
-    }
-    html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Eventbrite \u00b7 Direct booking':'Eventbrite \u00b7 Direct booking')+'</div></div></div>';
+
+    // Local specific events from API
+    html+='<div id="'+_lEvId+'_more"><div class="ev-loading"><div class="ev-spinner"></div><span>Loading local events...</span></div></div>';
     html+='</div>';
+
+    // Load from /api/events
+    (function(cn,ci,co,elId){
+      setTimeout(function(){
+        fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({cityName:cn,stateName:'',startDate:ci,endDate:co,vibe:'all'})
+        })
+        .then(function(r){return r.json();})
+        .then(function(data){
+          var el=document.getElementById(elId);
+          if(!el||!data.events||data.events.length===0){if(el)el.style.display='none';return;}
+          var nh='';
+          data.events.forEach(function(ev){
+            nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
+              '<div class="ev-left">'+
+                '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+'</div>'+
+                '<div class="ev-name">'+ev.name+'</div>'+
+                '<div class="ev-venue">📍 '+ev.venue+'</div>'+
+                (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
+                '<div class="ev-date">🗓 '+(ev.date||'Check dates')+'</div>'+
+              '</div>'+
+              '<div class="ev-right">'+
+                '<div class="ev-price">'+(ev.price||'')+'</div>'+
+                '<button class="ev-book">Book ↗</button>'+
+              '</div></div>';
+          });
+          el.innerHTML=nh;
+        })
+        .catch(function(){var el=document.getElementById(elId);if(el)el.style.display='none';});
+      },400);
+    })(cityName,wk.ci,wk.co,_lEvId+'_more');
+
+
+    // ═══ LOCAL: UNIFIED GUIDE ═══
+    var acts=data.acts||DEFAULT_LOCAL.acts;
+    var _lLocalId='lloc'+cityName.replace(/[^a-zA-Z0-9]/g,'');
+    html+='<div class="ev-section" id="'+_lLocalId+'">';
+    html+='<div class="sec-title">📍 '+cityName+' · LOCAL GUIDE</div>';
+
+    // EVENTS & RECOMMENDATIONS
+    html+='<div class="ev-subhead">📅 EVENTS & RECOMMENDATIONS</div>';
+    var _lCurated=getCuratedVenues(cityName);
+    if(_lCurated&&_lCurated.length>0){
+      _lCurated.forEach(function(v){
+        html+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
+          '<div class="ev-left">'+
+            '<div class="ev-cat">'+v.icon+' '+v.cat+'</div>'+
+            '<div class="ev-name">'+v.name+'</div>'+
+            '<div class="ev-venue">📍 '+v.addr+'</div>'+
+            '<div class="ev-date">🗓 '+v.date+'</div>'+
+          '</div>'+
+          '<div class="ev-right">'+
+            '<div class="ev-price">'+v.price+'</div>'+
+            '<button class="ev-book">Visit ↗</button>'+
+          '</div></div>';
+      });
+    }
+
+    // Live events slot
+    var _lLiveId='llive'+cityName.replace(/[^a-zA-Z0-9]/g,'');
+    html+='<div id="'+_lLiveId+'"></div>';
+
+    // ACTIVITIES
+    html+='<div class="ev-subhead">🎯 ACTIVITIES</div>';
+    for(var ai=0;ai<acts.length;ai++){
+      var a=acts[ai];
+      var aUrl=isIndia?indiaActUrl(a.name,cityName,wk.ci,wk.co):actUrl(a.name,cityName,wk.ci,wk.co);
+      var ppl=(typeof selPeople!=='undefined'?selPeople:'2');
+      html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
+        '<div class="ev-left">'+
+          '<div class="ev-cat">🎯 Bookable Tour · Viator</div>'+
+          '<div class="ev-name">'+a.name+'</div>'+
+          '<div class="ev-desc-sm">'+a.desc+'</div>'+
+          '<div class="ev-venue">📍 '+cityName+'</div>'+
+          '<div class="ev-date">🗓 '+wk.sub+' · '+ppl+' guest'+(parseInt(ppl)>1?'s':'')+'</div>'+
+        '</div>'+
+        '<div class="ev-right">'+
+          '<div class="ev-price">'+a.price+'</div>'+
+          '<button class="ev-book">Book ↗</button>'+
+        '</div></div>';
+    }
+    html+='</div>';
+
+    // Load live events from Eventbrite
+    (function(cn,ci,co,liveId){
+      setTimeout(function(){
+        fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({cityName:cn,stateName:'',startDate:ci,endDate:co,vibe:'all'})
+        })
+        .then(function(r){return r.json();})
+        .then(function(data){
+          if(!data||!data.events)return;
+          var el=document.getElementById(liveId);
+          if(!el||data.events.length===0)return;
+          var nh='<div class="ev-subhead-sm">🎟️ LIVE THIS WEEKEND · EVENTBRITE</div>';
+          data.events.slice(0,4).forEach(function(ev){
+            var d=new Date(ev.date);
+            var dStr=isNaN(d)?ev.date:d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+            nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
+              '<div class="ev-left">'+
+                '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+' · Eventbrite</div>'+
+                '<div class="ev-name">'+ev.name+'</div>'+
+                '<div class="ev-venue">📍 '+ev.venue+'</div>'+
+                (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
+                '<div class="ev-date">🗓 '+dStr+'</div>'+
+              '</div>'+
+              '<div class="ev-right">'+
+                '<div class="ev-price">'+(ev.price||'')+'</div>'+
+                '<button class="ev-book">Book ↗</button>'+
+              '</div></div>';
+          });
+          el.innerHTML=nh;
+        })
+        .catch(function(){});
+      },600);
+    })(cityName,wk.ci,wk.co,_lLiveId);
     document.getElementById('rBody').innerHTML=html;
     showRes();
   },50);
