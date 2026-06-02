@@ -10,113 +10,110 @@ module.exports = async function handler(req, res) {
   if (!cityName) return res.status(400).json({ error: 'cityName required' });
 
   const token = process.env.EVENTBRITE_TOKEN;
-  if (!token) {
-    return res.status(200).json({ events: getFallbackEvents(cityName, vibe), fallback: true });
-  }
+  console.log('Token present:', !!token, '| City:', cityName, '| Dates:', startDate, '-', endDate);
 
-  // Vibe → Eventbrite category mapping
-  const vibeCategories = {
-    'food':      { cats: ['110'], keywords: 'food market farmer restaurant' },
-    'culture':   { cats: ['105'], keywords: 'museum art gallery exhibition' },
-    'nature':    { cats: ['108'], keywords: 'outdoor hiking nature park' },
-    'nightlife': { cats: ['103'], keywords: 'rooftop bar nightlife cocktail' },
-    'music':     { cats: ['103'], keywords: 'live music concert jazz' },
-    'adventure': { cats: ['108'], keywords: 'adventure sports outdoor activity' },
-    'wellness':  { cats: ['107'], keywords: 'yoga wellness meditation' },
-    'family':    { cats: ['115'], keywords: 'family kids activities' },
-    'default':   { cats: ['110','105','103','108'], keywords: cityName + ' events weekend' }
-  };
+  if (token) {
+    try {
+      // Eventbrite API v3 - correct format
+      const location = cityName + (stateName ? ', ' + stateName : '') + ', United States';
+      
+      const params = new URLSearchParams({
+        'location.address': location,
+        'location.within': '30mi',
+        'start_date.range_start': startDate + 'T00:00:00',
+        'start_date.range_end': endDate + 'T23:59:59',
+        'sort_by': 'best',
+        'expand': 'venue,category,ticket_availability',
+        'page_size': '6'
+      });
 
-  const vc = vibeCategories[vibe] || vibeCategories['default'];
-  const location = encodeURIComponent(cityName + ', ' + (stateName || ''));
+      const url = 'https://www.eventbriteapi.com/v3/events/search/?' + params.toString();
+      console.log('Fetching:', url.slice(0, 100));
 
-  try {
-    // Search Eventbrite for specific events
-    const searchUrl = 'https://www.eventbriteapi.com/v3/events/search/?' +
-      'location.address=' + location +
-      '&location.within=25mi' +
-      '&start_date.range_start=' + startDate + 'T00:00:00' +
-      '&start_date.range_end=' + endDate + 'T23:59:59' +
-      '&categories=' + vc.cats.join(',') +
-      '&q=' + encodeURIComponent(vc.keywords) +
-      '&sort_by=best' +
-      '&expand=venue,category' +
-      '&page_size=8';
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Accept': 'application/json'
+        }
+      });
 
-    const response = await fetch(searchUrl, {
-      headers: {
-        'Authorization': 'Bearer ' + token,
-        'Content-Type': 'application/json'
+      console.log('Eventbrite response status:', response.status);
+
+      if (!response.ok) {
+        const errText = await response.text();
+        console.error('Eventbrite error body:', errText.slice(0, 200));
+        throw new Error('API ' + response.status);
       }
-    });
 
-    if (!response.ok) throw new Error('Eventbrite API ' + response.status);
-    const data = await response.json();
+      const data = await response.json();
+      console.log('Events found:', data.events ? data.events.length : 0);
 
-    if (!data.events || data.events.length === 0) {
-      return res.status(200).json({ events: getFallbackEvents(cityName, vibe), fallback: true });
+      if (data.events && data.events.length > 0) {
+        const events = data.events.map(ev => {
+          // Format date nicely
+          const startLocal = ev.start && ev.start.local ? ev.start.local : '';
+          const dateObj = startLocal ? new Date(startLocal) : null;
+          const dateStr = dateObj ? dateObj.toLocaleDateString('en-US', {
+            weekday: 'short', month: 'short', day: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          }) : startLocal;
+
+          // Get price
+          let price = 'Free';
+          if (!ev.is_free) {
+            if (ev.ticket_availability && ev.ticket_availability.minimum_ticket_price) {
+              price = 'From $' + ev.ticket_availability.minimum_ticket_price.major_value;
+            } else {
+              price = 'Paid';
+            }
+          }
+
+          return {
+            name: ev.name.text,
+            description: ev.summary || '',
+            venue: ev.venue ? ev.venue.name : cityName,
+            address: ev.venue && ev.venue.address ? ev.venue.address.localized_address_display : '',
+            date: dateStr,
+            url: ev.url,
+            price: price,
+            category: ev.category ? ev.category.name : 'Event',
+            fallback: false
+          };
+        });
+
+        res.setHeader('Cache-Control', 's-maxage=1800, stale-while-revalidate=3600');
+        return res.status(200).json({ events, source: 'eventbrite' });
+      }
+    } catch (err) {
+      console.error('Eventbrite failed:', err.message);
     }
-
-    const events = data.events.map(function(ev) {
-      return {
-        name: ev.name.text,
-        description: ev.description ? ev.description.text.slice(0, 100) : '',
-        venue: ev.venue ? ev.venue.name : cityName,
-        address: ev.venue ? (ev.venue.address.localized_address_display || '') : '',
-        date: ev.start.local,
-        url: ev.url,
-        price: ev.is_free ? 'Free' : (ev.ticket_availability ? 'From $' + (ev.ticket_availability.minimum_ticket_price ? ev.ticket_availability.minimum_ticket_price.major_value : '?') : 'Paid'),
-        image: ev.logo ? ev.logo.url : null,
-        category: ev.category ? ev.category.name : 'Event'
-      };
-    });
-
-    res.setHeader('Cache-Control', 's-maxage=3600');
-    return res.status(200).json({ events: events });
-
-  } catch (err) {
-    console.error('Eventbrite error:', err.message);
-    return res.status(200).json({ events: getFallbackEvents(cityName, vibe), fallback: true });
   }
+
+  // Smart fallback - Eventbrite filtered search URLs with exact dates
+  const citySlug = cityName.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const dateQ = startDate ? '?start_date=' + startDate + 'T00%3A00%3A00&end_date=' + endDate + 'T23%3A59%3A59' : '';
+  const base = 'https://www.eventbrite.com/d/' + citySlug + '/events/' + dateQ;
+  const amp = dateQ ? '&' : '?';
+
+  const fallbackEvents = [
+    { name: 'All Events in ' + cityName, category: 'Events', venue: cityName,
+      address: cityName + (stateName ? ', ' + stateName : ''),
+      date: startDate + ' to ' + endDate,
+      url: base + amp + 'q=events', price: 'Various', fallback: true },
+    { name: 'Food & Drink Events', category: 'Food & Drink', venue: cityName,
+      address: cityName + (stateName ? ', ' + stateName : ''),
+      date: startDate + ' to ' + endDate,
+      url: base + amp + 'q=food+drink', price: 'Various', fallback: true },
+    { name: 'Music & Concerts', category: 'Music', venue: cityName,
+      address: cityName + (stateName ? ', ' + stateName : ''),
+      date: startDate + ' to ' + endDate,
+      url: base + amp + 'q=music+concert', price: 'Various', fallback: true },
+    { name: 'Arts & Culture', category: 'Arts', venue: cityName,
+      address: cityName + (stateName ? ', ' + stateName : ''),
+      date: startDate + ' to ' + endDate,
+      url: base + amp + 'q=arts+culture', price: 'Various', fallback: true },
+  ];
+
+  return res.status(200).json({ events: fallbackEvents, fallback: true });
 };
-
-// Fallback curated events per city
-function getFallbackEvents(city, vibe) {
-  var c = (city || '').toLowerCase();
-  
-  var curated = {
-    'fort lauderdale': [
-      { name: 'Las Olas Farmers Market', venue: 'Las Olas Blvd', address: 'Las Olas Blvd, Fort Lauderdale, FL', date: 'Every Sunday 8am–2pm', url: 'https://www.google.com/maps/search/Las+Olas+Farmers+Market', price: 'Free', category: 'Market' },
-      { name: 'NSU Art Museum', venue: 'NSU Art Museum', address: '1 E Las Olas Blvd, Fort Lauderdale', date: 'Tue–Sun 11am–5pm', url: 'https://nsuartmuseum.org', price: 'From $10', category: 'Museum' },
-      { name: 'Rooftop @ The Dalmar', venue: 'The Dalmar Hotel', address: '299 N Federal Hwy, Fort Lauderdale', date: 'Daily 4pm–2am', url: 'https://www.thedalmar.com', price: 'Free entry', category: 'Rooftop Bar' }
-    ],
-    'miami': [
-      { name: 'Wynwood Farmers Market', venue: 'Wynwood Walls', address: '2520 NW 2nd Ave, Miami', date: 'Every Saturday 10am–4pm', url: 'https://www.google.com/maps/search/Wynwood+Farmers+Market', price: 'Free', category: 'Market' },
-      { name: 'Pérez Art Museum Miami', venue: 'PAMM', address: '1103 Biscayne Blvd, Miami', date: 'Daily 11am–6pm', url: 'https://pamm.org', price: 'From $16', category: 'Museum' },
-      { name: 'E11EVEN Miami', venue: 'E11EVEN', address: '29 NE 11th St, Miami', date: 'Fri–Sun 11pm+', url: 'https://11miami.com', price: 'Varies', category: 'Nightlife' }
-    ],
-    'savannah': [
-      { name: 'Forsyth Farmers Market', venue: 'Forsyth Park', address: 'Forsyth Park, Savannah, GA', date: 'Every Saturday 9am–1pm', url: 'https://www.google.com/maps/search/Forsyth+Farmers+Market+Savannah', price: 'Free', category: 'Market' },
-      { name: 'Telfair Museums', venue: 'Telfair Academy', address: '121 Barnard St, Savannah', date: 'Daily 10am–5pm', url: 'https://www.telfair.org', price: 'From $12', category: 'Museum' },
-      { name: 'The Rooftop Bar at Bohemian', venue: 'Bohemian Hotel', address: '102 W Bay St, Savannah', date: 'Daily 4pm–midnight', url: 'https://www.bohemianhotelsavannah.com', price: 'Free entry', category: 'Rooftop Bar' }
-    ],
-    'nashville': [
-      { name: 'Nashville Farmers Market', venue: 'Nashville Farmers Market', address: '900 Rosa L Parks Blvd, Nashville', date: 'Daily 8am–6pm', url: 'https://nashvillefarmersmarket.org', price: 'Free', category: 'Market' },
-      { name: 'Frist Art Museum', venue: 'Frist Art Museum', address: '919 Broadway, Nashville', date: 'Mon–Sat 10am–5pm', url: 'https://fristartmuseum.org', price: 'From $15', category: 'Museum' },
-      { name: 'L27 Rooftop Bar', venue: 'Loews Vanderbilt', address: '2100 West End Ave, Nashville', date: 'Daily 4pm–midnight', url: 'https://www.google.com/maps/search/L27+Rooftop+Nashville', price: 'Free entry', category: 'Rooftop Bar' }
-    ],
-    'default': [
-      { name: 'Local Farmers Market', venue: city + ' Market', address: 'Downtown ' + city, date: 'Weekend mornings', url: 'https://www.google.com/maps/search/farmers+market+' + encodeURIComponent(city), price: 'Free', category: 'Market' },
-      { name: 'City Art Museum', venue: city + ' Museum', address: 'Downtown ' + city, date: 'Tue–Sun 10am–5pm', url: 'https://www.google.com/maps/search/art+museum+' + encodeURIComponent(city), price: 'From $10', category: 'Museum' },
-      { name: 'Rooftop Bar', venue: 'Downtown ' + city, address: 'Downtown ' + city, date: 'Daily 5pm–late', url: 'https://www.google.com/maps/search/rooftop+bar+' + encodeURIComponent(city), price: 'Free entry', category: 'Rooftop' }
-    ]
-  };
-
-  // Find matching city
-  for (var key in curated) {
-    if (c.indexOf(key) >= 0 || key.indexOf(c.split(' ')[0]) >= 0) {
-      return curated[key];
-    }
-  }
-  return curated['default'];
-}
