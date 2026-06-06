@@ -417,6 +417,74 @@ function getCatIcon(cat){
   for(var k in icons){if(cat.toLowerCase().indexOf(k.toLowerCase())>=0)return icons[k];}
   return '📅';
 }
+function formatEvDate(d){
+  if(!d)return '';
+  if(d.indexOf('am')>=0||d.indexOf('pm')>=0||d.indexOf('Daily')>=0||d.indexOf('Mon')>=0||d.indexOf('Sat')>=0||d.indexOf('Sun')>=0)return d;
+  var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var dy=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var m=d.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if(m){var dt=new Date(parseInt(m[1]),parseInt(m[2])-1,parseInt(m[3]));var s=dy[dt.getDay()]+', '+mo[dt.getMonth()]+' '+dt.getDate();var t=d.match(/T(\d{2}):(\d{2})/);if(t){var h=parseInt(t[1]),mn=t[2],ap=h>=12?'PM':'AM';h=h>12?h-12:h===0?12:h;s+=' '+h+':'+mn+' '+ap;}return s;}
+  var r=d.match(/^(\d{4}-\d{2}-\d{2}) to (\d{4}-\d{2}-\d{2})$/);
+  if(r)return formatEvDate(r[1])+' – '+formatEvDate(r[2]);
+  return d;
+}
+function getCatEmoji(cat){
+  if(!cat)return '📍';
+  var c=cat.toLowerCase();
+  if(c.indexOf('market')>=0||c.indexOf('farm')>=0)return '🌾';
+  if(c.indexOf('museum')>=0)return '🏛️';
+  if(c.indexOf('art')>=0||c.indexOf('galley')>=0)return '🎨';
+  if(c.indexOf('rooftop')>=0||c.indexOf('bar')>=0)return '🍸';
+  if(c.indexOf('music')>=0||c.indexOf('concert')>=0||c.indexOf('jazz')>=0)return '🎵';
+  if(c.indexOf('beach')>=0)return '🏖️';
+  if(c.indexOf('park')>=0||c.indexOf('nature')>=0||c.indexOf('outdoor')>=0)return '🌿';
+  if(c.indexOf('food')>=0||c.indexOf('restaurant')>=0||c.indexOf('brunch')>=0)return '🍽️';
+  if(c.indexOf('water')>=0||c.indexOf('river')>=0)return '🚢';
+  if(c.indexOf('flea')>=0||c.indexOf('vintage')>=0)return '🛍️';
+  if(c.indexOf('sport')>=0||c.indexOf('adventure')>=0)return '🏄';
+  if(c.indexOf('comedy')>=0||c.indexOf('theater')>=0)return '🎭';
+  if(c.indexOf('yoga')>=0||c.indexOf('wellness')>=0)return '🧘';
+  return '📍';
+}
+
+function getCityLat(city){
+  var m={'miami':25.7617,'new york':40.7128,'chicago':41.8781,'los angeles':34.0522,'houston':29.7604,'phoenix':33.4484,'dallas':32.7767,'seattle':47.6062,'denver':39.7392,'atlanta':33.7490,'las vegas':36.1699,'orlando':28.5383,'nashville':36.1627,'austin':30.2672,'portland':45.5051,'san francisco':37.7749,'new orleans':29.9511,'san diego':32.7157,'washington':38.9072,'fort lauderdale':26.1224,'savannah':32.0809,'key largo':25.0865,'naples':26.1420,'breckenridge':39.4817,'asheville':35.5951,'santa barbara':34.4208,'napa':38.2975,'charleston':32.7765,'sedona':34.8697};
+  var c=(city||'').toLowerCase();
+  for(var k in m){if(c.indexOf(k)>=0)return m[k];}
+  return 37.0902;
+}
+
+function getCityLng(city){
+  var m={'miami':-80.1918,'new york':-74.0060,'chicago':-87.6298,'los angeles':-118.2437,'houston':-95.3698,'phoenix':-112.0740,'dallas':-96.7970,'seattle':-122.3321,'denver':-104.9903,'atlanta':-84.3880,'las vegas':-115.1398,'orlando':-81.3792,'nashville':-86.7816,'austin':-97.7431,'portland':-122.6750,'san francisco':-122.4194,'new orleans':-90.0715,'san diego':-117.1611,'washington':-77.0369,'fort lauderdale':-80.1373,'savannah':-81.0912,'key largo':-80.4473,'naples':-81.7948,'breckenridge':-106.0384,'asheville':-82.5515,'santa barbara':-119.6982,'napa':-122.2869,'charleston':-79.9311,'sedona':-111.7609};
+  var c=(city||'').toLowerCase();
+  for(var k in m){if(c.indexOf(k)>=0)return m[k];}
+  return -95.7129;
+}
+
+
+
+function goTo(url){
+  try{var w=window.open(url,'_blank');if(!w||w.closed||typeof w.closed=='undefined'){window.location.href=url;}}
+  catch(e){window.location.href=url;}
+}
+
+
+function getCityLat(city){
+  var m={'miami':25.7617,'new york':40.7128,'chicago':41.8781,'los angeles':34.0522,'houston':29.7604,'phoenix':33.4484,'dallas':32.7767,'seattle':47.6062,'denver':39.7392,'atlanta':33.7490,'las vegas':36.1699,'orlando':28.5383,'nashville':36.1627,'austin':30.2672,'portland':45.5051,'san francisco':37.7749,'new orleans':29.9511,'san diego':32.7157,'washington':38.9072,'fort lauderdale':26.1224,'savannah':32.0809,'key largo':25.0865,'naples':26.1420,'breckenridge':39.4817,'asheville':35.5951,'santa barbara':34.4208,'napa':38.2975,'charleston':32.7765,'sedona':34.8697};
+  var c=(city||'').toLowerCase();
+  for(var k in m){if(c.indexOf(k)>=0)return m[k];}
+  return 37.0902;
+}
+
+function getCityLng(city){
+  var m={'miami':-80.1918,'new york':-74.0060,'chicago':-87.6298,'los angeles':-118.2437,'houston':-95.3698,'phoenix':-112.0740,'dallas':-96.7970,'seattle':-122.3321,'denver':-104.9903,'atlanta':-84.3880,'las vegas':-115.1398,'orlando':-81.3792,'nashville':-86.7816,'austin':-97.7431,'portland':-122.6750,'san francisco':-122.4194,'new orleans':-90.0715,'san diego':-117.1611,'washington':-77.0369,'fort lauderdale':-80.1373,'savannah':-81.0912,'key largo':-80.4473,'naples':-81.7948,'breckenridge':-106.0384,'asheville':-82.5515,'santa barbara':-119.6982,'napa':-122.2869,'charleston':-79.9311,'sedona':-111.7609};
+  var c=(city||'').toLowerCase();
+  for(var k in m){if(c.indexOf(k)>=0)return m[k];}
+  return -95.7129;
+}
+
+
+
 function goTo(url){
   try{var w=window.open(url,'_blank');if(!w||w.closed||typeof w.closed=='undefined'){window.location.href=url;}}
   catch(e){window.location.href=url;}
@@ -554,28 +622,46 @@ var CURATED_VENUES={
 
 function getCuratedVenues(destName){
   var n=(destName||'').toLowerCase();
-  // Direct match
-  for(var key in CURATED_VENUES){
-    if(n.indexOf(key)>=0||key.indexOf(n.split(' ')[0])>=0){
-      return CURATED_VENUES[key];
+  var VENUES={
+    'key largo':[{name:'John Pennekamp Coral Reef State Park',category:'Nature',address:'102601 Overseas Hwy, Key Largo, FL',rating:4.8,price:'$',url:'https://www.floridastateparks.org/pennekamp',hours:'Daily 8am-sunset'},{name:'Caribbean Club Bar',category:'Bar',address:'104080 Overseas Hwy, Key Largo, FL',rating:4.6,price:'$',url:'https://maps.google.com/?q=Caribbean+Club+Key+Largo',hours:'Daily 7am-2am'},{name:'Key Largo Fisheries Backyard Market',category:'Seafood Market',address:'1313 Ocean Bay Dr, Key Largo, FL',rating:4.7,price:'$$',url:'https://maps.google.com/?q=Key+Largo+Fisheries',hours:'Mon-Sat 8am-6pm'},{name:'Sundowners Restaurant',category:'Waterfront Dining',address:'103900 Overseas Hwy, Key Largo, FL',rating:4.5,price:'$$$',url:'https://maps.google.com/?q=Sundowners+Key+Largo',hours:'Daily 11am-10pm'}],
+    'naples':[{name:'Naples Pier',category:'Landmark',address:'12th Ave S, Naples, FL',rating:4.9,price:'Free',url:'https://maps.google.com/?q=Naples+Pier+Florida',hours:'Daily 24hrs'},{name:'5th Avenue South',category:'Dining',address:'5th Ave S, Naples, FL',rating:4.7,price:'$$',url:'https://maps.google.com/?q=5th+Avenue+South+Naples',hours:'Daily 10am-10pm'},{name:'Clam Pass Beach Park',category:'Beach',address:'470 Seagate Dr, Naples, FL',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Clam+Pass+Beach+Naples',hours:'Daily 8am-sunset'},{name:'Tin City Waterfront Shops',category:'Waterfront',address:'1200 5th Ave S, Naples, FL',rating:4.5,price:'Free',url:'https://maps.google.com/?q=Tin+City+Naples',hours:'Mon-Sat 10am-6pm'}],
+    'tampa':[{name:'Armature Works',category:'Food Hall',address:'1910 N Ola Ave, Tampa, FL',rating:4.7,price:'$$',url:'https://www.armatureworks.com',hours:'Mon-Thu 11am-10pm, Fri-Sun 10am-11pm'},{name:'Tampa Riverwalk',category:'Waterfront',address:'Tampa Riverwalk, Tampa, FL',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Tampa+Riverwalk',hours:'Open 24hrs'},{name:'Ybor City',category:'Historic District',address:'Ybor City, Tampa, FL',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Ybor+City+Tampa',hours:'Nightlife from 9pm'},{name:'Tampa Museum of Art',category:'Museum',address:'120 W Gasparilla Plaza, Tampa, FL',rating:4.6,price:'$$',url:'https://tampamuseum.org',hours:'Mon-Thu 11am-7pm'}],
+    'orlando':[{name:'Disney Springs',category:'Entertainment',address:'1486 Buena Vista Dr, Orlando, FL',rating:4.7,price:'Free entry',url:'https://www.disneysprings.com',hours:'Daily 10am-11pm'},{name:'ICON Park',category:'Attractions',address:'8375 International Dr, Orlando, FL',rating:4.5,price:'$$',url:'https://iconparkorlando.com',hours:'Daily 10am-midnight'},{name:'Lake Eola Farmers Market',category:'Farmers Market',address:'195 N Rosalind Ave, Orlando, FL',rating:4.6,price:'Free',url:'https://www.orlandofarmersmarket.com',hours:'Sun 10am-4pm'},{name:'Dr. Phillips Center',category:'Arts',address:'445 S Magnolia Ave, Orlando, FL',rating:4.8,price:'Varies',url:'https://www.drphillipscenter.org',hours:'Check schedule'}],
+    'sarasota':[{name:'Siesta Key Beach',category:'Beach',address:'948 Beach Rd, Sarasota, FL',rating:4.9,price:'Free',url:'https://maps.google.com/?q=Siesta+Key+Beach+Sarasota',hours:'Daily 24hrs'},{name:'Ringling Museum',category:'Museum',address:'5401 Bay Shore Rd, Sarasota, FL',rating:4.7,price:'$$',url:'https://www.ringling.org',hours:'Daily 10am-5pm'},{name:'Sarasota Farmers Market',category:'Farmers Market',address:'1 Lemon Ave, Sarasota, FL',rating:4.7,price:'Free',url:'https://www.sarasotafarmersmarket.org',hours:'Sat 7am-1pm'},{name:'St. Armands Circle',category:'Dining',address:'St Armands Cir, Sarasota, FL',rating:4.6,price:'$$',url:'https://maps.google.com/?q=St+Armands+Circle+Sarasota',hours:'Daily 10am-9pm'}],
+    'st. augustine':[{name:'Castillo de San Marcos',category:'Historic Site',address:'1 S Castillo Dr, St. Augustine, FL',rating:4.8,price:'$',url:'https://www.nps.gov/casa',hours:'Daily 9am-5pm'},{name:'St. George Street',category:'Historic District',address:'St George St, St. Augustine, FL',rating:4.7,price:'Free',url:'https://maps.google.com/?q=St+George+Street+St+Augustine',hours:'Daily 10am-9pm'},{name:'Anastasia State Park',category:'Beach',address:'300 Anastasia Park Dr, St. Augustine, FL',rating:4.8,price:'$',url:'https://www.floridastateparks.org/anastasia',hours:'Daily 8am-sunset'},{name:'The Floridian Restaurant',category:'Brunch',address:'72 Spanish St, St. Augustine, FL',rating:4.6,price:'$$',url:'https://maps.google.com/?q=The+Floridian+St+Augustine',hours:'Daily 8am-9pm'}],
+    'fort lauderdale':[{name:'Las Olas Farmers Market',category:'Farmers Market',address:'Las Olas Blvd, Fort Lauderdale, FL',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Las+Olas+Farmers+Market',hours:'Sun 8am-2pm'},{name:'NSU Art Museum',category:'Museum',address:'1 E Las Olas Blvd, Fort Lauderdale',rating:4.5,price:'$$',url:'https://nsuartmuseum.org',hours:'Tue-Sun 11am-5pm'},{name:'Rooftop @ The Dalmar',category:'Rooftop Bar',address:'299 N Federal Hwy, Fort Lauderdale',rating:4.6,price:'$$$',url:'https://www.thedalmar.com',hours:'Daily 4pm-2am'},{name:'Fort Lauderdale Beach',category:'Beach',address:'Fort Lauderdale Beach Blvd',rating:4.9,price:'Free',url:'https://maps.google.com/?q=Fort+Lauderdale+Beach',hours:'Open daily'}],
+    'miami':[{name:'Wynwood Farmers Market',category:'Market',address:'2520 NW 2nd Ave, Miami',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Wynwood+Farmers+Market',hours:'Sat 10am-4pm'},{name:'Perez Art Museum Miami',category:'Museum',address:'1103 Biscayne Blvd, Miami',rating:4.6,price:'$$',url:'https://pamm.org',hours:'Daily 11am-6pm'},{name:'Wynwood Walls',category:'Art',address:'2520 NW 2nd Ave, Miami',rating:4.8,price:'$',url:'https://www.thewynwoodwalls.com',hours:'Mon-Thu 10:30am-11:30pm'},{name:'Bayside Marketplace',category:'Waterfront',address:'401 Biscayne Blvd, Miami',rating:4.4,price:'Free',url:'https://maps.google.com/?q=Bayside+Marketplace+Miami',hours:'Daily 10am-10pm'}],
+    'nashville':[{name:'Nashville Farmers Market',category:'Farmers Market',address:'900 Rosa L Parks Blvd, Nashville',rating:4.7,price:'Free',url:'https://nashvillefarmersmarket.org',hours:'Daily 8am-6pm'},{name:'Ryman Auditorium',category:'Music Venue',address:'116 5th Ave N, Nashville',rating:4.9,price:'$$',url:'https://ryman.com',hours:'Tours daily 9am-4pm'},{name:'Frist Art Museum',category:'Museum',address:'919 Broadway, Nashville',rating:4.7,price:'$$',url:'https://fristartmuseum.org',hours:'Mon-Sat 10am-5pm'},{name:'6th & Peabody Rooftop',category:'Rooftop Bar',address:'600 Peabody St, Nashville',rating:4.5,price:'$$$',url:'https://maps.google.com/?q=6th+Peabody+Nashville',hours:'Daily 4pm-midnight'}],
+    'savannah':[{name:'Forsyth Farmers Market',category:'Farmers Market',address:'Forsyth Park, Savannah, GA',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Forsyth+Farmers+Market',hours:'Sat 9am-1pm'},{name:'Telfair Museums',category:'Museum',address:'121 Barnard St, Savannah',rating:4.6,price:'$$',url:'https://www.telfair.org',hours:'Daily 10am-5pm'},{name:'Rooftop at Bohemian Hotel',category:'Rooftop Bar',address:'102 W Bay St, Savannah',rating:4.5,price:'$$$',url:'https://maps.google.com/?q=Bohemian+Hotel+Savannah',hours:'Daily 4pm-midnight'},{name:'Forsyth Park',category:'Park',address:'Forsyth Pl, Savannah, GA',rating:4.9,price:'Free',url:'https://maps.google.com/?q=Forsyth+Park+Savannah',hours:'Open 24hrs'}],
+    'seattle':[{name:'Pike Place Market',category:'Market',address:'85 Pike St, Seattle, WA',rating:4.8,price:'Free',url:'https://www.pikeplacemarket.org',hours:'Daily 9am-6pm'},{name:'Seattle Art Museum',category:'Museum',address:'1300 1st Ave, Seattle',rating:4.6,price:'$$',url:'https://www.seattleartmuseum.org',hours:'Wed-Sun 10am-5pm'},{name:'Chihuly Garden and Glass',category:'Art',address:'305 Harrison St, Seattle',rating:4.8,price:'$$',url:'https://www.chihulygardenandglass.com',hours:'Daily 9am-6pm'},{name:'Capitol Hill Farmers Market',category:'Farmers Market',address:'Broadway & Pine St, Seattle',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Capitol+Hill+Farmers+Market+Seattle',hours:'Sun 11am-3pm'}],
+    'chicago':[{name:'Green City Market',category:'Farmers Market',address:'1817 N Clark St, Chicago',rating:4.8,price:'Free',url:'https://greencitymarket.org',hours:'Sat 7am-1pm'},{name:'Art Institute of Chicago',category:'Museum',address:'111 S Michigan Ave, Chicago',rating:4.8,price:'$$',url:'https://www.artic.edu',hours:'Daily 11am-5pm'},{name:'Chicago Riverwalk',category:'Waterfront',address:'Chicago Riverwalk',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Chicago+Riverwalk',hours:'Open daily'},{name:'Millennium Park',category:'Park',address:'201 E Randolph St, Chicago',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Millennium+Park+Chicago',hours:'Daily 6am-11pm'}],
+    'new york':[{name:'Union Square Greenmarket',category:'Farmers Market',address:'E 17th St & Union Square W, NYC',rating:4.7,price:'Free',url:'https://www.grownyc.org',hours:'Mon/Wed/Fri/Sat 8am-6pm'},{name:'The Metropolitan Museum',category:'Museum',address:'1000 5th Ave, New York',rating:4.8,price:'$$',url:'https://www.metmuseum.org',hours:'Daily 10am-5pm'},{name:'Brooklyn Flea',category:'Flea Market',address:'80 Pearl St, Brooklyn',rating:4.6,price:'Free',url:'https://brooklynflea.com',hours:'Sat-Sun 10am-5pm'},{name:'High Line',category:'Park',address:'High Line, New York',rating:4.7,price:'Free',url:'https://www.thehighline.org',hours:'Daily 7am-10pm'}],
+    'milwaukee':[{name:'Milwaukee Public Market',category:'Market',address:'400 N Water St, Milwaukee, WI',rating:4.6,price:'Free',url:'https://www.milwaukeepublicmarket.org',hours:'Mon-Fri 10am-8pm, Sat 8am-7pm'},{name:'Milwaukee Art Museum',category:'Museum',address:'700 N Art Museum Dr, Milwaukee',rating:4.7,price:'$$',url:'https://mam.org',hours:'Tue-Sun 10am-5pm'},{name:'Brady Street',category:'Dining',address:'Brady St, Milwaukee, WI',rating:4.5,price:'$$',url:'https://maps.google.com/?q=Brady+Street+Milwaukee',hours:'Daily from 11am'},{name:'Lakefront Brewery',category:'Brewery',address:'1872 N Commerce St, Milwaukee',rating:4.7,price:'$$',url:'https://www.lakefrontbrewery.com',hours:'Mon-Thu 11am-9pm'}],
+    'indianapolis':[{name:'Mass Ave Arts District',category:'Arts District',address:'Massachusetts Ave, Indianapolis',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Mass+Ave+Indianapolis',hours:'Daily from 10am'},{name:'Indianapolis Museum of Art',category:'Museum',address:'4000 Michigan Rd, Indianapolis',rating:4.6,price:'$$',url:'https://discovernewfields.org',hours:'Wed-Sun 11am-5pm'},{name:'White River State Park',category:'Park',address:'801 W Washington St, Indianapolis',rating:4.6,price:'Free',url:'https://maps.google.com/?q=White+River+State+Park+Indianapolis',hours:'Daily 6am-11pm'},{name:'Fountain Square',category:'District',address:'Fountain Square, Indianapolis',rating:4.5,price:'Free',url:'https://maps.google.com/?q=Fountain+Square+Indianapolis',hours:'Daily from 10am'}],
+    'philadelphia':[{name:'Reading Terminal Market',category:'Market',address:'51 N 12th St, Philadelphia, PA',rating:4.7,price:'Free',url:'https://readingterminalmarket.org',hours:'Mon-Sat 8am-6pm'},{name:'Philadelphia Museum of Art',category:'Museum',address:'2600 Benjamin Franklin Pkwy',rating:4.7,price:'$$',url:'https://www.philamuseum.org',hours:'Tue-Sun 10am-5pm'},{name:'Old City District',category:'Historic',address:'Old City, Philadelphia, PA',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Old+City+Philadelphia',hours:'Daily from 10am'},{name:'Yards Brewing Company',category:'Brewery',address:'500 Spring Garden St, Philadelphia',rating:4.5,price:'$$',url:'https://www.yardsbrewing.com',hours:'Mon-Thu 11am-9pm'}],
+    'boston':[{name:'Faneuil Hall Marketplace',category:'Market',address:'4 S Market St, Boston, MA',rating:4.5,price:'Free',url:'https://maps.google.com/?q=Faneuil+Hall+Boston',hours:'Daily 10am-9pm'},{name:'Museum of Fine Arts Boston',category:'Museum',address:'465 Huntington Ave, Boston',rating:4.7,price:'$$',url:'https://www.mfa.org',hours:'Mon/Tue/Sat/Sun 10am-5pm'},{name:'Freedom Trail',category:'Historic',address:'Boston Common, Boston, MA',rating:4.7,price:'Free',url:'https://www.thefreedomtrail.org',hours:'Open daily'},{name:'Harvard Square',category:'District',address:'Harvard Square, Cambridge, MA',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Harvard+Square+Cambridge',hours:'Daily from 9am'}],
+    'austin':[{name:'SFC Farmers Market',category:'Farmers Market',address:'422 W 4th St, Austin, TX',rating:4.7,price:'Free',url:'https://www.sfcfarmersmarket.org',hours:'Sat 9am-1pm'},{name:'Blanton Museum of Art',category:'Museum',address:'200 E MLK Jr Blvd, Austin',rating:4.6,price:'$$',url:'https://blantonmuseum.org',hours:'Tue-Sun 10am-5pm'},{name:'6th Street Live Music',category:'Music',address:'6th St, Austin, TX',rating:4.8,price:'Free-Varies',url:'https://maps.google.com/?q=6th+Street+Austin',hours:'Nightly from 9pm'},{name:'Barton Springs Pool',category:'Swimming',address:'2201 Barton Springs Rd, Austin',rating:4.8,price:'$',url:'https://maps.google.com/?q=Barton+Springs+Pool+Austin',hours:'Daily 5am-10pm'}],
+    'denver':[{name:'Cherry Creek Farmers Market',category:'Farmers Market',address:'E 1st Ave & Milwaukee St, Denver',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Cherry+Creek+Farmers+Market+Denver',hours:'Sat 8am-1pm'},{name:'Denver Art Museum',category:'Museum',address:'100 W 14th Ave Pkwy, Denver',rating:4.7,price:'$$',url:'https://www.denverartmuseum.org',hours:'Tue-Sun 10am-5pm'},{name:'Rocky Mountain Day Hike',category:'Nature',address:'Rocky Mountain NP, CO',rating:4.9,price:'$$',url:'https://www.nps.gov/romo',hours:'Open daily'},{name:'RiNo Art District',category:'Art',address:'River North Art District, Denver',rating:4.7,price:'Free',url:'https://maps.google.com/?q=RiNo+Art+District+Denver',hours:'Daily from 10am'}],
+    'san diego':[{name:'Little Italy Mercato',category:'Farmers Market',address:'Date St & India St, San Diego',rating:4.8,price:'Free',url:'https://www.littleitalysd.com/events/mercato',hours:'Sat 8am-2pm'},{name:'San Diego Museum of Art',category:'Museum',address:'1450 El Prado, Balboa Park',rating:4.6,price:'$$',url:'https://www.sdmart.org',hours:'Mon/Tue/Thu-Sun 10am-5pm'},{name:'La Jolla Cove',category:'Beach',address:'1100 Coast Blvd, La Jolla',rating:4.9,price:'Free',url:'https://maps.google.com/?q=La+Jolla+Cove',hours:'Open daily'},{name:'Gaslamp Quarter',category:'Entertainment',address:'Gaslamp Quarter, San Diego',rating:4.5,price:'Free',url:'https://maps.google.com/?q=Gaslamp+Quarter+San+Diego',hours:'Daily from 11am'}],
+    'portland':[{name:'Portland Saturday Market',category:'Market',address:'2 SW Naito Pkwy, Portland',rating:4.7,price:'Free',url:'https://www.portlandsaturdaymarket.com',hours:'Sat 10am-5pm'},{name:'Portland Art Museum',category:'Museum',address:'1219 SW Park Ave, Portland',rating:4.6,price:'$$',url:'https://portlandartmuseum.org',hours:'Wed-Sun 10am-5pm'},{name:'Departure Rooftop',category:'Rooftop Bar',address:'525 SW Morrison St, Portland',rating:4.5,price:'$$$',url:'https://departureportland.com',hours:'Daily 4pm-midnight'},{name:'Powells Books',category:'Bookstore',address:'1005 W Burnside St, Portland',rating:4.8,price:'Free',url:'https://www.powells.com',hours:'Daily 9am-9pm'}],
+    'new orleans':[{name:'Crescent City Farmers Market',category:'Farmers Market',address:'700 Magazine St, New Orleans',rating:4.8,price:'Free',url:'https://www.crescentcityfarmersmarket.org',hours:'Sat 8am-noon'},{name:'New Orleans Museum of Art',category:'Museum',address:'1 Collins Diboll Cir, New Orleans',rating:4.7,price:'$$',url:'https://noma.org',hours:'Wed-Sun 11am-5pm'},{name:'Frenchmen Street Jazz',category:'Music',address:'Frenchmen St, New Orleans, LA',rating:4.9,price:'Free-$10',url:'https://maps.google.com/?q=Frenchmen+Street+New+Orleans',hours:'Nightly from 8pm'},{name:'French Quarter',category:'Historic',address:'French Quarter, New Orleans',rating:4.7,price:'Free',url:'https://maps.google.com/?q=French+Quarter+New+Orleans',hours:'Open daily'}],
+    'atlanta':[{name:'Freedom Farmers Market',category:'Farmers Market',address:'453 Freedom Pkwy NE, Atlanta',rating:4.7,price:'Free',url:'https://www.freedomfarmersmkt.org',hours:'Sat 9am-noon'},{name:'High Museum of Art',category:'Museum',address:'1280 Peachtree St NE, Atlanta',rating:4.7,price:'$$',url:'https://www.high.org',hours:'Tue-Sun 10am-5pm'},{name:'Ponce City Market',category:'Market',address:'675 Ponce De Leon Ave, Atlanta',rating:4.7,price:'Free',url:'https://poncecitymarket.com',hours:'Daily 10am-9pm'},{name:'Atlanta BeltLine',category:'Park',address:'Atlanta BeltLine, Atlanta',rating:4.8,price:'Free',url:'https://maps.google.com/?q=Atlanta+BeltLine',hours:'Open daily'}],
+    'washington':[{name:'FRESHFARM DuPont Market',category:'Farmers Market',address:'1500 20th St NW, Washington DC',rating:4.8,price:'Free',url:'https://www.freshfarm.org',hours:'Sun 8:30am-1:30pm'},{name:'National Gallery of Art',category:'Museum',address:'Constitution Ave NW, DC',rating:4.8,price:'Free',url:'https://www.nga.gov',hours:'Daily 10am-5pm'},{name:'Lincoln Memorial',category:'Monument',address:'2 Lincoln Memorial Cir NW, DC',rating:4.9,price:'Free',url:'https://www.nps.gov/linc',hours:'Open 24hrs'},{name:'Eastern Market DC',category:'Market',address:'225 7th St SE, Washington DC',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Eastern+Market+DC',hours:'Tue-Sun 7am-6pm'}],
+    'las vegas':[{name:'The Neon Museum',category:'Museum',address:'770 Las Vegas Blvd N, Las Vegas',rating:4.7,price:'$$',url:'https://www.neonmuseum.org',hours:'Daily tours from 8am'},{name:'Red Rock Canyon',category:'Nature',address:'1000 Scenic Loop Dr, Las Vegas',rating:4.9,price:'$',url:'https://www.blm.gov/programs/national-conservation-lands/nevada/red-rock-canyon',hours:'Daily 6am-7pm'},{name:'Arts District',category:'Art',address:'107 E Charleston Blvd, Las Vegas',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Arts+District+Las+Vegas',hours:'Daily from 10am'},{name:'Fremont Street',category:'Entertainment',address:'Fremont St, Las Vegas, NV',rating:4.5,price:'Free',url:'https://maps.google.com/?q=Fremont+Street+Las+Vegas',hours:'Daily 6pm-2am'}],
+    'los angeles':[{name:'Original Farmers Market',category:'Market',address:'6333 W 3rd St, Los Angeles',rating:4.6,price:'Free',url:'https://www.farmersmarketla.com',hours:'Daily 9am-9pm'},{name:'LACMA',category:'Museum',address:'5905 Wilshire Blvd, Los Angeles',rating:4.6,price:'$$',url:'https://www.lacma.org',hours:'Mon-Fri 11am-6pm'},{name:'The Getty Center',category:'Museum',address:'1200 Getty Center Dr, Los Angeles',rating:4.8,price:'Free',url:'https://www.getty.edu',hours:'Tue-Sun 10am-5:30pm'},{name:'Perch LA Rooftop',category:'Rooftop Bar',address:'448 S Hill St, Los Angeles',rating:4.5,price:'$$$',url:'https://perchla.com',hours:'Daily 11:30am-2am'}],
+    'houston':[{name:'Urban Harvest Farmers Market',category:'Farmers Market',address:'3000 Richmond Ave, Houston',rating:4.7,price:'Free',url:'https://www.urbanharvest.org',hours:'Sat 8am-noon'},{name:'Museum of Fine Arts Houston',category:'Museum',address:'1001 Bissonnet St, Houston',rating:4.7,price:'$$',url:'https://www.mfah.org',hours:'Wed-Sun 11am-5pm'},{name:'Space Center Houston',category:'Experience',address:'1601 E NASA Pkwy, Houston',rating:4.7,price:'$$',url:'https://www.spacecenter.org',hours:'Daily 10am-5pm'},{name:'Buffalo Bayou Park',category:'Park',address:'Buffalo Bayou Park, Houston',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Buffalo+Bayou+Park+Houston',hours:'Open daily'}],
+    'dallas':[{name:'Dallas Farmers Market',category:'Farmers Market',address:'920 S Harwood St, Dallas',rating:4.6,price:'Free',url:'https://www.dallasfarmersmarket.org',hours:'Sat-Sun 8am-5pm'},{name:'Dallas Museum of Art',category:'Museum',address:'1717 N Harwood St, Dallas',rating:4.7,price:'Free',url:'https://www.dma.org',hours:'Tue-Sun 11am-5pm'},{name:'Deep Ellum',category:'Entertainment',address:'Deep Ellum, Dallas, TX',rating:4.7,price:'Free-Varies',url:'https://maps.google.com/?q=Deep+Ellum+Dallas',hours:'Nightly from 7pm'},{name:'Klyde Warren Park',category:'Park',address:'2012 Woodall Rodgers Fwy, Dallas',rating:4.7,price:'Free',url:'https://maps.google.com/?q=Klyde+Warren+Park+Dallas',hours:'Daily 6am-11pm'}],
+    'phoenix':[{name:'Scottsdale Farmers Market',category:'Farmers Market',address:'3806 N Brown Ave, Scottsdale',rating:4.7,price:'Free',url:'https://www.scottsdalefarmersmarket.org',hours:'Sat 8am-1pm'},{name:'Heard Museum',category:'Museum',address:'2301 N Central Ave, Phoenix',rating:4.7,price:'$$',url:'https://heard.org',hours:'Daily 10am-5pm'},{name:'Sedona Red Rock',category:'Nature',address:'Sedona, AZ',rating:4.9,price:'$',url:'https://maps.google.com/?q=Sedona+Red+Rock+Trail',hours:'Open daily'},{name:'Old Town Scottsdale',category:'District',address:'Old Town Scottsdale, AZ',rating:4.6,price:'Free',url:'https://maps.google.com/?q=Old+Town+Scottsdale',hours:'Daily from 10am'}],
+    'sf':[{name:'Ferry Plaza Farmers Market',category:'Farmers Market',address:'1 Ferry Building, San Francisco',rating:4.8,price:'Free',url:'https://www.ferrybuildingmarketplace.com/farmers-market',hours:'Sat 8am-2pm'},{name:'SFMOMA',category:'Museum',address:'151 3rd St, San Francisco',rating:4.7,price:'$$',url:'https://www.sfmoma.org',hours:'Mon/Tue/Fri-Sun 10am-5pm'},{name:'Golden Gate Bridge Walk',category:'Nature',address:'Golden Gate Bridge, SF',rating:4.9,price:'Free',url:'https://www.goldengate.org',hours:'Open daily'},{name:'Fishermans Wharf',category:'Waterfront',address:'Fishermans Wharf, San Francisco',rating:4.4,price:'Free',url:'https://maps.google.com/?q=Fishermans+Wharf+San+Francisco',hours:'Daily 9am-10pm'}]
+  };
+  var firstWord=n.split(' ')[0];
+  for(var key in VENUES){
+    if(n.indexOf(key)>=0||key.indexOf(firstWord)>=0||firstWord.indexOf(key.split(' ')[0])>=0){
+      return VENUES[key];
     }
   }
-  // No match - return Google Maps search fallback for this specific city
   var enc=encodeURIComponent(destName);
-  return [
-    {cat:'Farmers Market',icon:'🌾',name:'Local Farmers Market',venue:destName,
-     addr:'Downtown '+destName,date:'Weekends - check local listings',price:'Free',
-     url:'https://www.google.com/maps/search/farmers+market+'+enc},
-    {cat:'Museum',icon:'🏛️',name:'Local Museum & Galleries',venue:destName,
-     addr:destName,date:'Check hours online',price:'Varies',
-     url:'https://www.google.com/maps/search/museum+art+gallery+'+enc},
-    {cat:'Rooftop Bar',icon:'🍸',name:'Rooftop Bars & Restaurants',venue:destName,
-     addr:destName,date:'Daily evenings',price:'Free entry',
-     url:'https://www.google.com/maps/search/rooftop+bar+restaurant+'+enc},
-    {cat:'Things To Do',icon:'🎭',name:'Weekend Activities',venue:destName,
-     addr:destName,date:'This weekend',price:'Varies',
-     url:'https://www.eventbrite.com/d/'+encodeURIComponent(destName.toLowerCase().replace(/[^a-z0-9]+/g,'-'))+'/events/'}
-  ];
+  return [{name:'Local Farmers Market',category:'Farmers Market',address:'Downtown '+destName,rating:4.5,price:'Free',url:'https://maps.google.com/?q=farmers+market+'+enc,hours:'Weekend mornings'},{name:'City Museum',category:'Museum',address:'Downtown '+destName,rating:4.5,price:'$$',url:'https://maps.google.com/?q=museum+'+enc,hours:'Tue-Sun 10am-5pm'},{name:'Rooftop Bar',category:'Rooftop Bar',address:'Downtown '+destName,rating:4.5,price:'$$$',url:'https://maps.google.com/?q=rooftop+bar+'+enc,hours:'Daily 4pm-late'}];
 }
 
 function setCountry(c){
@@ -976,7 +1062,8 @@ function runEscape(){
     document.getElementById('rSb').textContent='Within '+maxDr+'hr drive \u00b7 '+nights+' night'+(nights>1?'s':'')+' \u00b7 '+bLbl;
     document.getElementById('rDt').textContent='\ud83d\udcc5 '+wk.label+(isHol?' \u00b7 '+wk.hol.name:'')+' \u00b7 '+wk.sub;
     var all=getDests(cc),filtered=[];
-    for(var i=0;i<all.length;i++){if(all[i].dr<=maxDr)filtered.push(all[i]);}
+    var minDr=0.5;
+    for(var i=0;i<all.length;i++){if(all[i].dr<=maxDr&&all[i].dr>=minDr)filtered.push(all[i]);}
     // Filter by vibe (based on destination tags/categories)
     var activeVibes=(typeof selVibes!=='undefined'&&selVibes.length>0)?selVibes:(selVibe&&selVibe!=='all'?[selVibe]:[]);
     if(activeVibes.length>0){
@@ -1016,7 +1103,13 @@ function runEscape(){
     });
     var html='';
     if(!filtered.length){
-      html='<div style="text-align:center;padding:40px 20px"><div style="font-size:2rem;margin-bottom:12px">\ud83d\uddfa\ufe0f</div><div style="font-weight:600;color:#1a2e22;margin-bottom:6px">No destinations within '+maxDr+'hr</div><div style="font-size:0.8rem;color:#88a898">Try increasing your drive time</div></div>';
+      var _drLbl=selDrive==='all'?'any distance':maxDr+'hr drive';
+      html='<div style="text-align:center;padding:40px 20px">';
+      html+='<div style="font-size:2.5rem;margin-bottom:12px">🗺️</div>';
+      html+='<div style="font-size:1.05rem;font-weight:700;color:#1a2e22;margin-bottom:8px">No escapes found</div>';
+      html+='<div style="font-size:0.82rem;color:#88a898;margin-bottom:20px">Nothing within '+_drLbl+' from '+cn+'</div>';
+      html+='<button onclick="selDrive=\'all\';runEscape()" style="background:#2D8C6A;color:#fff;border:none;border-radius:100px;padding:12px 24px;font-size:0.88rem;font-weight:600;cursor:pointer;">Expand Search →</button>';
+      html+='</div>';
     } else {
       var allTiers=[
         {label:'💰 Budget',sub:'1-2 Star \u00b7 Most affordable',nflt:'class%3D1%3Bclass%3D2',tier:'budget',hi:0},
@@ -1113,46 +1206,47 @@ function runEscape(){
         html+='</div>';
         // AI upgrade disabled - geographic rules are accurate
 
-        // ═══ UNIFIED: LOCAL GUIDE ═══
-        html+='<div class="ev-section" id="ev'+d.n.replace(/[^a-zA-Z0-9]/g,'')+'">';
-        html+='<div class="sec-title">📍 '+d.n+' · LOCAL GUIDE</div>';
+        // ═══ DISCOVER SECTION ═══
+        var _did='d'+d.n.replace(/[^a-zA-Z0-9]/g,'');
 
-        // EVENTS & RECOMMENDATIONS subhead
-        html+='<div class="ev-subhead">📅 EVENTS & RECOMMENDATIONS</div>';
-
-        // Curated venues shown immediately
-        var _curated=getCuratedVenues(d.n);
-        if(_curated&&_curated.length>0){
-          _curated.forEach(function(v){
+        // ── TOP PICKS (curated - instant) ──
+        html+='<div class="ev-section">';
+        html+='<div class="sec-title">📍 '+d.n.toUpperCase()+' · THIS WEEKEND</div>';
+        html+='<div class="ev-subhead">⭐ TOP PICKS</div>';
+        var _cv=getCuratedVenues(d.n);
+        if(_cv){
+          _cv.slice(0,3).forEach(function(v){
             html+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
               '<div class="ev-left">'+
-                '<div class="ev-cat">'+v.icon+' '+v.cat+'</div>'+
+                '<div class="ev-cat">'+getCatEmoji(v.category)+' '+v.category+'</div>'+
                 '<div class="ev-name">'+v.name+'</div>'+
-                '<div class="ev-venue">📍 '+v.addr+'</div>'+
-                '<div class="ev-date">🗓 '+v.date+'</div>'+
+                '<div class="ev-venue">📍 '+v.address+'</div>'+
+                '<div class="ev-date">🕐 '+v.hours+'</div>'+
               '</div>'+
               '<div class="ev-right">'+
-                '<div class="ev-price">'+v.price+'</div>'+
+                '<div class="ev-price">'+(v.rating?'★'+v.rating+' ':'')+v.price+'</div>'+
                 '<button class="ev-book">Visit ↗</button>'+
               '</div></div>';
           });
         }
 
-        // Live events slot - filled by API
-        var _liveId='live'+d.n.replace(/[^a-zA-Z0-9]/g,'');
-        html+='<div id="'+_liveId+'"></div>';
-
-        // ACTIVITIES subhead
-        html+='<div class="ev-subhead">🎯 ACTIVITIES</div>';
+        // ── ACTIVITIES (Viator - exact dates+guests) ──
+        html+='<div class="ev-subhead">🎯 BOOKABLE ACTIVITIES</div>';
+        var _seenActs={};
+        var _actCount=0;
         for(var ai=0;ai<d.acts.length;ai++){
+          if(_actCount>=3)break; // max 3 activities
           var a=d.acts[ai];
-          var aUrl=isIndia?indiaActUrl(a.name,d.n,wk.ci,wk.co):actUrl(a.name,d.n+', '+d.st,wk.ci,wk.co);
+          if(_seenActs[a.name])continue; // dedup
+          _seenActs[a.name]=1;
+          _actCount++;
+          var aUrl=actUrl(a.name,d.n+', '+d.st,wk.ci,wk.co);
           html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
             '<div class="ev-left">'+
-              '<div class="ev-cat">🎯 Bookable Tour · Viator</div>'+
+              '<div class="ev-cat">🎯 Viator · Guided Tour</div>'+
               '<div class="ev-name">'+a.name+'</div>'+
               '<div class="ev-desc-sm">'+a.desc+'</div>'+
-              '<div class="ev-venue">📍 '+d.n+', '+d.st+'</div>'+
+              '<div class="ev-venue">📍 '+d.n+'</div>'+
               '<div class="ev-date">🗓 '+wk.sub+' · '+wtsAdults+' guest'+(parseInt(wtsAdults)>1?'s':'')+'</div>'+
             '</div>'+
             '<div class="ev-right">'+
@@ -1160,43 +1254,81 @@ function runEscape(){
               '<button class="ev-book">Book ↗</button>'+
             '</div></div>';
         }
+
+        // ── LIVE EVENTS slot (filled by /api/discover) ──
+        html+='<div id="'+_did+'_ev"></div>';
         html+='</div>';
 
-        // Load LIVE events from Eventbrite API in background
-        (function(dn,ds,ci,co,vibe,liveId){
-          setTimeout(function(){
-            fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
-              body:JSON.stringify({cityName:dn,stateName:ds,startDate:ci,endDate:co,vibe:vibe})
-            })
-            .then(function(r){return r.json();})
-            .then(function(data){
-              if(!data||!data.events||data.events.length===0)return;
-              var el=document.getElementById(liveId);
-              if(!el)return;
-              var label=data.fallback?'🎟️ EVENTS THIS WEEKEND · EVENTBRITE':'🎟️ LIVE THIS WEEKEND · EVENTBRITE';
-              var nh='<div class="ev-subhead-sm">'+label+'</div>';
+        // Load Meetup + Yelp events in background
+        (function(dn,ds,ci,co,vibe,evId){
+          fetch('/api/discover',{method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({cityName:dn,stateName:ds,startDate:ci,endDate:co,vibe:vibe,
+              lat:getCityLat(dn),lng:getCityLng(dn)})
+          })
+          .then(function(r){return r.json();})
+          .then(function(data){
+            var el=document.getElementById(evId);
+            if(!el)return;
+            var nh='';
+
+            // Meetup events
+            if(data.events&&data.events.length>0&&!data.eventsFallback){
+              nh+='<div class="ev-subhead">🎟️ LOCAL EVENTS · MEETUP</div>';
               data.events.slice(0,4).forEach(function(ev){
-                // Format date nicely
-                var d=new Date(ev.date);
-                var dStr=isNaN(d)?ev.date:d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
                 nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
                   '<div class="ev-left">'+
-                    '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+' · Eventbrite</div>'+
+                    '<div class="ev-cat">👥 '+ev.group+'</div>'+
                     '<div class="ev-name">'+ev.name+'</div>'+
                     '<div class="ev-venue">📍 '+ev.venue+'</div>'+
-                    (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
-                    '<div class="ev-date">🗓 '+dStr+'</div>'+
+                    '<div class="ev-addr">'+ev.address+'</div>'+
+                    '<div class="ev-date">🗓 '+ev.date+(ev.going?' · '+ev.going+' going':'')+'</div>'+
                   '</div>'+
                   '<div class="ev-right">'+
-                    '<div class="ev-price">'+(ev.price||'')+'</div>'+
-                    '<button class="ev-book">Book ↗</button>'+
+                    '<div class="ev-price">'+ev.price+'</div>'+
+                    '<button class="ev-book">Join ↗</button>'+
                   '</div></div>';
               });
-              el.innerHTML=nh;
-            })
-            .catch(function(){});
-          },600);
-        })(d.n,d.st,wk.ci,wk.co,selVibe,_liveId);
+            } else if(data.events&&data.events.length>0){
+              // Eventbrite fallback events
+              nh+='<div class="ev-subhead">🎟️ EVENTS · EVENTBRITE</div>';
+              data.events.slice(0,3).forEach(function(ev){
+                nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
+                  '<div class="ev-left">'+
+                    '<div class="ev-cat">'+getCatEmoji(ev.category)+' '+ev.category+'</div>'+
+                    '<div class="ev-name">'+ev.name+'</div>'+
+                    '<div class="ev-venue">📍 '+ev.venue+'</div>'+
+                    '<div class="ev-date">🗓 '+ev.date+'</div>'+
+                  '</div>'+
+                  '<div class="ev-right">'+
+                    '<div class="ev-price">'+ev.price+'</div>'+
+                    '<button class="ev-book">Browse ↗</button>'+
+                  '</div></div>';
+              });
+            }
+
+            // Yelp venues (if better than curated)
+            if(data.venues&&data.venues.length>0&&!data.venuesFallback){
+              nh+='<div class="ev-subhead">⭐ TOP RATED · YELP</div>';
+              data.venues.slice(0,3).forEach(function(v){
+                nh+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
+                  '<div class="ev-left">'+
+                    '<div class="ev-cat">'+getCatEmoji(v.category)+' '+v.category+'</div>'+
+                    '<div class="ev-name">'+v.name+'</div>'+
+                    '<div class="ev-venue">📍 '+v.address+'</div>'+
+                    (v.distance?'<div class="ev-addr">'+v.distance+' away</div>':'')+
+                  '</div>'+
+                  '<div class="ev-right">'+
+                    '<div class="ev-price">★'+v.rating+' · '+v.price+'</div>'+
+                    '<button class="ev-book">View ↗</button>'+
+                  '</div></div>';
+              });
+            }
+
+            if(nh)el.innerHTML=nh;
+          })
+          .catch(function(){});
+        })(d.n,d.st,wk.ci,wk.co,selVibe,_did+'_ev');
       }
     }
     document.getElementById('rBody').innerHTML=html;
@@ -1315,76 +1447,43 @@ function runLocal(){
     html+='<div id="'+_lEvId+'_more"><div class="ev-loading"><div class="ev-spinner"></div><span>Loading local events...</span></div></div>';
     html+='</div>';
 
-    // Load from /api/events
-    (function(cn,ci,co,elId){
-      setTimeout(function(){
-        fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({cityName:cn,stateName:'',startDate:ci,endDate:co,vibe:'all'})
-        })
-        .then(function(r){return r.json();})
-        .then(function(data){
-          var el=document.getElementById(elId);
-          if(!el||!data.events||data.events.length===0){if(el)el.style.display='none';return;}
-          var nh='';
-          data.events.forEach(function(ev){
-            nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
-              '<div class="ev-left">'+
-                '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+'</div>'+
-                '<div class="ev-name">'+ev.name+'</div>'+
-                '<div class="ev-venue">📍 '+ev.venue+'</div>'+
-                (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
-                '<div class="ev-date">🗓 '+(ev.date||'Check dates')+'</div>'+
-              '</div>'+
-              '<div class="ev-right">'+
-                '<div class="ev-price">'+(ev.price||'')+'</div>'+
-                '<button class="ev-book">Book ↗</button>'+
-              '</div></div>';
-          });
-          el.innerHTML=nh;
-        })
-        .catch(function(){var el=document.getElementById(elId);if(el)el.style.display='none';});
-      },400);
-    })(cityName,wk.ci,wk.co,_lEvId+'_more');
 
 
-    // ═══ LOCAL: UNIFIED GUIDE ═══
+
+    // ═══ LOCAL DISCOVER ═══
     var acts=data.acts||DEFAULT_LOCAL.acts;
-    var _lLocalId='lloc'+cityName.replace(/[^a-zA-Z0-9]/g,'');
-    html+='<div class="ev-section" id="'+_lLocalId+'">';
-    html+='<div class="sec-title">📍 '+cityName+' · LOCAL GUIDE</div>';
+    var _ldid='ld'+cityName.replace(/[^a-zA-Z0-9]/g,'');
+    html+='<div class="ev-section">';
+    html+='<div class="sec-title">📍 '+cityName.toUpperCase()+' · TODAY & THIS WEEKEND</div>';
 
-    // EVENTS & RECOMMENDATIONS
-    html+='<div class="ev-subhead">📅 EVENTS & RECOMMENDATIONS</div>';
-    var _lCurated=getCuratedVenues(cityName);
-    if(_lCurated&&_lCurated.length>0){
-      _lCurated.forEach(function(v){
+    // Top Picks
+    html+='<div class="ev-subhead">⭐ TOP PICKS</div>';
+    var _lcv=getCuratedVenues(cityName);
+    if(_lcv){
+      _lcv.slice(0,3).forEach(function(v){
         html+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
           '<div class="ev-left">'+
-            '<div class="ev-cat">'+v.icon+' '+v.cat+'</div>'+
+            '<div class="ev-cat">'+getCatEmoji(v.category)+' '+v.category+'</div>'+
             '<div class="ev-name">'+v.name+'</div>'+
-            '<div class="ev-venue">📍 '+v.addr+'</div>'+
-            '<div class="ev-date">🗓 '+v.date+'</div>'+
+            '<div class="ev-venue">📍 '+v.address+'</div>'+
+            '<div class="ev-date">🕐 '+v.hours+'</div>'+
           '</div>'+
           '<div class="ev-right">'+
-            '<div class="ev-price">'+v.price+'</div>'+
+            '<div class="ev-price">'+(v.rating?'★'+v.rating+' ':'')+v.price+'</div>'+
             '<button class="ev-book">Visit ↗</button>'+
           '</div></div>';
       });
     }
 
-    // Live events slot
-    var _lLiveId='llive'+cityName.replace(/[^a-zA-Z0-9]/g,'');
-    html+='<div id="'+_lLiveId+'"></div>';
-
-    // ACTIVITIES
-    html+='<div class="ev-subhead">🎯 ACTIVITIES</div>';
+    // Activities
+    html+='<div class="ev-subhead">🎯 BOOKABLE ACTIVITIES</div>';
+    var ppl=(typeof selPeople!=='undefined'?selPeople:'2');
     for(var ai=0;ai<acts.length;ai++){
       var a=acts[ai];
-      var aUrl=isIndia?indiaActUrl(a.name,cityName,wk.ci,wk.co):actUrl(a.name,cityName,wk.ci,wk.co);
-      var ppl=(typeof selPeople!=='undefined'?selPeople:'2');
+      var aUrl=actUrl(a.name,cityName,wk.ci,wk.co);
       html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
         '<div class="ev-left">'+
-          '<div class="ev-cat">🎯 Bookable Tour · Viator</div>'+
+          '<div class="ev-cat">🎯 Viator · Guided Tour</div>'+
           '<div class="ev-name">'+a.name+'</div>'+
           '<div class="ev-desc-sm">'+a.desc+'</div>'+
           '<div class="ev-venue">📍 '+cityName+'</div>'+
@@ -1395,41 +1494,58 @@ function runLocal(){
           '<button class="ev-book">Book ↗</button>'+
         '</div></div>';
     }
+
+    // Live events slot
+    html+='<div id="'+_ldid+'_ev"></div>';
     html+='</div>';
 
-    // Load live events from Eventbrite
-    (function(cn,ci,co,liveId){
-      setTimeout(function(){
-        fetch('/api/events',{method:'POST',headers:{'Content-Type':'application/json'},
-          body:JSON.stringify({cityName:cn,stateName:'',startDate:ci,endDate:co,vibe:'all'})
-        })
-        .then(function(r){return r.json();})
-        .then(function(data){
-          if(!data||!data.events)return;
-          var el=document.getElementById(liveId);
-          if(!el||data.events.length===0)return;
-          var nh='<div class="ev-subhead-sm">🎟️ LIVE THIS WEEKEND · EVENTBRITE</div>';
+    // Load Meetup + Yelp
+    (function(cn,ci,co,evId){
+      fetch('/api/discover',{method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({cityName:cn,startDate:ci,endDate:co,vibe:'all',
+          lat:getCityLat(cn),lng:getCityLng(cn)})
+      })
+      .then(function(r){return r.json();})
+      .then(function(data){
+        var el=document.getElementById(evId);
+        if(!el)return;
+        var nh='';
+        if(data.events&&data.events.length>0&&!data.eventsFallback){
+          nh+='<div class="ev-subhead">🎟️ LOCAL EVENTS · MEETUP</div>';
           data.events.slice(0,4).forEach(function(ev){
-            var d=new Date(ev.date);
-            var dStr=isNaN(d)?ev.date:d.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
             nh+='<div class="ev-item" onclick="goTo(\''+ev.url+'\')">'+
               '<div class="ev-left">'+
-                '<div class="ev-cat">'+getCatIcon(ev.category)+' '+ev.category+' · Eventbrite</div>'+
+                '<div class="ev-cat">👥 '+ev.group+'</div>'+
                 '<div class="ev-name">'+ev.name+'</div>'+
                 '<div class="ev-venue">📍 '+ev.venue+'</div>'+
-                (ev.address?'<div class="ev-addr">'+ev.address+'</div>':'')+
-                '<div class="ev-date">🗓 '+dStr+'</div>'+
+                '<div class="ev-date">🗓 '+ev.date+(ev.going?' · '+ev.going+' going':'')+'</div>'+
               '</div>'+
               '<div class="ev-right">'+
-                '<div class="ev-price">'+(ev.price||'')+'</div>'+
-                '<button class="ev-book">Book ↗</button>'+
+                '<div class="ev-price">'+ev.price+'</div>'+
+                '<button class="ev-book">Join ↗</button>'+
               '</div></div>';
           });
-          el.innerHTML=nh;
-        })
-        .catch(function(){});
-      },600);
-    })(cityName,wk.ci,wk.co,_lLiveId);
+        }
+        if(data.venues&&data.venues.length>0&&!data.venuesFallback){
+          nh+='<div class="ev-subhead">⭐ TOP RATED · YELP</div>';
+          data.venues.slice(0,3).forEach(function(v){
+            nh+='<div class="ev-item" onclick="goTo(\''+v.url+'\')">'+
+              '<div class="ev-left">'+
+                '<div class="ev-cat">'+getCatEmoji(v.category)+' '+v.category+'</div>'+
+                '<div class="ev-name">'+v.name+'</div>'+
+                '<div class="ev-venue">📍 '+v.address+'</div>'+
+              '</div>'+
+              '<div class="ev-right">'+
+                '<div class="ev-price">★'+v.rating+' · '+v.price+'</div>'+
+                '<button class="ev-book">View ↗</button>'+
+              '</div></div>';
+          });
+        }
+        if(nh)el.innerHTML=nh;
+      })
+      .catch(function(){});
+    })(cityName,wk.ci,wk.co,_ldid+'_ev');
     document.getElementById('rBody').innerHTML=html;
     showRes();
   },50);
