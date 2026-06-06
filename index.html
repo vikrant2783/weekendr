@@ -228,15 +228,15 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .policy-modal.open{display:flex;}
 .policy-box{background:#fff;border-radius:20px;padding:24px 20px;max-width:480px;width:100%;max-height:80vh;overflow-y:auto;}
 .policy-close{float:right;background:#F0F7F3;border:none;border-radius:100px;padding:5px 14px;font-size:0.8rem;cursor:pointer;color:#2D8C6A;font-weight:600;}
-.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:10px 14px 4px;align-items:stretch;width:100%;box-sizing:border-box;}
-.ai-stay-card{border-radius:14px;padding:13px 12px 11px;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;box-sizing:border-box;height:100%;min-height:120px;}
+.ai-stays-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:8px 12px 4px;align-items:stretch;width:100%;box-sizing:border-box;overflow:hidden;}
+.ai-stay-card{border-radius:14px;padding:11px 10px 9px;cursor:pointer;transition:transform 0.15s;display:flex;flex-direction:column;box-sizing:border-box;height:100%;min-height:110px;overflow:hidden;}
 .ai-stay-card:active{transform:scale(0.97);}
 .ai-stay-top{display:flex;align-items:center;gap:6px;margin-bottom:6px;}
 .ai-stay-icon{font-size:1.25rem;line-height:1;flex-shrink:0;}
-.ai-stay-name{font-size:0.83rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ai-stay-desc{font-size:0.62rem;color:rgba(255,255,255,0.85);line-height:1.3;flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ai-stay-name{font-size:0.78rem;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.ai-stay-desc{font-size:0.6rem;color:rgba(255,255,255,0.82);line-height:1.35;flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .ai-stay-bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;flex-shrink:0;}
-.ai-stay-price{font-size:0.7rem;font-weight:700;color:#fff;white-space:nowrap;}
+.ai-stay-price{font-size:0.65rem;font-weight:700;color:#fff;white-space:nowrap;}
 .ai-stay-book{font-size:0.6rem;font-weight:600;color:#fff;background:rgba(255,255,255,0.22);border:1px solid rgba(255,255,255,0.3);border-radius:100px;padding:3px 9px;white-space:nowrap;flex-shrink:0;}
 .ai-stays-note{font-size:0.6rem;color:#88a898;text-align:center;padding:6px 14px 10px;}
 .policy-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9999;padding:20px;box-sizing:border-box;align-items:center;justify-content:center;}
@@ -696,40 +696,44 @@ function getStayUrl(stayType, cityName, stateName, ci, co){
   var dest = cityName + (stateName ? ', ' + stateName : '');
   var adults = (typeof selPeople !== 'undefined' ? selPeople : '2');
 
-  function airbnbUrl(propType, amenityId){
-    var url = 'https://www.airbnb.com/s/' + encodeURIComponent(dest) + '/homes';
-    url += '?checkin=' + ci + '&checkout=' + co + '&adults=' + adults;
-    if(propType) url += '&property_type_id%5B%5D=' + propType;
-    if(amenityId) url += '&amenities%5B%5D=' + amenityId;
-    url += '&sort_order=PRICE_LTE';
+  function airbnb(propType, amenityId){
+    var url='https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes';
+    url+='?adults='+adults+'&checkin='+ci+'&checkout='+co;
+    if(propType) url+='&property_type_id%5B%5D='+propType;
+    if(amenityId) url+='&amenities%5B%5D='+amenityId;
+    url+='&sort_order=PRICE_LTE';
     return url;
   }
-
-  function vrboUrl(keyword){
-    return 'https://www.vrbo.com/search/keywords:' +
-      cityName.replace(/ /g, '+') +
-      (stateName ? '+' + stateName.replace(/ /g, '+') : '') +
-      '+' + keyword +
-      '?startDate=' + ci + '&endDate=' + co +
-      '&adultsCount=' + adults + '&sort=PRICE_ASCENDING';
+  function vrbo(kw){
+    return 'https://www.vrbo.com/search/keywords:'+
+      cityName.replace(/ /g,'+')+
+      (stateName?'+'+stateName.replace(/ /g,'+'):'')+
+      '+'+kw+
+      '?startDate='+ci+'&endDate='+co+'&adultsCount='+adults+'&sort=PRICE_ASCENDING';
   }
-
-  function hipcampUrl(){
-    // Hipcamp correct URL params: arrive/depart/adults
-    var q=encodeURIComponent(cityName+(stateName?' '+stateName:''));
-    return 'https://www.hipcamp.com/en-US/search?q='+q+
-      '&arrive='+ci+'&depart='+co+'&adults='+adults+'&category=camping';
+  function hipcamp(cat){
+    return 'https://www.hipcamp.com/en-US/search?q='+
+      encodeURIComponent(cityName+(stateName?' '+stateName:''))+
+      '&arrive='+ci+'&depart='+co+'&adults='+adults+
+      (cat?'&category='+cat:'&category=camping');
+  }
+  function booking(star){
+    return 'https://www.booking.com/searchresults.html?ss='+
+      encodeURIComponent(dest)+
+      '&checkin='+ci+'&checkout='+co+
+      '&group_adults='+adults+
+      '&nflt=class%3D'+star+'&selected_currency=USD&lang=en-us&order=price';
   }
 
   switch(stayType){
-    case 'treehouse':   return airbnbUrl('treehouses');
-    case 'cabin':       return airbnbUrl('cabins');
-    case 'glamping':    return airbnbUrl('glamping');
-    case 'beachfront':  return airbnbUrl('', '4');
-    case 'lakefront':   return airbnbUrl('', '4');
-    case 'farmhouse':   return vrboUrl('farmhouse');
-    case 'camping':     return hipcampUrl();
-    default:            return airbnbUrl('');
+    case 'treehouse':   return airbnb('treehouses');        // Airbnb treehouses
+    case 'cabin':       return vrbo('cabin');               // VRBO cabins (different inventory!)
+    case 'glamping':    return airbnb('glamping');          // Airbnb glamping
+    case 'beachfront':  return airbnb('','4');              // Airbnb waterfront
+    case 'farmhouse':   return vrbo('farmhouse');           // VRBO farmhouses
+    case 'camping':     return hipcamp('camping');          // Hipcamp camping
+    case 'lakefront':   return vrbo('lakefront+waterfront');// VRBO lakefront (different!)
+    default:            return airbnb('');
   }
 }
 // India Hotels: Goibibo - ALWAYS INR, never USD
@@ -1163,7 +1167,7 @@ function runEscape(){
         var _neverBeach=(_isBeach&&_isWine)?['cabin','lakefront']:['treehouse','cabin','farmhouse','lakefront','camping'];
         var _neverDesert=['treehouse','cabin','lakefront'];
         var _padExclude=_isBeach?_neverBeach:_isDesert?_neverDesert:[];
-        var _padOrder=_isBeach&&_isWine?['farmhouse','beachfront','glamping','treehouse']:_isBeach?['beachfront','glamping']:_isDesert?['camping','glamping']:_isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:_isWine?['farmhouse','treehouse','camping','cabin','lakefront']:_isLake?['lakefront','cabin','camping','treehouse','farmhouse']:['treehouse','camping','cabin','farmhouse','lakefront'];
+        var _padOrder=_isBeach&&_isWine?['farmhouse','beachfront','camping','glamping']:_isBeach?['beachfront','camping','glamping']:_isDesert?['camping','glamping']:_isMtn?['treehouse','cabin','camping','lakefront','farmhouse']:_isWine?['farmhouse','treehouse','camping','cabin','lakefront']:_isLake?['lakefront','cabin','camping','treehouse','farmhouse']:['treehouse','camping','cabin','farmhouse','lakefront'];
         var _display=_avail.slice();
         if(_display.length%2!==0){
           var _padded=false;
@@ -1194,7 +1198,15 @@ function runEscape(){
         var _safeId='ws'+d.n.replace(/[^a-zA-Z0-9]/g,'');
         html+='<div id="'+_safeId+'" class="ai-stays-grid">';
         _display.forEach(function(s){
-          var _u=getStayUrl(s.type,d.n,d.st,wk.ci,wk.co);
+          // For beach dests: glamping → Hipcamp (different platform from beachfront=Airbnb)
+          var _u;
+          if(s.type==='glamping'&&_isBeach){
+            _u='https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(d.n+(d.st?' '+d.st:''))+'&arrive='+wk.ci+'&depart='+wk.co+'&adults='+wtsAdults+'&category=camping';
+          } else if(s.type==='cabin'){
+            _u='https://www.vrbo.com/search/keywords:'+d.n.replace(/ /g,'+')+(d.st?'+'+d.st.replace(/ /g,'+'):'')+'+cabin?startDate='+wk.ci+'&endDate='+wk.co+'&adultsCount='+wtsAdults+'&sort=PRICE_ASCENDING';
+          } else {
+            _u=getStayUrl(s.type,d.n,d.st,wk.ci,wk.co);
+          }
           html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_u+'\')">';
           html+='<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>';
           html+='<div class="ai-stay-desc">'+s.why+'</div>';
@@ -1374,89 +1386,148 @@ function runLocal(){
       {label:'\ud83d\udcb0 Budget',sub:'1-2 Star \u00b7 Most affordable',nflt:'class%3D1%3Bclass%3D2',p:lp.b},
       {label:'\u2b50 Mid-Range',sub:'3 Star \u00b7 Best value',nflt:'class%3D3',p:lp.m},
       {label:'\ud83c\udfc6 Premium',sub:'4-5 Star \u00b7 Top rated',nflt:'class%3D4%3Bclass%3D5',p:lp.p}
-    ];
-    html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">\ud83c\udfe8 Hotels \u00b7 '+(isIndia?'Goibibo \u00b7 \u20b9 INR Always':'Booking.com')+' \u00b7 '+wk.sub+'</div></div><div class="lr-cl">';
-    for(var li=0;li<ltiers.length;li++){
-      var t=ltiers[li];
-      var lTier=t.p.includes('800')||t.p.includes('2,500')||t.p.includes('$80')||t.p.includes('$95')||t.p.includes('$90')?'budget':t.p.includes('5,000')||t.p.includes('4,500')||t.p.includes('$150')||t.p.includes('$160')?'mid':'premium';
-      var lhUrl=isIndia?indiaHotelUrl(cityName,wk.ci,wk.co,lTier):hotelUrl(cityName,wk.ci,wk.co,t.nflt);
-      html+='<div class="lr-h"><div><div class="lr-hn">'+t.label+'</div><div class="lr-ha">'+t.sub+'</div></div><div style="text-align:right;flex-shrink:0"><div class="lr-hp">'+t.p+'<span style="font-size:0.55rem;color:#88a898">/night</span></div><button class="lr-hb" onclick="goTo(\''+lhUrl+'\')">\ud83c\udfe8 Book</button></div></div>';
-    }
-    html+='<div class="price-disclaimer">\u2705 '+(isIndia?'Goibibo \u00b7 \u20b9 INR always':'Booking.com \u00b7 Dates pre-filled \u00b7 No popup')+'</div></div></div>';
-        // UNIQUE STAYS for local explore
-    if(!isIndia){
-      var _lcn=cityName.toLowerCase(),_lst=(selCity&&selCity.state?selCity.state:'').toLowerCase();
-      var _lBeach=['beach','miami','fort lauderdale','los angeles','san diego','honolulu','malibu','clearwater','naples'].some(function(w){return _lcn.indexOf(w)>=0;})||_lst==='hawaii';
-      var _lMtn=['denver','seattle','portland','boulder','asheville','flagstaff','breckenridge','vail','aspen'].some(function(w){return _lcn.indexOf(w)>=0;})||['colorado','utah','washington','oregon','montana','vermont','tennessee','north carolina'].indexOf(_lst)>=0;
-      var _lDesert=['phoenix','tucson','las vegas','albuquerque','scottsdale'].some(function(w){return _lcn.indexOf(w)>=0;})||['arizona','nevada','new mexico'].indexOf(_lst)>=0;
-      var _lWine=['napa','sonoma','austin','nashville','savannah','charleston','fredericksburg'].some(function(w){return _lcn.indexOf(w)>=0;});
-      var _lBase=150;
-      var _lStays=[
-        {type:'treehouse',icon:'🌳',label:'Treehouse',color:'135deg,#1a3d1a,#2D6A2D',ok:(_lMtn||_lWine)&&!_lBeach&&!_lDesert,from:89,to:250,why:_lMtn?'Mountain forest treehouses':'Countryside treehouses'},
-        {type:'cabin',icon:'🪵',label:'Cabin',color:'135deg,#2d1a1a,#6a2a1a',ok:_lMtn&&!_lBeach&&!_lDesert,from:75,to:180,why:'Mountain cabins nearby'},
-        {type:'glamping',icon:'✨',label:'Glamping',color:'135deg,#2a1a3d,#5a2a7a',ok:true,from:_lBeach?110:_lDesert?120:90,to:_lBeach?300:280,why:_lBeach?'Luxury coastal glamping':_lDesert?'Desert glamping':'Outdoor glamping nearby'},
-        {type:'beachfront',icon:'🏖️',label:'Beachfront',color:'135deg,#1a3d4a,#1a6a8a',ok:_lBeach,from:120,to:320,why:'Beachfront homes & condos'},
-        {type:'farmhouse',icon:'🚜',label:'Farmhouse',color:'135deg,#3d2a1a,#7a5a2a',ok:_lWine&&!_lBeach&&!_lDesert,from:85,to:200,why:'Wine country farm stays'},
-        {type:'camping',icon:'⛺',label:'Camping',color:'135deg,#1a2d3d,#1a5a7a',ok:_lMtn&&!_lBeach,from:25,to:75,why:'Mountain & forest camping'}
-      ];
-      var _lAvail=_lStays.filter(function(s){return s.ok;});
-      if(_lAvail.length%2!==0&&_lAvail.length>0){
-        var _lExtra=_lStays.find(function(s){return !s.ok&&['treehouse','cabin','farmhouse','lakefront'].indexOf(s.type)<0||_lBeach;});
-        if(!_lExtra)_lExtra=_lStays.find(function(s){return !_lAvail.some(function(a){return a.type===s.type;});});
-        if(_lExtra)_lAvail.push(_lExtra);
-      }
-      if(_lAvail.length>=2){
-        html+='<div class="lr-card"><div class="lr-ch"><div class="lr-clb">🏕️ UNIQUE STAYS · Near '+cityName+'</div></div>';
-        html+='<div class="ai-stays-grid" style="padding:10px 10px 8px;">';
-        _lAvail.slice(0,6).forEach(function(s){
-          var _lu=getStayUrl(s.type,cityName,selCity&&selCity.state?selCity.state:'',wk.ci,wk.co);
-          html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+_lu+'\')">'+
-            '<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>'+
-            '<div class="ai-stay-desc">'+s.why+'</div>'+
-            '<div class="ai-stay-bottom"><div class="ai-stay-price">$'+s.from+' – $'+s.to+'/nt</div><div class="ai-stay-book">Book ↗</div></div>'+
-          '</div>';
-        });
-        html+='</div></div>';
-      }
-    }
-    // THINGS TO DO - unified section for local mode
-    var acts=data.acts||DEFAULT_LOCAL.acts;
-    var _lEvId='lev'+cityName.replace(/[^a-zA-Z0-9]/g,'');
-    html+='<div class="ev-section" id="'+_lEvId+'">';
-    html+='<div class="sec-title">📍 THINGS TO DO · '+cityName+'</div>';
-
-    // Viator activities with direct booking
-    for(var ai=0;ai<acts.length;ai++){
-      var a=acts[ai];
-      var aUrl=isIndia?indiaActUrl(a.name,cityName,wk.ci,wk.co):actUrl(a.name,cityName,wk.ci,wk.co);
-      html+='<div class="ev-item" onclick="goTo(\''+aUrl+'\')">'+
-        '<div class="ev-left">'+
-          '<div class="ev-cat">🎯 Activity</div>'+
-          '<div class="ev-name">'+a.name+'</div>'+
-          '<div class="ev-venue">📍 '+cityName+'</div>'+
-          '<div class="ev-date">🗓 '+wk.sub+'</div>'+
-        '</div>'+
-        '<div class="ev-right">'+
-          '<div class="ev-price">'+a.price+'</div>'+
-          '<button class="ev-book">Book ↗</button>'+
-        '</div>'+
-      '</div>';
-    }
-
-    // Local specific events from API
-    html+='<div id="'+_lEvId+'_more"><div class="ev-loading"><div class="ev-spinner"></div><span>Loading local events...</span></div></div>';
-    html+='</div>';
-
-
-
-
-    // ═══ LOCAL DISCOVER ═══
+    ];// ═══ LOCAL DISCOVER ═══
     var acts=data.acts||DEFAULT_LOCAL.acts;
     var _ldid='ld'+cityName.replace(/[^a-zA-Z0-9]/g,'');
     html+='<div class="ev-section">';
     html+='<div class="sec-title">📍 '+cityName.toUpperCase()+' · TODAY & THIS WEEKEND</div>';
 
     // Top Picks
+    // ── STAYCATION · 2 UNIQUE PICKS based on city type ──
+    var _stayCity=cityName+(selCity&&selCity.state?', '+selCity.state:'');
+    var _stayAdults=(typeof selPeople!=='undefined'?selPeople:'2');
+    var _ci=wk.ci,_co=wk.co;
+    var _cn=cityName.toLowerCase();
+    var _isBeachCity=['miami','fort lauderdale','los angeles','san diego','honolulu','clearwater','virginia beach','myrtle beach','santa monica','key'].some(function(k){return _cn.indexOf(k)>=0;});
+    var _isMtnCity=['denver','seattle','portland','boulder','asheville','breckenridge','vail','aspen','jackson','tahoe'].some(function(k){return _cn.indexOf(k)>=0;});
+    var _isUrban=['new york','chicago','boston','philadelphia','washington','atlanta','houston','dallas','phoenix','las vegas'].some(function(k){return _cn.indexOf(k)>=0;});
+
+    var _pick1, _pick2;
+    if(_isBeachCity){
+      _pick1={icon:'🏖️',label:'Beachfront Stay',desc:'Oceanfront homes & condos',color:'135deg,#1a3d4a,#1a6a8a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&amenities%5B%5D=4&sort_order=PRICE_LTE',price:'From $120/nt'};
+      _pick2={icon:'✨',label:'Luxury Glamping',desc:'Luxury camping with ocean views',color:'135deg,#2a1a3d,#5a2a7a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=glamping&sort_order=PRICE_LTE',price:'From $110/nt'};
+    } else if(_isMtnCity){
+      _pick1={icon:'🌳',label:'Treehouse Escape',desc:'Forest treehouses, mountain views',color:'135deg,#1a3d1a,#2D6A2D',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=treehouses&sort_order=PRICE_LTE',price:'From $89/nt'};
+      _pick2={icon:'🪵',label:'Mountain Cabin',desc:'Log cabins near trails & slopes',color:'135deg,#2d1a1a,#6a2a1a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=cabins&sort_order=PRICE_LTE',price:'From $85/nt'};
+    } else if(_isUrban){
+      _pick1={icon:'🏙️',label:'Unique City Loft',desc:'Designer lofts & penthouses',color:'135deg,#1a2a3d,#1a4a7a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&room_types%5B%5D=Entire+home%2Fapt&amenities%5B%5D=35&sort_order=PRICE_LTE',price:'From $95/nt'};
+      _pick2={icon:'🏨',label:'Boutique Hotel',desc:'Unique independent hotels',color:'135deg,#2d1a1a,#6a2a1a',url:'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(_stayCity)+'&checkin='+_ci+'&checkout='+_co+'&group_adults='+_stayAdults+'&nflt=class%3D3&selected_currency=USD&lang=en-us&order=price',price:'From $100/nt'};
+    } else {
+      _pick1={icon:'✨',label:'Glamping',desc:'Luxury outdoor glamping',color:'135deg,#2a1a3d,#5a2a7a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=glamping&sort_order=PRICE_LTE',price:'From $90/nt'};
+      _pick2={icon:'🏡',label:'Unique Home',desc:'Unique local homes & hidden gems',color:'135deg,#1a2d3d,#1a5a7a',url:'https://www.airbnb.com/s/'+encodeURIComponent(_stayCity)+'/homes?adults='+_stayAdults+'&checkin='+_ci+'&checkout='+_co+'&room_types%5B%5D=Entire+home%2Fapt&amenities%5B%5D=35&sort_order=PRICE_LTE',price:'From $75/nt'};
+    }
+
+    // ── STAYCATION · UNIQUE EXPERIENCE (Different platforms + types) ──
+    var _sc=cityName+(selCity&&selCity.state?', '+selCity.state:'');
+    var _sa=(typeof selPeople!=='undefined'?selPeople:'2');
+    var _ci=wk.ci,_co=wk.co;
+    var _cn=cityName.toLowerCase();
+
+    // Detect city type
+    var _isBeach=['miami','fort lauderdale','los angeles','san diego','malibu','clearwater','virginia beach','santa monica','key largo','naples','myrtle','venice beach'].some(function(k){return _cn.indexOf(k)>=0;});
+    var _isMtn=['denver','seattle','portland','boulder','asheville','breckenridge','vail','aspen','jackson','tahoe','flagstaff'].some(function(k){return _cn.indexOf(k)>=0;});
+    var _isDesert=['phoenix','scottsdale','tucson','las vegas','palm springs','santa fe','sedona','albuquerque'].some(function(k){return _cn.indexOf(k)>=0;});
+    var _isWine=['napa','sonoma','fredericksburg','healdsburg','paso robles'].some(function(k){return _cn.indexOf(k)>=0;});
+
+    // Build TWO truly different options per city type
+    // Tile 1 = Airbnb unique stay (specific property type)
+    // Tile 2 = VRBO/Hipcamp/Booking (different platform = different inventory)
+    var _t1,_t2;
+
+    if(_isBeach){
+      // Beach: Airbnb waterfront | Hipcamp coastal camping
+      _t1={
+        icon:'🏖️',label:'Beachfront Home',
+        desc:'Wake up steps from the water',
+        color:'135deg,#1a3d4a,#1a6a8a',
+        price:'From $120/nt',
+        url:'https://www.airbnb.com/s/'+encodeURIComponent(_sc)+'/homes?adults='+_sa+'&checkin='+_ci+'&checkout='+_co+'&amenities%5B%5D=4&sort_order=PRICE_LTE'
+      };
+      _t2={
+        icon:'⛺',label:'Coastal Camping',
+        desc:'Sleep under stars near the coast',
+        color:'135deg,#1a4a2a,#2a7a4a',
+        price:'From $45/nt',
+        url:'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName)+'+beach+coastal&arrive='+_ci+'&depart='+_co+'&adults='+_sa+'&category=camping'
+      };
+    } else if(_isMtn){
+      // Mountain: Airbnb treehouse | VRBO cabin
+      _t1={
+        icon:'🌳',label:'Treehouse Getaway',
+        desc:'Secluded treetop escape with views',
+        color:'135deg,#1a3d1a,#2D6A2D',
+        price:'From $89/nt',
+        url:'https://www.airbnb.com/s/'+encodeURIComponent(_sc)+'/homes?adults='+_sa+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=treehouses&sort_order=PRICE_LTE'
+      };
+      _t2={
+        icon:'🪵',label:'Mountain Cabin',
+        desc:'Cozy cabin near trails & nature',
+        color:'135deg,#2d1a1a,#6a2a1a',
+        price:'From $85/nt',
+        url:'https://www.vrbo.com/search/keywords:'+cityName.replace(/ /g,'+')+'+cabin+mountain?startDate='+_ci+'&endDate='+_co+'&adultsCount='+_sa+'&sort=PRICE_ASCENDING'
+      };
+    } else if(_isDesert){
+      // Desert: Airbnb glamping | Hipcamp desert camping
+      _t1={
+        icon:'✨',label:'Desert Glamping',
+        desc:'Luxury tents under desert stars',
+        color:'135deg,#3d2a1a,#7a5a1a',
+        price:'From $95/nt',
+        url:'https://www.airbnb.com/s/'+encodeURIComponent(_sc)+'/homes?adults='+_sa+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=glamping&sort_order=PRICE_LTE'
+      };
+      _t2={
+        icon:'🏜️',label:'Desert Camp',
+        desc:'Stargazing & sunrise in the wild',
+        color:'135deg,#2a1a0a,#5a3a1a',
+        price:'From $40/nt',
+        url:'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName)+'+desert&arrive='+_ci+'&depart='+_co+'&adults='+_sa+'&category=camping'
+      };
+    } else if(_isWine){
+      // Wine country: Airbnb farmhouse | VRBO vineyard
+      _t1={
+        icon:'🍷',label:'Wine Country Farm',
+        desc:'Stay on a working vineyard or farm',
+        color:'135deg,#2d1a2d,#6a2a5a',
+        price:'From $95/nt',
+        url:'https://www.airbnb.com/s/'+encodeURIComponent(_sc)+'/homes?adults='+_sa+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=farmhouses&sort_order=PRICE_LTE'
+      };
+      _t2={
+        icon:'🌿',label:'Vineyard Rental',
+        desc:'VRBO homes on vineyard estates',
+        color:'135deg,#1a3d1a,#3a6a2a',
+        price:'From $120/nt',
+        url:'https://www.vrbo.com/search/keywords:'+cityName.replace(/ /g,'+')+'+vineyard+wine?startDate='+_ci+'&endDate='+_co+'&adultsCount='+_sa+'&sort=PRICE_ASCENDING'
+      };
+    } else {
+      // Urban/Generic: Airbnb unique | Booking boutique
+      _t1={
+        icon:'✨',label:'Airbnb Unique Stay',
+        desc:'Handpicked one-of-a-kind spaces',
+        color:'135deg,#2a1a3d,#5a2a7a',
+        price:'From $80/nt',
+        url:'https://www.airbnb.com/s/'+encodeURIComponent(_sc)+'/homes?adults='+_sa+'&checkin='+_ci+'&checkout='+_co+'&property_type_id%5B%5D=glamping,treehouses&sort_order=PRICE_LTE'
+      };
+      _t2={
+        icon:'🏨',label:'Boutique Hotel',
+        desc:'Unique independent hotels & inns',
+        color:'135deg,#1a2a3d,#2a4a6a',
+        price:'From $90/nt',
+        url:'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(_sc)+'&checkin='+_ci+'&checkout='+_co+'&group_adults='+_sa+'&nflt=class%3D3&selected_currency=USD&lang=en-us&order=price'
+      };
+    }
+
+    html+='<div class="ev-subhead">🏕️ UNIQUE STAY EXPERIENCE</div>';
+    html+='<div class="ai-stays-grid" style="padding:8px 12px 4px;">';
+    [_t1,_t2].forEach(function(s){
+      html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+');" onclick="goTo(\''+s.url+'\')">'+
+        '<div class="ai-stay-top"><div class="ai-stay-icon">'+s.icon+'</div><div class="ai-stay-name">'+s.label+'</div></div>'+
+        '<div class="ai-stay-desc">'+s.desc+'</div>'+
+        '<div class="ai-stay-bottom"><div class="ai-stay-price">'+s.price+'</div><div class="ai-stay-book">Book ↗</div></div>'+
+      '</div>';
+    });
+    html+='</div>';
+    html+='<div class="ai-stays-note">🗓 '+wk.sub+' · '+_sa+' guest'+(parseInt(_sa)>1?'s':'')+' · Dates pre-filled</div>';
+
     html+='<div class="ev-subhead">⭐ TOP PICKS</div>';
     var _lcv=getCuratedVenues(cityName);
     if(_lcv){
@@ -1476,6 +1547,8 @@ function runLocal(){
     }
 
     // Activities
+
+    // ── STAYCATION · UNIQUE STAYS ──
     html+='<div class="ev-subhead">🎯 BOOKABLE ACTIVITIES</div>';
     var ppl=(typeof selPeople!=='undefined'?selPeople:'2');
     for(var ai=0;ai<acts.length;ai++){
@@ -1945,14 +2018,52 @@ buildHomeStrip();
 pickCity('miami','Miami, FL','🌴');
 
 function surpriseMe(){
-  var codes=['miami','nyc','chicago','la','houston','phoenix','dallas','seattle','denver','atlanta','lasvegas','orlando','nashville','austin','portland','sf','neworleans','sandiego','dc'];
-  if(!selCity){var rc=codes[Math.floor(Math.random()*codes.length)];selCity={code:rc,name:rc};}
-  var drives=['2','3','5','8'];
-  selDrive=drives[Math.floor(Math.random()*drives.length)];
-  var vibes=['beach','nature','adventure','romantic','food','culture'];
-  var rv=vibes[Math.floor(Math.random()*vibes.length)];
-  selVibes=[rv]; selVibe=rv; selBudget='all';
-  runEscape();
+  // Curated surprise combos — each feels genuinely exciting
+  var surprises=[
+    {city:'miami',name:'Miami, FL',drive:'2',vibe:'beach',label:'🏖️ Beach Weekend',desc:'Sun, sand & ocean vibes'},
+    {city:'nyc',name:'New York, NY',drive:'2',vibe:'culture',label:'🗽 City Escape',desc:'Museums, rooftops & food'},
+    {city:'nashville',name:'Nashville, TN',drive:'3',vibe:'nightlife',label:'🎵 Music & Nightlife',desc:'Live music capital awaits'},
+    {city:'denver',name:'Denver, CO',drive:'2',vibe:'nature',label:'🏔️ Mountain Adventure',desc:'Trails, peaks & fresh air'},
+    {city:'chicago',name:'Chicago, IL',drive:'2',vibe:'food',label:'🍕 Foodie Weekend',desc:'Deep dish & rooftop bars'},
+    {city:'seattle',name:'Seattle, WA',drive:'2',vibe:'nature',label:'🌲 Pacific Northwest',desc:'Coffee, forests & coastline'},
+    {city:'austin',name:'Austin, TX',drive:'2',vibe:'nightlife',label:'🤠 Keep it Weird',desc:'Live music & BBQ culture'},
+    {city:'neworleans',name:'New Orleans, LA',drive:'3',vibe:'culture',label:'🎷 Jazz & Creole',desc:'Frenchmen Street calling'},
+    {city:'sandiego',name:'San Diego, CA',drive:'2',vibe:'beach',label:'🌊 Perfect Weather',desc:'Beaches, burritos & sunshine'},
+    {city:'sf',name:'San Francisco, CA',drive:'2',vibe:'culture',label:'🌁 Golden Gate',desc:'Fog, food halls & bay views'},
+    {city:'lasvegas',name:'Las Vegas, NV',drive:'3',vibe:'adventure',label:'🎰 Roll the Dice',desc:'Desert, casinos & shows'},
+    {city:'portland',name:'Portland, OR',drive:'2',vibe:'food',label:'🌹 Rose City',desc:'Craft beer, food carts & parks'},
+    {city:'atlanta',name:'Atlanta, GA',drive:'2',vibe:'culture',label:'🍑 ATL Weekend',desc:'BeltLine, food & history'},
+    {city:'dc',name:'Washington, DC',drive:'2',vibe:'culture',label:'🏛️ DC Deep Dive',desc:'Free museums & monuments'},
+    {city:'orlando',name:'Orlando, FL',drive:'2',vibe:'family',label:'🎢 Theme Park Escape',desc:'Thrill rides & magic'},
+  ];
+
+  var pick=surprises[Math.floor(Math.random()*surprises.length)];
+
+  // Show toast notification
+  try{
+    var toast=document.createElement('div');
+    if(toast&&toast.style!==undefined){
+      toast.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#2D8C6A;color:#fff;padding:12px 20px;border-radius:100px;font-size:0.85rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,0.2);';
+      toast.innerHTML=pick.label+' <span style="opacity:0.75;font-weight:400">'+pick.desc+'</span>';
+      document.body.appendChild(toast);
+      setTimeout(function(){try{if(toast.parentNode)toast.parentNode.removeChild(toast);}catch(e){}},2500);
+    }
+  }catch(e){}
+
+  // Apply selections
+  selCity={code:pick.city,name:pick.name};
+  selDrive=pick.drive;
+  selVibes=[pick.vibe];
+  selVibe=pick.vibe;
+  selBudget='all';
+  selPeople='2';
+
+  // Update city display
+  var cityEl=document.getElementById('eCityVal');
+  if(cityEl)cityEl.textContent=pick.name;
+
+  // Run escape
+  setTimeout(function(){runEscape();},300);
 }
 
 function shareResults(){
