@@ -130,6 +130,9 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .rbn-tt{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:4px;}
 .rbn-sb{font-size:0.72rem;color:rgba(255,255,255,.65);}
 .rbn-dt{font-size:0.72rem;color:rgba(255,255,255,.65);margin-top:4px;}
+.rbn.rbn-surprise{background:linear-gradient(135deg,#2a1f4d,#4a3a8a);}
+.rbn.rbn-surprise .rbn-ey{color:#c9b8ff;}
+.surprise-badge{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;font-size:0.62rem;font-weight:700;letter-spacing:0.5px;padding:4px 11px;border-radius:100px;margin-bottom:8px;}
 .rbody{padding:16px 16px 100px;}
 .dest-card{background:#fff;border-radius:20px;margin-bottom:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.06);}
 .dc-scene{height:90px;position:relative;overflow:hidden;}
@@ -698,7 +701,7 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 
 <!-- RESULTS -->
 <div class="screen" id="resScreen">
-  <div class="rbn">
+  <div class="rbn" id="rBn">
     <div class="rbn-back" onclick="goBack()">&#8592; Back</div>
     <div class="rbn-nt" id="rNT">Results</div>
     <div class="rbn-ey" id="rEy"></div>
@@ -858,7 +861,10 @@ var RTXT={
     stay_lakecabin:'Lakefront Cabin',stay_lakecabin_d:'Waterfront cabin with dock',
     stay_lakecamp:'Lakeside Camp',stay_lakecamp_d:'Camp by the water, stars overhead',
     stay_winefarm:'Wine Country Farm',stay_winefarm_d:'Stay on a vineyard or farm',
-    stay_vineyard:'Vineyard Rental',stay_vineyard_d:'VRBO estate homes and guesthouses'},
+    stay_vineyard:'Vineyard Rental',stay_vineyard_d:'VRBO estate homes and guesthouses',
+    surprise_title:'Your Surprise Picks',surprise_eyebrow:'✨ Hand-picked hidden gems',
+    surprise_sub_one:'Your one hidden gem this weekend',surprise_sub_two:'Two hidden gems, just for you',
+    surprise_label:'HIDDEN GEM'},
   es:{where_stay:'DÓNDE QUEDARTE',hotels:'Hoteles',hotel_desc:'Booking.com · más barato primero',budget:'Económico',mid:'Medio',premium:'Premium',top_picks:'LO MEJOR',bookable:'ACTIVIDADES RESERVABLES',book:'Reservar ↗',visit:'Visitar ↗',local_events:'EVENTOS LOCALES',join:'Unirme',guided_tour:'Viator · Tour Guiado',local_weekend:'Fin de Semana Local',insider_weekend:' Guía de Insider',local_guide:'Guía Local',hotels_acts_events:'Hoteles · Actividades · Eventos · Itinerario · ',
     stay_treehouse:'Casa del Árbol',stay_treehouse_d:'Escape entre copas con vistas a la montaña',
     stay_mtncabin:'Cabaña de Montaña',stay_mtncabin_d:'Cabaña acogedora cerca de senderos y picos',
@@ -886,7 +892,10 @@ var RTXT={
     stay_lakecabin:'Cabaña en el Lago',stay_lakecabin_d:'Cabaña frente al agua con muelle',
     stay_lakecamp:'Campamento Junto al Lago',stay_lakecamp_d:'Acampa junto al agua, bajo las estrellas',
     stay_winefarm:'Granja en Tierra de Vinos',stay_winefarm_d:'Hospédate en un viñedo o granja',
-    stay_vineyard:'Alquiler en Viñedo',stay_vineyard_d:'Casas de hacienda y huéspedes VRBO'}
+    stay_vineyard:'Alquiler en Viñedo',stay_vineyard_d:'Casas de hacienda y huéspedes VRBO',
+    surprise_title:'Tus Sorpresas',surprise_eyebrow:'✨ Joyas escondidas elegidas para ti',
+    surprise_sub_one:'Tu joya escondida de este fin de semana',surprise_sub_two:'Dos joyas escondidas, solo para ti',
+    surprise_label:'JOYA ESCONDIDA'}
 };
 function rt(key){return (RTXT[selLang]||RTXT.en)[key];}
 var CAT_ES={market:'Mercado',museum:'Museo',art:'Arte',rooftop:'Azotea',bar:'Bar',music:'Música',beach:'Playa',park:'Parque',nature:'Naturaleza',food:'Comida',restaurant:'Restaurante',sport:'Deporte',adventure:'Aventura'};
@@ -899,6 +908,13 @@ function trCat(cat){
 function trPrice(p){
   if(selLang!=='es'||!p)return p;
   return p.replace(/Free/gi,'Gratis').replace(/\bFrom\b/gi,'Desde').replace(/\bparking\b/gi,'estacionamiento').replace(/\bpark fee\b/gi,'tarifa de parque');
+}
+var HOURS_ES=[[/\bDaily\b/gi,'Diario'],[/\bOpen daily\b/gi,'Abierto a diario'],[/\bMon\b/gi,'Lun'],[/\bTue\b/gi,'Mar'],[/\bWed\b/gi,'Mié'],[/\bThu\b/gi,'Jue'],[/\bFri\b/gi,'Vie'],[/\bSat\b/gi,'Sáb'],[/\bSun\b/gi,'Dom'],[/\bsunset\b/gi,'atardecer'],[/\bnoon\b/gi,'mediodía'],[/\bmidnight\b/gi,'medianoche'],[/\bTours daily\b/gi,'Tours diarios'],[/\bNightly\b/gi,'Cada noche'],[/\bfrom\b/gi,'desde'],[/\bOpen 24hrs\b/gi,'Abierto 24h'],[/\b24hrs\b/gi,'24h'],[/\bWeekend mornings\b/gi,'Mañanas de fin de semana']];
+function trHours(h){
+  if(selLang!=='es'||!h)return h;
+  var out=h;
+  HOURS_ES.forEach(function(pair){out=out.replace(pair[0],pair[1]);});
+  return out;
 }
 function setLang(lang){
   selLang=lang;
@@ -913,8 +929,8 @@ function setLang(lang){
 function updateLangToggleVisibility(){
   var t=document.getElementById('langToggle');
   if(!t)return;
-  // Spanish toggle pilot: Miami only for now (highest Spanish-speaking population of our cities)
-  if(selCity&&selCity.code==='miami'){t.style.display='inline-flex';}
+  // Spanish toggle now available for all cities
+  if(selCity){t.style.display='flex';}
   else{t.style.display='none';selLang='en';setLang('en');}
 }
 var MO=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
@@ -1380,6 +1396,7 @@ function runSurprise(){
       phoenix:[{n:'Sedona',st:'Arizona',dr:2.1,vibe:'wellness'},{n:'Prescott',st:'Arizona',dr:1.6,vibe:'culture'}],
       dallas:[{n:'Fort Worth',st:'Texas',dr:0.6,vibe:'culture'},{n:'Waco',st:'Texas',dr:1.6,vibe:'culture'}],
       seattle:[{n:'Leavenworth',st:'Washington',dr:2.6,vibe:'culture'},{n:'Mount Rainier',st:'Washington',dr:2.1,vibe:'nature'}],
+      boston:[{n:'Salem',st:'Massachusetts',dr:0.5,vibe:'culture'},{n:'Newport',st:'Rhode Island',dr:1.2,vibe:'romantic'}],
       denver:[{n:'Breckenridge',st:'Colorado',dr:1.6,vibe:'adventure'},{n:'Colorado Springs',st:'Colorado',dr:1.6,vibe:'nature'}],
       atlanta:[{n:'Savannah',st:'Georgia',dr:4.1,vibe:'culture'},{n:'Chattanooga',st:'Tennessee',dr:2.1,vibe:'adventure'}],
       lasvegas:[{n:'Red Rock Canyon',st:'Nevada',dr:0.6,vibe:'nature'},{n:'Zion National Park',st:'Utah',dr:2.6,vibe:'adventure'}],
@@ -1392,19 +1409,40 @@ function runSurprise(){
       sandiego:[{n:'Temecula',st:'California',dr:1.1,vibe:'food'},{n:'Laguna Beach',st:'California',dr:1.6,vibe:'beach'}],
       dc:[{n:'Shenandoah Valley',st:'Virginia',dr:1.6,vibe:'nature'},{n:'Annapolis',st:'Maryland',dr:0.6,vibe:'culture'}]
     };
-    var cc=selCity.code;
+    var cc=selCity.code,cn=selCity.name,isIndia=curCountry==='india';
     var list=gems[cc]||[{n:'Asheville',st:'North Carolina',dr:4,vibe:'culture'}];
-    var pick=list[Math.floor(Math.random()*list.length)];
-    selDrive=String(Math.ceil(pick.dr)+1);
-    selVibe='all';selVibes=[];selBudget='all'; // don't filter by vibe - show all dests within drive distance
-    try{
-      var t=document.createElement('div');
-      t.style.cssText='position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#1a3d28;color:#fff;padding:12px 22px;border-radius:100px;font-size:0.85rem;font-weight:700;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);white-space:nowrap;';
-      t.textContent='✨ Surprise! → '+pick.n;
-      document.body.appendChild(t);
-      setTimeout(function(){try{document.body.removeChild(t);}catch(e){}},2500);
-    }catch(e){}
-    runEscape();
+    // Shuffle and take up to 2 unique gems
+    var shuffled=list.slice().sort(function(){return Math.random()-0.5;});
+    var chosenGems=shuffled.slice(0,Math.min(2,shuffled.length));
+    // Match each gem to its full destination record (desc/tags/hotels/acts) from the city's destination data
+    var allDests=getDests(cc);
+    var picks=[];
+    chosenGems.forEach(function(g){
+      var match=allDests.find(function(dd){return dd.n.toLowerCase()===g.n.toLowerCase();});
+      if(match)picks.push(match);
+      else picks.push({n:g.n,st:g.st,dr:g.dr,desc:'A hidden gem getaway picked just for you.',ch:[{t:'Hidden Gem',c:'dcc-s'}],hotels:[{price:'$120'},{price:'$200'},{price:'$350'}],acts:[{name:'Explore '+g.n,desc:'Discover this hidden gem at your own pace',price:'Free'}]});
+    });
+    if(!picks.length){show('surpriseScreen');return;}
+    var wk=getSelDates(),isHol=wk.isHol||false;
+    prevScreen='surpriseScreen';
+    startLoad();
+    setTimeout(function(){
+      var bn=document.getElementById('rBn');if(bn)bn.className='rbn rbn-surprise';
+      document.getElementById('rNT').textContent=rt('surprise_title');
+      document.getElementById('rEy').textContent=rt('surprise_eyebrow');
+      var pickNames=picks.map(function(p){return p.n;}).join(' & ');
+      document.getElementById('rTt').innerHTML='<em>'+pickNames+'</em>';
+      document.getElementById('rSb').textContent=picks.length>1?rt('surprise_sub_two'):rt('surprise_sub_one');
+      document.getElementById('rDt').textContent='\ud83d\udcc5 '+wk.label+(isHol?' \u00b7 '+wk.hol.name:'')+' \u00b7 '+wk.sub;
+      var html='';
+      var purpleAccent='#2a1a4d,#4a3a8a';
+      picks.forEach(function(p){
+        html+='<div style="text-align:center;margin:4px 0 -10px"><span class="surprise-badge" style="background:#f0ecff;border-color:#d0c4ff;color:#5a3fa0;">\u2728 '+rt('surprise_label')+'</span></div>';
+        html+=buildDestCard(p,wk,isIndia,purpleAccent);
+      });
+      document.getElementById('rBody').innerHTML=html;
+      showRes();
+    },3000);
   }catch(e){
     console.error('runSurprise error:',e);
     show('surpriseScreen');
@@ -1451,87 +1489,14 @@ function startLoad(){
 function showRes(){show('resScreen');}
 
 // Run Escape
-function runEscape(){
-  var wk=getSelDates(),nights=wk.nights||2,isHol=wk.isHol||false;
-  var maxDr=parseFloat(selDrive)||99;
-  var cc=selCity?selCity.code:'miami',cn=selCity?selCity.name:'Miami, FL';
-  var isIndia=curCountry==='india',sym=getSym();
-  prevScreen='escapeForm';
-  startLoad();
-  setTimeout(function(){
-    document.getElementById('rNT').textContent=selLang==='es'?'Escapa de la Ciudad':'Escape the City';
-    document.getElementById('rEy').textContent=(selLang==='es'?'\u2726 Mejores escapadas desde ':'\u2726 Best Escapes from ')+cn.split(',')[0];
-    var vibeLabel=typeof selVibe!=='undefined'&&selVibe&&selVibe!=='all'?' · '+selVibe.charAt(0).toUpperCase()+selVibe.slice(1)+(selLang==='es'?'':' vibes'):'';
-    document.getElementById('rTt').innerHTML=(selLang==='es'?'Escapadas de Fin de Semana':'Weekend Escapes')+vibeLabel+' &middot; <em>'+(selLang==='es'?'Mejor valor primero':'Best value first')+'</em>';
-    var bLbl=selBudget==='all'?(selLang==='es'?'Todos los rangos de precio':'All price ranges'):selBudget==='budget'?(isIndia?'\u20b9500-\u20b92,500/night':'$60-$120/night'):selBudget==='mid'?(isIndia?'\u20b92,500-\u20b96,000/night':'$120-$250/night'):(isIndia?'\u20b96,000+/night':'$250+/night');
-    document.getElementById('rSb').textContent=(selLang==='es'?'Hasta ':'Within ')+maxDr+(selLang==='es'?'h de manejo':'hr drive')+' \u00b7 '+nights+' '+(selLang==='es'?(nights>1?'noches':'noche'):'night'+(nights>1?'s':''))+' \u00b7 '+bLbl;
-    document.getElementById('rDt').textContent='\ud83d\udcc5 '+wk.label+(isHol?' \u00b7 '+wk.hol.name:'')+' \u00b7 '+wk.sub;
-    var all=getDests(cc),filtered=[];
-    var _minDr=selCity&&selCity.code==='miami'?0.8:0.5;
-    for(var i=0;i<all.length;i++){if(all[i].dr<=maxDr&&all[i].dr>=_minDr)filtered.push(all[i]);}
-    // Filter by vibe (based on destination tags/categories)
-    var activeVibes=(typeof selVibes!=='undefined'&&selVibes.length>0)?selVibes:(selVibe&&selVibe!=='all'?[selVibe]:[]);
-    if(activeVibes.length>0){
-      var vibeKeywords={
-        'beach':['Beach','Coast','Ocean','Sea','Island','Surf','Sand','Bay'],
-        'nature':['Nature','Mountain','Forest','Lake','Canyon','Valley','Waterfall','Wildlife','Woods','Hiking','Camping'],
-        'nightlife':['Nightlife','City','Urban','Club','Bar','Jazz','Music'],
-        'food':['Food','Cuisine','Wine','Brew','Foodie','Farm','Market'],
-        'adventure':['Adventure','Hiking','Rafting','Climbing','Safari','Kayak','Ski'],
-        'romantic':['Romantic','Scenic','Sunset','Vineyard','Spa','Luxury'],
-        'family':['Family','Theme Park','Zoo','Aquarium','Museum','Kids'],
-        'culture':['Culture','Art','History','Museum','Heritage','Architecture'],
-        'wellness':['Wellness','Spa','Yoga','Hot Spring','Retreat','Meditation'],
-        'roadtrip':['Scenic Drive','Route','Highway','National Park','Desert']
-      };
-      var kws=[];activeVibes.forEach(function(v){var vk=vibeKeywords[v]||[];kws=kws.concat(vk);});
-      var vibeFiltered=filtered.filter(function(d){
-        var dname=d.n||'';var ddesc=d.desc||'';var dtags=d.ch?d.ch.map(function(c){return c.t||'';}).join(' '):'';
-        var text=dname+' '+ddesc+' '+dtags;
-        return kws.some(function(k){return text.toLowerCase().indexOf(k.toLowerCase())>=0;});
-      });
-      if(vibeFiltered.length>0){
-        filtered=vibeFiltered;
-      } else if(activeVibes.length>0){
-        var _vn=activeVibes[0];_vn=_vn.charAt(0).toUpperCase()+_vn.slice(1);
-        var _eh='<div style="text-align:center;padding:40px 20px">';
-        _eh+='<div style="font-size:2rem;margin-bottom:12px">&#x1F50D;</div>';
-        _eh+='<div style="font-size:1rem;font-weight:700;color:#1a2e22;margin-bottom:8px">'+(selLang==='es'?'No hay escapadas de '+_vn+' cerca':'No '+_vn+' escapes nearby')+'</div>';
-        _eh+='<div style="font-size:0.8rem;color:#88a898;margin-bottom:20px">'+(selLang==='es'?'Prueba otro estilo o amplía el tiempo de manejo':'Try a different vibe or expand drive time')+'</div>';
-        _eh+='<button onclick="selVibes=[];selVibe=\'all\';runEscape()" style="background:#2D8C6A;color:#fff;border:none;border-radius:100px;padding:12px 24px;font-size:0.85rem;font-weight:600;cursor:pointer">'+(selLang==='es'?'Ver Todo':'Show All')+' &#8594;</button></div>';
-        document.getElementById('rBody').innerHTML=_eh;showRes();return;
-      }
-    }
-        filtered.sort(function(a,b){
-      // Best value = balance of price + drive time + activities count
-      var ap=(a.hotels&&a.hotels[0]?parseInt(String(a.hotels[0].price).replace(/[^\d]/g,''))||999:999);
-      var bp=(b.hotels&&b.hotels[0]?parseInt(String(b.hotels[0].price).replace(/[^\d]/g,''))||999:999);
-      var aPriceScore=ap/5;
-      var bPriceScore=bp/5;
-      var aDriveScore=a.dr*8;
-      var bDriveScore=b.dr*8;
-      var aActBonus=(a.acts?a.acts.length:0)*(-5);
-      var bActBonus=(b.acts?b.acts.length:0)*(-5);
-      var aScore=aPriceScore+aDriveScore+aActBonus;
-      var bScore=bPriceScore+bDriveScore+bActBonus;
-      return aScore-bScore;
-    });
-    var html='';
-    if(!filtered.length){
-      html='<div style="text-align:center;padding:40px 20px"><div style="font-size:2rem;margin-bottom:12px">\ud83d\uddfa\ufe0f</div><div style="font-weight:600;color:#1a2e22;margin-bottom:6px">No destinations within '+maxDr+'hr</div><div style="font-size:0.8rem;color:#88a898">Try increasing your drive time</div></div>';
-    } else {
-      var allTiers=[
-        {label:'💰 Budget',sub:'1-2 Star \u00b7 Most affordable',nflt:'class%3D1%3Bclass%3D2',tier:'budget',hi:0},
-        {label:'\u2b50 Mid-Range',sub:'3 Star \u00b7 Best value',nflt:'class%3D3',tier:'mid',hi:1},
-        {label:'\ud83c\udfc6 Premium',sub:'4-5 Star \u00b7 Top rated',nflt:'class%3D4%3Bclass%3D5',tier:'premium',hi:2}
-      ];
-      var tiers=selBudget==='all'?allTiers:allTiers.filter(function(t){return t.tier===selBudget;});
-      for(var di=0;di<filtered.length;di++){
-        var d=filtered[di];
+function buildDestCard(d,wk,isIndia,accent){
+  var html='';
+        var _hdrGrad=accent||'#0d2015,#1a4d2e';
+        var _drColor=accent?'#c9b8ff':'#4ade80';
         html+='<div class="dest-card">';
-        html+='<div class="dc-hdr" style="background:linear-gradient(135deg,#0d2015,#1a4d2e);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">';
+        html+='<div class="dc-hdr" style="background:linear-gradient(135deg,'+_hdrGrad+');padding:14px 16px;display:flex;align-items:center;justify-content:space-between;">';
         html+='<div><div style="font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px">'+d.dr+'HR DRIVE</div><div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;font-weight:900;color:#fff">'+d.n+'</div><div style="font-size:0.72rem;color:rgba(255,255,255,.65)">'+d.st+'</div></div>';
-        html+='<div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:6px 14px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:#4ade80">'+d.dr+'h</div><div style="font-size:0.55rem;color:rgba(255,255,255,.7);font-weight:600">DRIVE</div></div>';
+        html+='<div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:6px 14px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:'+_drColor+'">'+d.dr+'h</div><div style="font-size:0.55rem;color:rgba(255,255,255,.7);font-weight:600">DRIVE</div></div>';
         html+='</div>';
         html+='<div class="dc-body">';
         // dc-head now in dc-hdr above
@@ -1630,7 +1595,7 @@ function runEscape(){
                 '<div class="ev-cat">'+getCatEmoji(v.category)+' '+trCat(v.category)+'</div>'+
                 '<div class="ev-name">'+v.name+'</div>'+
                 '<div class="ev-venue">📍 '+v.address+'</div>'+
-                '<div class="ev-date">🕐 '+v.hours+'</div>'+
+                '<div class="ev-date">🕐 '+trHours(v.hours)+'</div>'+
               '</div>'+
               '<div class="ev-right">'+
                 '<div class="ev-price">'+(v.rating?'★'+v.rating+' ':'')+trPrice(v.price)+'</div>'+
@@ -1673,6 +1638,87 @@ function runEscape(){
             if(nh)el.innerHTML=nh;
           }).catch(function(){});
         })(d.n,d.st,wk.ci,wk.co,_did+'_ev');
+  return html;
+}
+
+function runEscape(){
+  var wk=getSelDates(),nights=wk.nights||2,isHol=wk.isHol||false;
+  var maxDr=parseFloat(selDrive)||99;
+  var cc=selCity?selCity.code:'miami',cn=selCity?selCity.name:'Miami, FL';
+  var isIndia=curCountry==='india',sym=getSym();
+  prevScreen='escapeForm';
+  startLoad();
+  setTimeout(function(){
+    var bn0=document.getElementById('rBn');if(bn0)bn0.className='rbn';
+    document.getElementById('rNT').textContent=selLang==='es'?'Escapa de la Ciudad':'Escape the City';
+    document.getElementById('rEy').textContent=(selLang==='es'?'\u2726 Mejores escapadas desde ':'\u2726 Best Escapes from ')+cn.split(',')[0];
+    var vibeLabel=typeof selVibe!=='undefined'&&selVibe&&selVibe!=='all'?' · '+selVibe.charAt(0).toUpperCase()+selVibe.slice(1)+(selLang==='es'?'':' vibes'):'';
+    document.getElementById('rTt').innerHTML=(selLang==='es'?'Escapadas de Fin de Semana':'Weekend Escapes')+vibeLabel+' &middot; <em>'+(selLang==='es'?'Mejor valor primero':'Best value first')+'</em>';
+    var bLbl=selBudget==='all'?(selLang==='es'?'Todos los rangos de precio':'All price ranges'):selBudget==='budget'?(isIndia?'\u20b9500-\u20b92,500/night':'$60-$120/night'):selBudget==='mid'?(isIndia?'\u20b92,500-\u20b96,000/night':'$120-$250/night'):(isIndia?'\u20b96,000+/night':'$250+/night');
+    document.getElementById('rSb').textContent=(selLang==='es'?'Hasta ':'Within ')+maxDr+(selLang==='es'?'h de manejo':'hr drive')+' \u00b7 '+nights+' '+(selLang==='es'?(nights>1?'noches':'noche'):'night'+(nights>1?'s':''))+' \u00b7 '+bLbl;
+    document.getElementById('rDt').textContent='\ud83d\udcc5 '+wk.label+(isHol?' \u00b7 '+wk.hol.name:'')+' \u00b7 '+wk.sub;
+    var all=getDests(cc),filtered=[];
+    var _minDr=selCity&&selCity.code==='miami'?0.8:0.5;
+    for(var i=0;i<all.length;i++){if(all[i].dr<=maxDr&&all[i].dr>=_minDr)filtered.push(all[i]);}
+    // Filter by vibe (based on destination tags/categories)
+    var activeVibes=(typeof selVibes!=='undefined'&&selVibes.length>0)?selVibes:(selVibe&&selVibe!=='all'?[selVibe]:[]);
+    if(activeVibes.length>0){
+      var vibeKeywords={
+        'beach':['Beach','Coast','Ocean','Sea','Island','Surf','Sand','Bay'],
+        'nature':['Nature','Mountain','Forest','Lake','Canyon','Valley','Waterfall','Wildlife','Woods','Hiking','Camping'],
+        'nightlife':['Nightlife','City','Urban','Club','Bar','Jazz','Music'],
+        'food':['Food','Cuisine','Wine','Brew','Foodie','Farm','Market'],
+        'adventure':['Adventure','Hiking','Rafting','Climbing','Safari','Kayak','Ski'],
+        'romantic':['Romantic','Scenic','Sunset','Vineyard','Spa','Luxury'],
+        'family':['Family','Theme Park','Zoo','Aquarium','Museum','Kids'],
+        'culture':['Culture','Art','History','Museum','Heritage','Architecture'],
+        'wellness':['Wellness','Spa','Yoga','Hot Spring','Retreat','Meditation'],
+        'roadtrip':['Scenic Drive','Route','Highway','National Park','Desert']
+      };
+      var kws=[];activeVibes.forEach(function(v){var vk=vibeKeywords[v]||[];kws=kws.concat(vk);});
+      var vibeFiltered=filtered.filter(function(d){
+        var dname=d.n||'';var ddesc=d.desc||'';var dtags=d.ch?d.ch.map(function(c){return c.t||'';}).join(' '):'';
+        var text=dname+' '+ddesc+' '+dtags;
+        return kws.some(function(k){return text.toLowerCase().indexOf(k.toLowerCase())>=0;});
+      });
+      if(vibeFiltered.length>0){
+        filtered=vibeFiltered;
+      } else if(activeVibes.length>0){
+        var _vn=activeVibes[0];_vn=_vn.charAt(0).toUpperCase()+_vn.slice(1);
+        var _eh='<div style="text-align:center;padding:40px 20px">';
+        _eh+='<div style="font-size:2rem;margin-bottom:12px">&#x1F50D;</div>';
+        _eh+='<div style="font-size:1rem;font-weight:700;color:#1a2e22;margin-bottom:8px">'+(selLang==='es'?'No hay escapadas de '+_vn+' cerca':'No '+_vn+' escapes nearby')+'</div>';
+        _eh+='<div style="font-size:0.8rem;color:#88a898;margin-bottom:20px">'+(selLang==='es'?'Prueba otro estilo o amplía el tiempo de manejo':'Try a different vibe or expand drive time')+'</div>';
+        _eh+='<button onclick="selVibes=[];selVibe=\'all\';runEscape()" style="background:#2D8C6A;color:#fff;border:none;border-radius:100px;padding:12px 24px;font-size:0.85rem;font-weight:600;cursor:pointer">'+(selLang==='es'?'Ver Todo':'Show All')+' &#8594;</button></div>';
+        document.getElementById('rBody').innerHTML=_eh;showRes();return;
+      }
+    }
+        filtered.sort(function(a,b){
+      // Best value = balance of price + drive time + activities count
+      var ap=(a.hotels&&a.hotels[0]?parseInt(String(a.hotels[0].price).replace(/[^\d]/g,''))||999:999);
+      var bp=(b.hotels&&b.hotels[0]?parseInt(String(b.hotels[0].price).replace(/[^\d]/g,''))||999:999);
+      var aPriceScore=ap/5;
+      var bPriceScore=bp/5;
+      var aDriveScore=a.dr*8;
+      var bDriveScore=b.dr*8;
+      var aActBonus=(a.acts?a.acts.length:0)*(-5);
+      var bActBonus=(b.acts?b.acts.length:0)*(-5);
+      var aScore=aPriceScore+aDriveScore+aActBonus;
+      var bScore=bPriceScore+bDriveScore+bActBonus;
+      return aScore-bScore;
+    });
+    var html='';
+    if(!filtered.length){
+      html='<div style="text-align:center;padding:40px 20px"><div style="font-size:2rem;margin-bottom:12px">\ud83d\uddfa\ufe0f</div><div style="font-weight:600;color:#1a2e22;margin-bottom:6px">No destinations within '+maxDr+'hr</div><div style="font-size:0.8rem;color:#88a898">Try increasing your drive time</div></div>';
+    } else {
+      var allTiers=[
+        {label:'💰 Budget',sub:'1-2 Star \u00b7 Most affordable',nflt:'class%3D1%3Bclass%3D2',tier:'budget',hi:0},
+        {label:'\u2b50 Mid-Range',sub:'3 Star \u00b7 Best value',nflt:'class%3D3',tier:'mid',hi:1},
+        {label:'\ud83c\udfc6 Premium',sub:'4-5 Star \u00b7 Top rated',nflt:'class%3D4%3Bclass%3D5',tier:'premium',hi:2}
+      ];
+      var tiers=selBudget==='all'?allTiers:allTiers.filter(function(t){return t.tier===selBudget;});
+      for(var di=0;di<filtered.length;di++){
+        html+=buildDestCard(filtered[di],wk,isIndia);
       }
     }
     document.getElementById('rBody').innerHTML=html;
@@ -1690,6 +1736,7 @@ function runLocal(){
   prevScreen='localForm';
   startLoad();
   setTimeout(function(){
+    var bn0=document.getElementById('rBn');if(bn0)bn0.className='rbn';
     document.getElementById('rNT').textContent=rt('local_weekend');
     document.getElementById('rEy').textContent='\u2726 '+cityName+rt('insider_weekend');
     document.getElementById('rTt').innerHTML='<em>'+cityName+'</em> '+rt('local_guide');
@@ -1776,13 +1823,13 @@ function runLocal(){
     var _lcvNames=_lcv?_lcv.map(function(v){return v.name.toLowerCase();}):[];
     if(_lcv&&_lcv.length>0){
       html+='<div class="ev-subhead">⭐ '+rt('top_picks')+'</div>';
-      _lcv.slice(0,3).forEach(function(v){
+      _lcv.slice(0,4).forEach(function(v){
         html+='<div class="ev-item" data-url="'+v.url+'" onclick="goTo(this.dataset.url)">'+
           '<div class="ev-left">'+
             '<div class="ev-cat">'+getCatEmoji(v.category)+' '+trCat(v.category)+'</div>'+
             '<div class="ev-name">'+v.name+'</div>'+
             '<div class="ev-venue">📍 '+v.address+'</div>'+
-            '<div class="ev-date">🕐 '+v.hours+'</div>'+
+            '<div class="ev-date">🕐 '+trHours(v.hours)+'</div>'+
           '</div>'+
           '<div class="ev-right">'+
             '<div class="ev-price">'+(v.rating?'★'+v.rating+' ':'')+trPrice(v.price)+'</div>'+
@@ -1791,23 +1838,28 @@ function runLocal(){
       });
     }
 
-    // BOOKABLE ACTIVITIES (max 3, deduped, no date/guest metadata)
+    // BOOKABLE ACTIVITIES — vibe-matched first, then fill remaining slots, max 5, deduped
     html+='<div class="ev-subhead">🎯 '+rt('bookable')+'</div>';
     var _lppl=(typeof selPeople!=='undefined'?selPeople:'2');
     var _lacts=(isIndia?(INDIA_LOCAL[cc]||DEFAULT_INDIA_LOCAL):(LOCAL[cc]||DEFAULT_LOCAL)).acts||DEFAULT_LOCAL.acts;
-    var _lseenActs={},_lactCount=0;
-    for(var lai=0;lai<_lacts.length;lai++){
-      if(_lactCount>=3)break;
-      var _la=_lacts[lai];
+    var _lactiveVibes=(typeof selVibes!=='undefined'&&selVibes.length)?selVibes:((typeof selVibe!=='undefined'&&selVibe&&selVibe!=='all')?[selVibe]:[]);
+    var _lavailable=_lacts.filter(function(a){return _lcvNames.indexOf(a.name.toLowerCase())<0;});
+    var _lmatched=_lactiveVibes.length?_lavailable.filter(function(a){return a.vibes&&a.vibes.some(function(v){return _lactiveVibes.indexOf(v)>=0;});}):[];
+    var _lrest=_lavailable.filter(function(a){return _lmatched.indexOf(a)<0;});
+    var _lordered=_lmatched.concat(_lrest);
+    var _lseenActs={},_lactCount=0,_lmaxActs=5;
+    for(var lai=0;lai<_lordered.length;lai++){
+      if(_lactCount>=_lmaxActs)break;
+      var _la=_lordered[lai];
       if(_lseenActs[_la.name])continue;
-      if(_lcvNames.indexOf(_la.name.toLowerCase())>=0)continue;
       _lseenActs[_la.name]=true;_lactCount++;
       var _laUrl=actUrl(_la.name,cityName,_lci,_lco);
+      var _laBadge=(_la.vibes&&_lactiveVibes.length&&_la.vibes.some(function(v){return _lactiveVibes.indexOf(v)>=0;}))?'<span style="background:#2D8C6A;color:#fff;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:6px;">'+(selLang==='es'?'COINCIDE':'MATCH')+'</span>':'';
       html+='<div class="ev-item" data-url="'+_laUrl+'" onclick="goTo(this.dataset.url)">'+
         '<div class="ev-left">'+
-          '<div class="ev-cat">🎯 '+rt('guided_tour')+'</div>'+
+          '<div class="ev-cat">🎯 '+rt('guided_tour')+_laBadge+'</div>'+
           '<div class="ev-name">'+_la.name+'</div>'+
-          '<div class="ev-desc-sm">'+_la.desc+'</div>'+
+          '<div class="ev-desc-sm">'+(selLang==='es'&&_la.desc_es?_la.desc_es:_la.desc)+'</div>'+
         '</div>'+
         '<div class="ev-right">'+
           '<div class="ev-price">'+trPrice(_la.price)+'</div>'+
@@ -2074,14 +2126,24 @@ dallas:[
 var LOCAL={
 miami:{
   acts:[
-    {name:'Little Havana Food Tour',desc:'Eat your way through Calle Ocho',price:'From $55'},
-    {name:'Biscayne Bay Boat Tour',desc:'See Miami skyline from the water',price:'From $35'},
-    {name:'Wynwood Art Walk Tour',desc:'Guided street art walk',price:'From $25'},
-    {name:'South Beach Bike Ride',desc:'Art Deco South Beach cycling',price:'From $30'},
-    {name:'Everglades Day Trip',desc:'Airboat and wildlife from Miami',price:'From $50'},
-    {name:'Sunset Sailing Cruise',desc:'2-hour sail around Biscayne Bay',price:'From $65'},
-    {name:'Miami Street Food Tour',desc:'Hidden local eats Wynwood to Design District',price:'From $45'},
-    {name:'Kayak Mangroves Oleta',desc:'Paddle through mangroves',price:'From $35'}
+    {name:'Little Havana Food Tour',desc:'Eat your way through Calle Ocho',desc_es:'Come tu camino por la Calle Ocho',price:'From $55',vibes:['food','culture']},
+    {name:'Biscayne Bay Boat Tour',desc:'See Miami skyline from the water',desc_es:'Ve el horizonte de Miami desde el agua',price:'From $35',vibes:['romantic','adventure']},
+    {name:'Wynwood Art Walk Tour',desc:'Guided street art walk',desc_es:'Recorrido guiado de arte callejero',price:'From $25',vibes:['culture','nightlife']},
+    {name:'South Beach Bike Ride',desc:'Art Deco South Beach cycling',desc_es:'Paseo en bici por South Beach Art Deco',price:'From $30',vibes:['adventure','family']},
+    {name:'Everglades Day Trip',desc:'Airboat and wildlife from Miami',desc_es:'Paseo en aerobote y fauna desde Miami',price:'From $50',vibes:['nature','adventure','family']},
+    {name:'Sunset Sailing Cruise',desc:'2-hour sail around Biscayne Bay',desc_es:'Navegación de 2 horas por Biscayne Bay',price:'From $65',vibes:['romantic']},
+    {name:'Miami Street Food Tour',desc:'Hidden local eats Wynwood to Design District',desc_es:'Comida local escondida de Wynwood al Design District',price:'From $45',vibes:['food']},
+    {name:'Kayak Mangroves Oleta',desc:'Paddle through mangroves',desc_es:'Rema entre los manglares',price:'From $35',vibes:['nature','adventure']},
+    {name:'Couples Spa Day Miami',desc:'Hidden gem oceanfront spa retreat',desc_es:'Joya escondida: spa frente al mar para parejas',price:'From $120',vibes:['romantic','wellness']},
+    {name:'Sunrise Yoga on the Beach',desc:'Hidden gem — quiet beach session before the crowds',desc_es:'Joya escondida — sesión tranquila en la playa antes de la multitud',price:'From $20',vibes:['wellness']},
+    {name:'Vizcaya Museum & Gardens',desc:'Italian Renaissance estate on the bay',desc_es:'Mansión renacentista italiana frente a la bahía',price:'From $22',vibes:['culture','romantic']},
+    {name:'Jungle Island Adventure',desc:'Exotic wildlife park, great for kids',desc_es:'Parque de vida salvaje exótica, ideal para niños',price:'From $45',vibes:['family']},
+    {name:'Rooftop Bar Crawl SoBe',desc:'Hidden gem — locals-only rooftop circuit',desc_es:'Joya escondida — circuito de azoteas que solo conocen los locales',price:'From $40',vibes:['nightlife']},
+    {name:'Deep Sea Fishing Charter',desc:'Half-day charter into the Gulf Stream',desc_es:'Excursión de medio día de pesca en la Corriente del Golfo',price:'From $90',vibes:['adventure','roadtrip']},
+    {name:'Coral Castle Day Trip',desc:'Hidden gem mystery landmark south of the city',desc_es:'Joya escondida — monumento misterioso al sur de la ciudad',price:'From $18',vibes:['culture','roadtrip']},
+    {name:'Wynwood Brewery Crawl',desc:'Craft beer tasting through Wynwood',desc_es:'Cata de cervezas artesanales por Wynwood',price:'From $40',vibes:['nightlife','food']},
+    {name:'Family Splash Park Day',desc:'Free-flowing fun for younger kids',desc_es:'Diversión sin parar para los más pequeños',price:'From $10',vibes:['family']},
+    {name:'Stand-Up Paddleboard Sunset',desc:'Hidden gem calm-water SUP session at golden hour',desc_es:'Joya escondida — sesión de paddleboard en aguas tranquilas al atardecer',price:'From $35',vibes:['romantic','wellness','adventure']}
   ],
   evCats:[{name:'🎵 Music and Concerts',q:'music'},{name:'🍽️ Food and Drink',q:'food-and-drink'},{name:'🎨 Art and Culture',q:'arts'},{name:'👤 Family Events',q:'family-and-education'},{name:'🌿 Outdoor Events',q:'outdoors-and-adventure'},{name:'🎉 All Events',q:'events'}]
 },
