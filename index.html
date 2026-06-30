@@ -325,6 +325,54 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 /* UX-05: Fix any remaining purple buttons */
 [style*="5B3FA0"]{background:#2D8C6A !important;}
 /* Surprise Me button on homepage → use goSurprise */
+
+.ai-search-wrap{margin-top:18px;margin-bottom:4px;}
+.ai-search-box{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #C8E4D4;border-radius:16px;padding:13px 16px;box-shadow:0 2px 8px rgba(45,140,106,0.07);}
+.ai-search-icon{font-size:1.1rem;flex-shrink:0;}
+.ai-search-input{flex:1;border:none;outline:none;font-size:0.92rem;color:#1a2e22;background:transparent;font-family:inherit;}
+.ai-search-input::placeholder{color:#a8c4b4;}
+.ai-search-hint{font-size:0.72rem;color:#2D8C6A;margin-top:6px;padding:0 2px;min-height:16px;font-weight:600;}
+.ai-search-go{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#2D8C6A;color:#fff;border:none;font-size:1rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;animation:aiGoPop 0.25s ease;}
+@keyframes aiGoPop{from{transform:scale(0);opacity:0;}to{transform:scale(1);opacity:1;}}
+.ai-search-go:active{transform:scale(0.92);}
+.ai-search-box.ai-ready{border-color:#2D8C6A;box-shadow:0 2px 12px rgba(45,140,106,0.18);}
+
+
+.share-cta-card{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#2D8C6A,#1a5a40);border-radius:18px;padding:16px 18px;margin:18px 4px 8px;cursor:pointer;box-shadow:0 5px 18px rgba(45,140,106,0.35);}
+.share-cta-icon{font-size:1.7rem;flex-shrink:0;width:46px;height:46px;background:rgba(255,255,255,0.18);border-radius:13px;display:flex;align-items:center;justify-content:center;}
+.share-cta-txt{flex:1;}
+.share-cta-title{color:#fff;font-weight:700;font-size:0.94rem;margin-bottom:2px;}
+.share-cta-sub{color:rgba(255,255,255,0.78);font-size:0.74rem;}
+.share-cta-arrow{color:#fff;font-size:1.3rem;flex-shrink:0;}
+.share-cta-card:active{transform:scale(0.98);}
+
+.share-modal{position:fixed;inset:0;z-index:9999;opacity:0;pointer-events:none;transition:opacity 0.25s;display:flex;align-items:center;justify-content:center;padding:20px;}
+.share-modal.show{opacity:1;pointer-events:auto;}
+.share-modal-bg{position:absolute;inset:0;background:rgba(0,0,0,0.65);}
+.share-modal-card{position:relative;background:#fff;border-radius:20px;padding:16px;max-width:380px;width:100%;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.4);}
+.share-modal-img{width:100%;border-radius:14px;display:block;margin-bottom:14px;}
+.share-modal-btns{display:flex;gap:10px;}
+.share-modal-btn{flex:1;padding:13px;border-radius:14px;border:1.5px solid #C8E4D4;background:#fff;color:#2D8C6A;font-weight:700;font-size:0.85rem;cursor:pointer;}
+.share-modal-btn-primary{background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;border:none;}
+.share-modal-close{position:absolute;top:10px;right:10px;width:32px;height:32px;background:rgba(0,0,0,0.5);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:0.9rem;}
+
+/* ── Value Score + Why This Destination ── */
+.dc-value-row{display:flex;gap:12px;padding:0 16px 16px;align-items:flex-start;}
+.dc-vscore{flex-shrink:0;width:74px;height:74px;border-radius:50%;border:3px solid #2D8C6A;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#fff;}
+.dc-vscore-num{font-size:1.35rem;font-weight:900;line-height:1;}
+.dc-vscore-lbl{font-size:0.46rem;font-weight:700;color:#88a898;letter-spacing:0.5px;margin-top:2px;}
+.dc-why{flex:1;background:#F2FAF5;border-radius:14px;padding:10px 14px;}
+.dc-why-tt{font-size:0.66rem;font-weight:700;color:#1a5a40;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
+.dc-why-item{font-size:0.76rem;color:#2D8C6A;font-weight:600;line-height:1.6;}
+
+/* ── Footer: Budget Breakdown + Map ── */
+.dc-footer{padding:0 16px 18px;}
+.dc-bb{background:#F8FCF9;border:1px solid #E0F0E8;border-radius:14px;padding:14px 16px;margin-bottom:10px;}
+.dc-bb-tt{font-size:0.78rem;font-weight:700;color:#1a2e22;margin-bottom:8px;}
+.dc-bb-row{display:flex;justify-content:space-between;font-size:0.78rem;color:#5a8a72;padding:3px 0;}
+.dc-bb-total{border-top:1px solid #D8EEE3;margin-top:6px;padding-top:8px;font-weight:800;color:#1a2e22;font-size:0.86rem;}
+.dc-map-btn{width:100%;padding:12px;background:#fff;border:1.5px solid #2D8C6A;color:#2D8C6A;border-radius:14px;font-size:0.84rem;font-weight:700;cursor:pointer;}
+.dc-map-btn:active{background:#F2FAF5;}
 </style>
 
 <!-- Schema.org Structured Data for SEO + GEO -->
@@ -572,6 +620,15 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
   <div class="sec-lbl" data-i18n="lbl_dates">Pick your dates</div>
   <div id="homePickerWrap"></div>
   <div class="sec-divider"></div>
+  <div class="ai-search-wrap">
+    <div class="sec-lbl" data-i18n="lbl_ai">Or just tell us what you want</div>
+    <div class="ai-search-box">
+      <span class="ai-search-icon">✨</span>
+      <input type="text" id="aiSearchInput" class="ai-search-input" placeholder="Romantic dinner under $80..." data-i18n-placeholder="ai_placeholder" oninput="aiSearchParse(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();aiSearchGo();}">
+      <button type="button" id="aiSearchGoBtn" class="ai-search-go" onclick="aiSearchGo()" style="display:none;" aria-label="Go">&#8594;</button>
+    </div>
+    <div class="ai-search-hint" id="aiSearchHint"></div>
+  </div>
   <div class="sec-lbl" data-i18n="lbl_vibe">What's your vibe?</div>
   <div class="vibe-scroll" id="vibeScroll">
     <div class="vibe-chip selected" id="vibeAll" onclick="pickVibe(this,'all')">✨ <span data-i18n="v_all">All</span></div>
@@ -589,6 +646,9 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
   <div class="vibe-hint" id="vibeHint" data-i18n="vibe_hint">Tap one or more — we'll match your vibe ✨</div>
   <button onclick="goMode()" style="width:100%;padding:16px 20px;background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;border:none;border-radius:18px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:12px;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 16px rgba(45,140,106,0.35);">
     <span data-i18n="btn_plan">Plan My Weekend</span> <span style="font-size:1rem;">→</span>
+  </button>
+  <button onclick="oneTapWeekend()" style="width:100%;padding:13px 20px;background:#fff;color:#2D8C6A;border:2px solid #2D8C6A;border-radius:18px;font-size:0.88rem;font-weight:700;cursor:pointer;margin-top:10px;display:flex;align-items:center;justify-content:center;gap:7px;">
+    <span>⚡</span><span data-i18n="btn_onetap">One-Tap Weekend</span>
   </button>
   <div style="text-align:center;font-size:0.68rem;color:#88a898;margin-top:6px;margin-bottom:12px;" data-i18n="ftr_caption">Escape · Explore · or Be Surprised</div>
 </div>
@@ -789,9 +849,14 @@ var I18N={
     lbl_where:'Where are you?',
     lbl_dates:'Pick your dates',
     lbl_vibe:"What's your vibe?",
+    lbl_ai:'Or just tell us what you want',
+    ai_placeholder:'Romantic dinner under $80...',
+    ai_matched:'Got it! Tap \u2192 to see results: ',
     browse_cities:'See all cities we cover &rarr;',
     vibe_hint:"Tap one or more — we'll match your vibe ✨",
     btn_plan:'Plan My Weekend',
+    btn_onetap:'One-Tap Weekend',
+    onetap_loading:'Picking your perfect weekend\u2026',
     free_pill:'Free Forever &middot; No Signup',
     ftr_caption:'Escape · Explore · or Be Surprised',
     ftr_tagline:'Your Weekend Getaway',
@@ -839,9 +904,14 @@ var I18N={
     lbl_where:'¿Dónde estás?',
     lbl_dates:'Elige tus fechas',
     lbl_vibe:'¿Cuál es tu estilo?',
+    lbl_ai:'O simplemente dinos qué quieres',
+    ai_placeholder:'Cena romántica por menos de \u00242000...',
+    ai_matched:'\u00a1Listo! Toca \u2192 para ver resultados: ',
     browse_cities:'Ver todas las ciudades &rarr;',
     vibe_hint:'Toca uno o más — encontraremos tu estilo ✨',
     btn_plan:'Planear Mi Fin de Semana',
+    btn_onetap:'Fin de Semana en 1 Toque',
+    onetap_loading:'Eligiendo tu fin de semana perfecto\u2026',
     free_pill:'Gratis Siempre &middot; Sin Registro',
     ftr_caption:'Escapa · Explora · o Déjate Sorprender',
     ftr_tagline:'Tu Escapada de Fin de Semana',
@@ -890,10 +960,12 @@ function applyLang(){
   }
   var inp=document.getElementById('homeCity');
   if(inp)inp.placeholder=d.city_placeholder;
+  var aiInp=document.getElementById('aiSearchInput');
+  if(aiInp)aiInp.placeholder=d.ai_placeholder;
 }
 // Short reusable labels for dynamically-built results HTML
 var RTXT={
-  en:{where_stay:'WHERE TO STAY',hotels:'Hotels',hotel_desc:'Booking.com · cheapest first',budget:'Budget',mid:'Mid',premium:'Premium',top_picks:'TOP PICKS',bookable:'BOOKABLE ACTIVITIES',book:'Book ↗',visit:'Visit ↗',local_events:'LOCAL EVENTS',join:'Join',guided_tour:'Viator · Guided Tour',local_weekend:'Local Weekend',insider_weekend:' Insider Weekend',local_guide:'Local Guide',hotels_acts_events:'Hotels · Activities · Events · Itinerary · ',
+  en:{share_cta_title:'Save this weekend',share_cta_sub:'Tap to download a shareable card',share_send:'\ud83d\udce4 Send',share_download:'\u2b07\ufe0f Save Image',value_score:'VALUE SCORE',why_title:'Why this destination',why_budget:'Fits your budget',why_close:'Quick drive away',why_activities:'Lots to do',why_scenic:'Beautiful scenery',why_value:'Great value',why_romantic:'Perfect for couples',why_curated:'Hand-picked for you',budget_est:'\ud83d\udcb0 Estimated Budget',bb_stay:'Stay',bb_gas:'Gas',bb_food:'Food',bb_activities:'Activities',bb_total:'Total',open_maps:'Open in Google Maps',where_stay:'WHERE TO STAY',hotels:'Hotels',hotel_desc:'Booking.com · cheapest first',budget:'Budget',mid:'Mid',premium:'Premium',top_picks:'TOP PICKS',bookable:'BOOKABLE ACTIVITIES',book:'Book ↗',visit:'Visit ↗',local_events:'LOCAL EVENTS',join:'Join',guided_tour:'Viator · Guided Tour',local_weekend:'Local Weekend',insider_weekend:' Insider Weekend',local_guide:'Local Guide',hotels_acts_events:'Hotels · Activities · Events · Itinerary · ',
     stay_treehouse:'Treehouse',stay_treehouse_d:'Treetop escape with mountain views',
     stay_mtncabin:'Mountain Cabin',stay_mtncabin_d:'Cozy cabin near trails and peaks',
     stay_mtncabin_d2:'Cozy cabin near trails & nature',
@@ -924,7 +996,7 @@ var RTXT={
     surprise_title:'Your Surprise Picks',surprise_eyebrow:'✨ Hand-picked hidden gems',
     surprise_sub_one:'Your one hidden gem this weekend',surprise_sub_two:'Two hidden gems, just for you',
     surprise_label:'HIDDEN GEM'},
-  es:{where_stay:'DÓNDE QUEDARTE',hotels:'Hoteles',hotel_desc:'Booking.com · más barato primero',budget:'Económico',mid:'Medio',premium:'Premium',top_picks:'LO MEJOR',bookable:'ACTIVIDADES RESERVABLES',book:'Reservar ↗',visit:'Visitar ↗',local_events:'EVENTOS LOCALES',join:'Unirme',guided_tour:'Viator · Tour Guiado',local_weekend:'Fin de Semana Local',insider_weekend:' Guía de Insider',local_guide:'Guía Local',hotels_acts_events:'Hoteles · Actividades · Eventos · Itinerario · ',
+  es:{share_cta_title:'Guarda este finde',share_cta_sub:'Toca para descargar una tarjeta',share_send:'\ud83d\udce4 Enviar',share_download:'\u2b07\ufe0f Guardar',value_score:'PUNTUACI\u00d3N',why_title:'Por qu\u00e9 este destino',why_budget:'Se ajusta a tu presupuesto',why_close:'Manejo corto',why_activities:'Mucho que hacer',why_scenic:'Paisajes hermosos',why_value:'Excelente relaci\u00f3n calidad-precio',why_romantic:'Perfecto para parejas',why_curated:'Elegido especialmente para ti',budget_est:'\ud83d\udcb0 Presupuesto Estimado',bb_stay:'Hospedaje',bb_gas:'Gasolina',bb_food:'Comida',bb_activities:'Actividades',bb_total:'Total',open_maps:'Abrir en Google Maps',where_stay:'DÓNDE QUEDARTE',hotels:'Hoteles',hotel_desc:'Booking.com · más barato primero',budget:'Económico',mid:'Medio',premium:'Premium',top_picks:'LO MEJOR',bookable:'ACTIVIDADES RESERVABLES',book:'Reservar ↗',visit:'Visitar ↗',local_events:'EVENTOS LOCALES',join:'Unirme',guided_tour:'Viator · Tour Guiado',local_weekend:'Fin de Semana Local',insider_weekend:' Guía de Insider',local_guide:'Guía Local',hotels_acts_events:'Hoteles · Actividades · Eventos · Itinerario · ',
     stay_treehouse:'Casa del Árbol',stay_treehouse_d:'Escape entre copas con vistas a la montaña',
     stay_mtncabin:'Cabaña de Montaña',stay_mtncabin_d:'Cabaña acogedora cerca de senderos y picos',
     stay_mtncabin_d2:'Cabaña acogedora cerca de senderos y naturaleza',
@@ -1052,6 +1124,201 @@ function shareResults(){
       if(btn){btn.textContent='\u2705 Copied!';setTimeout(function(){btn.textContent='\ud83d\udce4 Share';},2000);}
     });
   }
+}
+
+// ── Visual Shareable Weekend Card (Canvas) ──────────────────────────
+function generateShareCard(){
+  try{
+    var names=[];
+    // Try destination cards first (Escape & Surprise screens)
+    var dests=document.querySelectorAll('.dest-card');
+    for(var i=0;i<dests.length&&names.length<3;i++){
+      var nameDivs=dests[i].querySelectorAll('.dc-hdr > div > div');
+      var nameEl=nameDivs[1];
+      if(nameEl&&nameEl.textContent.trim())names.push(nameEl.textContent.trim());
+    }
+    // Fallback: top picks / venue names (works on Local Guide too)
+    if(names.length===0){
+      var venues=document.querySelectorAll('.ev-name');
+      for(var k=0;k<venues.length&&names.length<3;k++){
+        var vt=venues[k].textContent.trim();
+        if(vt&&names.indexOf(vt)===-1)names.push(vt);
+      }
+    }
+    // Last resort: screen title
+    if(names.length===0){
+      var titleEl=document.getElementById('rTt');
+      if(titleEl&&titleEl.textContent)names.push(titleEl.textContent.trim());
+    }
+    var cityName=selCity?selCity.name.split(',')[0]:'Your City';
+    var driveTxt=selDrive==='99'?'Anywhere':(selDrive+'hr drive');
+
+    var W=1080,H=1350;
+    var cv=document.createElement('canvas');cv.width=W;cv.height=H;
+    var ctx=cv.getContext('2d');
+
+    // Background gradient
+    var bg=ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0d2015');bg.addColorStop(0.5,'#1a4d2e');bg.addColorStop(1,'#0a1810');
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+
+    // Decorative circle
+    ctx.beginPath();ctx.arc(W-100,140,180,0,Math.PI*2);
+    ctx.fillStyle='rgba(74,154,114,0.15)';ctx.fill();
+
+    // Logo
+    ctx.fillStyle='#fff';ctx.font='700 52px Georgia, serif';
+    ctx.fillText('wkndo.',70,130);
+    ctx.fillStyle='#4ade80';ctx.beginPath();ctx.arc(252,112,7,0,Math.PI*2);ctx.fill();
+
+    // Tagline
+    ctx.fillStyle='rgba(255,255,255,0.65)';ctx.font='600 24px -apple-system, sans-serif';
+    ctx.fillText('YOUR WEEKEND ESCAPE',70,180);
+
+    // Main title
+    ctx.fillStyle='#fff';ctx.font='700 64px Georgia, serif';
+    wrapText(ctx,cityName+' Weekend',70,290,W-140,72);
+
+    // Drive badge
+    ctx.fillStyle='rgba(255,255,255,0.12)';
+    roundRect(ctx,70,330,260,56,28);ctx.fill();
+    ctx.fillStyle='#fff';ctx.font='600 26px -apple-system, sans-serif';
+    ctx.fillText('\ud83d\ude97 '+driveTxt,92,366);
+
+    // Destination list
+    var startY=460;
+    ctx.font='600 22px -apple-system, sans-serif';
+    for(var j=0;j<names.length;j++){
+      var y=startY+j*110;
+      ctx.fillStyle='rgba(255,255,255,0.08)';
+      roundRect(ctx,70,y,W-140,90,18);ctx.fill();
+      ctx.fillStyle='#4ade80';ctx.font='700 28px -apple-system, sans-serif';
+      ctx.fillText((j+1)+'.',100,y+56);
+      ctx.fillStyle='#fff';ctx.font='600 32px Georgia, serif';
+      ctx.fillText(names[j],150,y+56);
+    }
+
+    // Footer
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='500 24px -apple-system, sans-serif';
+    ctx.fillText('Free \u00b7 No signup \u00b7 wkndo.com',70,H-60);
+
+    var dataUrl=cv.toDataURL('image/png');
+    showSharePreview(dataUrl,cv);
+  }catch(e){
+    console.error('Share card error:',e);
+    shareResults();
+  }
+}
+
+function showSharePreview(dataUrl,canvasEl){
+  var existing=document.getElementById('shareModal');
+  if(existing)existing.remove();
+  var modal=document.createElement('div');
+  modal.id='shareModal';
+  modal.className='share-modal';
+
+  var bgEl=document.createElement('div');
+  bgEl.className='share-modal-bg';
+  bgEl.addEventListener('click',closeShareModal);
+
+  var card=document.createElement('div');
+  card.className='share-modal-card';
+
+  var img=document.createElement('img');
+  img.className='share-modal-img';
+  img.alt='Your weekend card';
+  img.src=dataUrl;
+
+  var btns=document.createElement('div');
+  btns.className='share-modal-btns';
+
+  var sendBtn=document.createElement('button');
+  sendBtn.className='share-modal-btn share-modal-btn-primary';
+  sendBtn.textContent=rt('share_send');
+
+  var dlBtn=document.createElement('button');
+  dlBtn.className='share-modal-btn';
+  dlBtn.textContent=rt('share_download');
+
+  var closeBtn=document.createElement('div');
+  closeBtn.className='share-modal-close';
+  closeBtn.textContent='\u2715';
+  closeBtn.addEventListener('click',closeShareModal);
+
+  btns.appendChild(sendBtn);
+  btns.appendChild(dlBtn);
+  card.appendChild(img);
+  card.appendChild(btns);
+  card.appendChild(closeBtn);
+  modal.appendChild(bgEl);
+  modal.appendChild(card);
+  document.body.appendChild(modal);
+  setTimeout(function(){modal.classList.add('show');},10);
+
+  function doDownload(){
+    try{
+      var link=document.createElement('a');
+      link.download='wkndo-weekend.png';
+      link.href=dataUrl;
+      link.target='_blank';
+      link.rel='noopener';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      var origTxt=dlBtn.textContent;
+      dlBtn.textContent='\u2705 Saved!';
+      setTimeout(function(){dlBtn.textContent=origTxt;},1800);
+    }catch(err){
+      window.open(dataUrl,'_blank');
+    }
+  }
+
+  dlBtn.addEventListener('click',doDownload);
+
+  sendBtn.addEventListener('click',function(){
+    if(canvasEl&&canvasEl.toBlob){
+      canvasEl.toBlob(function(blob){
+        if(!blob){doDownload();return;}
+        try{
+          var file=new File([blob],'wkndo-weekend.png',{type:'image/png'});
+          if(navigator.canShare&&navigator.canShare({files:[file]})){
+            navigator.share({files:[file],title:'My Weekend Plan',text:'Check out my weekend plan from wkndo.com!'}).catch(function(){});
+            return;
+          }
+        }catch(e){}
+        if(navigator.share){
+          navigator.share({title:'My Weekend Plan',text:'Check out my weekend plan from wkndo.com!',url:'https://wkndo.com'}).catch(function(){});
+        }else{
+          doDownload();
+        }
+      },'image/png');
+    }else{
+      doDownload();
+    }
+  });
+}
+function closeShareModal(){
+  var modal=document.getElementById('shareModal');
+  if(modal){modal.classList.remove('show');setTimeout(function(){modal.remove();},250);}
+}
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);
+  ctx.arcTo(x,y+h,x,y,r);
+  ctx.arcTo(x,y,x+w,y,r);
+  ctx.closePath();
+}
+function wrapText(ctx,text,x,y,maxWidth,lineHeight){
+  var words=text.split(' '),line='',lines=[];
+  for(var n=0;n<words.length;n++){
+    var test=line+words[n]+' ';
+    if(ctx.measureText(test).width>maxWidth&&n>0){lines.push(line);line=words[n]+' ';}
+    else line=test;
+  }
+  lines.push(line);
+  for(var i=0;i<lines.length;i++)ctx.fillText(lines[i].trim(),x,y+i*lineHeight);
 }
 
 function showPolicy(type){
@@ -1408,6 +1675,107 @@ function pickVibe(el,vibe){
     else{hint.textContent=selVibes.length+' vibe'+(selVibes.length>1?'s':'')+' selected — '+selVibes.map(function(v){return v.charAt(0).toUpperCase()+v.slice(1);}).join(', ');}
   }
 }
+// ── AI-style natural language search ──────────────────────────────
+function aiSearchParse(text){
+  var hint=document.getElementById('aiSearchHint');
+  if(!text||text.trim().length<3){if(hint)hint.textContent='';return;}
+  var t=text.toLowerCase();
+  var matched=[];
+
+  // Budget detection: $80, under 50, etc.
+  var priceMatch=t.match(/\$?(\d{2,4})/);
+  if(priceMatch){
+    var amt=parseInt(priceMatch[1]);
+    var newBudget='all';
+    if(amt<=50)newBudget='budget';
+    else if(amt<=150)newBudget='mid';
+    else newBudget='premium';
+    if(newBudget!==selBudget){
+      selBudget=newBudget;
+      matched.push('$'+amt+' budget');
+    }
+  }
+
+  // Vibe keyword detection
+  var vibeMap={
+    beach:['beach','ocean','coast','sea','sand'],
+    nature:['nature','hike','hiking','trail','outdoor','forest','park'],
+    nightlife:['nightlife','club','party','bar','night out'],
+    food:['food','foodie','dinner','restaurant','eat','cuisine','brunch'],
+    adventure:['adventure','adrenaline','extreme','thrill'],
+    romantic:['romantic','date','anniversary','proposal','couple'],
+    family:['family','kids','children','stroller'],
+    culture:['culture','museum','art','history'],
+    wellness:['wellness','spa','relax','peace','yoga','meditat'],
+    roadtrip:['road trip','roadtrip','drive','driving']
+  };
+  var foundVibes=[];
+  for(var key in vibeMap){
+    var kws=vibeMap[key];
+    for(var i=0;i<kws.length;i++){
+      if(t.indexOf(kws[i])>=0){foundVibes.push(key);break;}
+    }
+  }
+
+  if(foundVibes.length>0){
+    selVibes=foundVibes;
+    selVibe=foundVibes.length===1?foundVibes[0]:'mixed';
+    // Update vibe chip UI
+    var wrap=document.getElementById('vibeScroll');
+    if(wrap){
+      var chips=wrap.querySelectorAll('.vibe-chip');
+      for(var c=0;c<chips.length;c++){
+        var onclick=chips[c].getAttribute('onclick')||'';
+        var isMatch=false;
+        for(var fv=0;fv<foundVibes.length;fv++){
+          if(onclick.indexOf("'"+foundVibes[fv]+"'")>=0){isMatch=true;break;}
+        }
+        chips[c].className=isMatch?'vibe-chip selected':'vibe-chip';
+      }
+      var allChip=document.getElementById('vibeAll');
+      if(allChip)allChip.className='vibe-chip';
+    }
+    var vibeLabels={beach:'Beach',nature:'Nature',nightlife:'Nightlife',food:'Foodie',adventure:'Adventure',romantic:'Romantic',family:'Family',culture:'Culture',wellness:'Wellness',roadtrip:'Road Trip'};
+    for(var fv2=0;fv2<foundVibes.length;fv2++)matched.push(vibeLabels[foundVibes[fv2]]);
+  }
+
+  if(hint){
+    hint.textContent=matched.length>0?(rt('ai_matched')+matched.join(', ')+' \u2728'):'';
+  }
+
+  // Show/hide the Go button + highlight box when we've matched something useful
+  var goBtn=document.getElementById('aiSearchGoBtn');
+  var box=document.querySelector('.ai-search-box');
+  if(goBtn){
+    if(matched.length>0){
+      goBtn.style.display='flex';
+      if(box)box.classList.add('ai-ready');
+    }else{
+      goBtn.style.display='none';
+      if(box)box.classList.remove('ai-ready');
+    }
+  }
+}
+
+// ── Instant results: AI box -> straight to results, no extra questions ──
+function aiSearchGo(){
+  var inp=document.getElementById('aiSearchInput');
+  var text=inp?inp.value:'';
+  if(!text||text.trim().length<3)return;
+  // Make sure latest text is parsed into selBudget/selVibes
+  aiSearchParse(text);
+  if(!selCity){
+    var ci=document.getElementById('homeCity');
+    if(ci){ci.style.borderColor='#e05a2b';ci.focus();setTimeout(function(){ci.style.borderColor='#C8E4D4';},1500);}
+    return;
+  }
+  // Keep whatever budget/vibe got matched; default drive + this weekend
+  selWeekIdx=0;selDurIdx=0;
+  if(typeof selDrive==='undefined'||!selDrive)selDrive='2';
+  prevScreen='escapeForm';
+  runEscape();
+}
+
 function selOpt(gid,el,val){
   if(gid==='ePeople'){selPeople=val;}
   var nl=document.getElementById(gid).querySelectorAll('.fs-opt');
@@ -1557,6 +1925,18 @@ function goEscape(){
 }
 function goLocal(){if(!selCity){alert('Please select your city first');return;}document.getElementById('lCity').value=selCity.name;buildDateBadge('lDateBadge');show('localForm');}
 
+function oneTapWeekend(){
+  if(!selCity){
+    var ci=document.getElementById('homeCity');
+    if(ci){ci.style.borderColor='#e05a2b';ci.focus();setTimeout(function(){ci.style.borderColor='#C8E4D4';},1500);}
+    return;
+  }
+  selWeekIdx=0;selDurIdx=0;
+  selDrive='2';selBudget='all';selVibe='all';selVibes=[];
+  prevScreen='escapeForm';
+  runEscape();
+}
+
 // Loading
 var TL_EN=['Scouting the best escapes for you...','Double-checking hotel prices...','Sorting cheapest first, always...','Digging up activities & local events...','Putting your plan together...'];
 var TL_ES=['Buscando las mejores escapadas para ti...','Verificando precios de hoteles...','Ordenando del más barato primero...','Buscando actividades y eventos locales...','Armando tu plan...'];
@@ -1568,9 +1948,57 @@ function startLoad(){
   document.getElementById('loadSub').textContent=selLang==='es'?'Precios actualizados en tiempo real':'Prices updated in real time';
   var iv=setInterval(function(){ti++;if(ti>=TL.length){clearInterval(iv);return;}document.getElementById('loadTxt').textContent=TL[ti];},700);
 }
-function showRes(){show('resScreen');}
+function showRes(){
+  show('resScreen');
+  var rb=document.getElementById('rBody');
+  if(rb&&rb.innerHTML.indexOf('shareCtaCard')===-1){
+    rb.innerHTML+='<div id="shareCtaCard" class="share-cta-card" onclick="generateShareCard()">'
+      +'<div class="share-cta-icon">\ud83d\udcf8</div>'
+      +'<div class="share-cta-txt"><div class="share-cta-title">'+rt('share_cta_title')+'</div>'
+      +'<div class="share-cta-sub">'+rt('share_cta_sub')+'</div></div>'
+      +'<div class="share-cta-arrow">\u2192</div></div>';
+  }
+}
 
 // Run Escape
+function _valueScore(d){
+  var price=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||150:150);
+  var drive=d.dr||2;
+  var actCount=d.acts?d.acts.length:0;
+  // Lower raw score = better (matches sort logic). Convert to 0-100 display score.
+  var raw=(price/5)+(drive*8)-(actCount*5);
+  var score=Math.round(100-raw*1.1);
+  if(score>99)score=99;
+  if(score<62)score=62;
+  return score;
+}
+function _whyReasons(d,selBudgetVal){
+  var reasons=[];
+  var price=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||150:150);
+  if(selBudgetVal&&selBudgetVal!=='all'){
+    if(selBudgetVal==='budget'&&price<=150)reasons.push(rt('why_budget'));
+    else if(selBudgetVal==='mid'&&price>150&&price<=300)reasons.push(rt('why_budget'));
+    else if(selBudgetVal==='premium'&&price>300)reasons.push(rt('why_budget'));
+  }
+  if(d.dr<=1.5)reasons.push(rt('why_close'));
+  if(d.acts&&d.acts.length>=4)reasons.push(rt('why_activities'));
+  var tags=(d.ch||[]).map(function(x){return(x.t||'').toLowerCase();});
+  if(tags.some(function(t){return t.indexOf('beach')>=0||t.indexOf('sunset')>=0;}))reasons.push(rt('why_scenic'));
+  if(tags.some(function(t){return t.indexOf('budget')>=0||t.indexOf('cheap')>=0;}))reasons.push(rt('why_value'));
+  if(tags.some(function(t){return t.indexOf('romantic')>=0;}))reasons.push(rt('why_romantic'));
+  if(reasons.length<2)reasons.push(rt('why_curated'));
+  return reasons.slice(0,4);
+}
+function _budgetBreakdown(d,nights,peopleCount){
+  nights=nights||1;peopleCount=parseInt(peopleCount)||2;
+  var hotelNight=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||100:100);
+  var hotel=hotelNight*nights;
+  var gas=Math.round(d.dr*16);
+  var food=Math.round(35*peopleCount*nights*0.75);
+  var activities=d.acts&&d.acts.length?Math.round(parseInt(String(d.acts[0].price).replace(/[^\d]/g,''))||25)*Math.min(peopleCount,4):50;
+  var total=hotel+gas+food+activities;
+  return {hotel:hotel,gas:gas,food:food,activities:activities,total:total};
+}
 function buildDestCard(d,wk,isIndia,accent){
   var html='';
         var _hdrGrad=accent||'#0d2015,#1a4d2e';
@@ -1585,6 +2013,17 @@ function buildDestCard(d,wk,isIndia,accent){
         html+='<div class="dc-desc">'+d.desc+'</div><div class="dc-chips">';
         for(var ci=0;ci<d.ch.length;ci++)html+='<span class="dcc '+d.ch[ci].c+'">'+d.ch[ci].t+'</span>';
         html+='</div></div>';
+
+        // ── Value Score + Why This Destination ──────────────────────
+        var _vScore=_valueScore(d);
+        var _vColor=_vScore>=85?'#2D8C6A':(_vScore>=72?'#d4920a':'#a85a2d');
+        var _whyList=_whyReasons(d,typeof selBudget!=='undefined'?selBudget:'all');
+        html+='<div class="dc-value-row">';
+        html+='<div class="dc-vscore" style="border-color:'+_vColor+'"><div class="dc-vscore-num" style="color:'+_vColor+'">'+_vScore+'</div><div class="dc-vscore-lbl">'+rt('value_score')+'</div></div>';
+        html+='<div class="dc-why"><div class="dc-why-tt">'+rt('why_title')+'</div>';
+        for(var wi=0;wi<_whyList.length;wi++)html+='<div class="dc-why-item">\u2713 '+_whyList[wi]+'</div>';
+        html+='</div></div>';
+
         // WHERE TO STAY - Hotels + Unique Stays in one beautiful grid
         html+='<div class="wts-section"><div class="wts-title">🏡 '+rt('where_stay')+'</div><div class="wts-grid">';
         // Hotel tile - full width
@@ -1728,6 +2167,21 @@ function buildDestCard(d,wk,isIndia,accent){
         }
         html+='<div id="'+_did+'_ev"></div>';
         html+='</div>'; // close ev-section
+
+        // ── Budget Breakdown + Map Route ─────────────────────────────
+        var _bb=_budgetBreakdown(d,wk.nights||1,typeof selPeople!=='undefined'?selPeople:'2');
+        var _mapUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.n+', '+d.st);
+        html+='<div class="dc-footer">';
+        html+='<div class="dc-bb"><div class="dc-bb-tt">'+rt('budget_est')+'</div>';
+        html+='<div class="dc-bb-row"><span>'+rt('bb_stay')+'</span><span>$'+_bb.hotel+'</span></div>';
+        html+='<div class="dc-bb-row"><span>'+rt('bb_gas')+'</span><span>$'+_bb.gas+'</span></div>';
+        html+='<div class="dc-bb-row"><span>'+rt('bb_food')+'</span><span>$'+_bb.food+'</span></div>';
+        html+='<div class="dc-bb-row"><span>'+rt('bb_activities')+'</span><span>$'+_bb.activities+'</span></div>';
+        html+='<div class="dc-bb-row dc-bb-total"><span>'+rt('bb_total')+'</span><span>$'+_bb.total+'</span></div>';
+        html+='</div>';
+        html+='<button class="dc-map-btn" data-url="'+_mapUrl+'" onclick="goTo(this.dataset.url)">\ud83d\uddfa\ufe0f '+rt('open_maps')+'</button>';
+        html+='</div>';
+
         html+='</div>'; // close dest-card
         (function(dn,ds,ci,co,evId){
           fetch('/api/discover',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cityName:dn,stateName:ds,startDate:ci,endDate:co,vibe:selVibe,lat:getCityLat(dn),lng:getCityLng(dn)})})
