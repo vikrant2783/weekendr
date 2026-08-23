@@ -373,6 +373,182 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 .dc-bb-total{border-top:1px solid #D8EEE3;margin-top:6px;padding-top:8px;font-weight:800;color:#1a2e22;font-size:0.86rem;}
 .dc-map-btn{width:100%;padding:12px;background:#fff;border:1.5px solid #2D8C6A;color:#2D8C6A;border-radius:14px;font-size:0.84rem;font-weight:700;cursor:pointer;}
 .dc-map-btn:active{background:#F2FAF5;}
+
+/* ── Weekend Deals ── */
+.dc-deals{padding:0 16px 14px;}
+.dc-deals-hdr{font-size:0.72rem;font-weight:700;color:#1a5a40;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;}
+.dc-deal-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;background:#F8FCF9;border:1px solid #E0F0E8;border-radius:12px;margin-bottom:8px;}
+.dc-deal-left{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
+.dc-deal-icon{font-size:1.3rem;flex-shrink:0;}
+.dc-deal-title{font-size:0.8rem;font-weight:700;color:#1a2e22;line-height:1.3;}
+.dc-deal-desc{font-size:0.68rem;color:#5a8a72;margin-top:1px;}
+.dc-deal-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0;}
+.dc-deal-badge{background:#e8546a;color:#fff;font-size:0.62rem;font-weight:700;padding:2px 6px;border-radius:8px;}
+.dc-deal-price{font-size:0.75rem;font-weight:700;color:#2D8C6A;}
+.dc-deal-btn{padding:6px 12px;background:#2D8C6A;color:#fff;border:none;border-radius:10px;font-size:0.7rem;font-weight:700;cursor:pointer;white-space:nowrap;}
+.dc-deal-btn:active{opacity:0.8;}
+/* ── Group/Corporate Panel ── */
+.dc-group-box{margin:0 16px 16px;border:2px solid #2D8C6A;border-radius:16px;overflow:hidden;}
+.dc-group-hdr{background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;font-size:0.82rem;font-weight:700;padding:11px 16px;}
+.dc-group-est{padding:12px 14px 6px;}
+.dc-group-row{display:flex;justify-content:space-between;font-size:0.78rem;color:#5a8a72;padding:3px 0;}
+.dc-group-total{border-top:1px solid #D8EEE3;margin-top:6px;padding-top:8px;font-weight:800;color:#1a2e22;font-size:0.86rem;}
+.dc-group-pp{text-align:center;font-size:0.74rem;font-weight:700;color:#2D8C6A;background:#EDF5F0;border-radius:8px;padding:6px;margin:8px 14px 10px;}
+.dc-group-btns{display:flex;gap:8px;padding:0 12px 14px;flex-wrap:wrap;}
+.dc-group-btn{flex:1;min-width:80px;padding:10px 8px;border:1.5px solid #2D8C6A;background:#fff;color:#2D8C6A;border-radius:12px;font-size:0.72rem;font-weight:700;cursor:pointer;text-align:center;}
+.dc-group-btn-primary{background:#2D8C6A;color:#fff;border:none;}
+
+/* ── Weekend Personality Card ── */
+.personality-card{position:fixed;bottom:-100%;left:50%;transform:translateX(-50%);width:calc(100% - 32px);max-width:400px;border-radius:24px 24px 0 0;padding:28px 24px 32px;z-index:9999;transition:bottom 0.4s cubic-bezier(0.34,1.56,0.64,1);text-align:center;box-shadow:0 -8px 40px rgba(0,0,0,0.4);}
+.personality-card.pc-show{bottom:0;}
+.pc-close{position:absolute;top:14px;right:16px;width:30px;height:30px;background:rgba(255,255,255,0.2);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:0.9rem;}
+.pc-emoji{font-size:3rem;margin-bottom:8px;display:block;}
+.pc-label{font-size:0.6rem;font-weight:700;letter-spacing:2px;color:rgba(255,255,255,0.65);text-transform:uppercase;margin-bottom:4px;}
+.pc-title{font-size:1.5rem;font-weight:900;color:#fff;margin-bottom:8px;font-family:'Playfair Display',Georgia,serif;}
+.pc-desc{font-size:0.85rem;color:rgba(255,255,255,0.85);line-height:1.5;margin-bottom:18px;}
+.pc-btns{display:flex;gap:10px;}
+.pc-share-btn{flex:1;padding:12px;background:rgba(255,255,255,0.2);border:1.5px solid rgba(255,255,255,0.4);color:#fff;border-radius:14px;font-size:0.82rem;font-weight:700;cursor:pointer;}
+.pc-plan-btn{flex:1;padding:12px;background:#fff;color:#1a2e22;border:none;border-radius:14px;font-size:0.82rem;font-weight:700;cursor:pointer;}
+
+/* ── Destination Badges ── */
+.dc-badge-row{display:flex;gap:6px;flex-wrap:wrap;padding:6px 16px 0;}
+.dest-badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:20px;font-size:0.68rem;font-weight:700;white-space:nowrap;}
+.badge-gem{background:#1a3d52;color:#4dd8f0;border:1px solid #2a6d8a;}
+.badge-trend{background:#3d1a0a;color:#ff7c4d;border:1px solid #8a3d1a;}
+.badge-local{background:#1a3d28;color:#4ade80;border:1px solid #2D8C6A;}
+
+/* ── Weekend Roulette Screen ── */
+.rl-wrap{padding:16px;}
+.rl-title{font-size:1.3rem;font-weight:800;color:#1a2e22;text-align:center;margin-bottom:4px;}
+.rl-sub{font-size:0.78rem;color:#5a8a72;text-align:center;margin-bottom:16px;}
+.rl-card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.12);min-height:280px;transition:transform 0.28s ease,opacity 0.28s ease;cursor:grab;}
+.rt-hdr{padding:20px 16px;position:relative;}
+.rt-drive{font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.6);margin-bottom:4px;}
+.rt-name{font-size:1.6rem;font-weight:900;color:#fff;font-family:'Playfair Display',Georgia,serif;}
+.rt-state{font-size:0.78rem;color:rgba(255,255,255,0.65);margin-top:2px;}
+.rt-badge-score{position:absolute;top:16px;right:16px;width:52px;height:52px;border-radius:50%;border:3px solid;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,0.12);font-size:1.1rem;font-weight:900;}
+.rt-body{padding:14px 16px;}
+.rt-desc{font-size:0.82rem;color:#3a5a4a;line-height:1.5;margin-bottom:10px;}
+.rt-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;}
+.rt-tag{background:#EDF5F0;color:#2D8C6A;font-size:0.68rem;font-weight:600;padding:3px 10px;border-radius:20px;}
+.rt-price{font-size:0.78rem;font-weight:700;color:#2D8C6A;}
+.rt-progress{text-align:center;font-size:0.72rem;color:#88a898;padding:10px;border-top:1px solid #f0f0f0;}
+.rl-btns{display:flex;gap:12px;margin-top:14px;}
+.rl-btn{flex:1;padding:14px;border-radius:16px;font-size:0.92rem;font-weight:700;cursor:pointer;border:none;}
+.rl-skip{background:#f5f5f5;color:#666;}
+.rl-go{background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;box-shadow:0 4px 14px rgba(45,140,106,0.3);}
+
+/* ── Weekend Battle Screen ── */
+.battle-wrap{padding:16px;}
+.battle-container{}
+.battle-title{font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:#88a898;text-align:center;margin-bottom:14px;}
+.battle-row{display:flex;align-items:center;gap:8px;}
+.battle-card{flex:1;background:#fff;border-radius:18px;padding:16px 12px;text-align:center;cursor:pointer;border:2px solid #E0F0E8;transition:all 0.2s;box-shadow:0 2px 10px rgba(0,0,0,0.06);}
+.battle-card:active{transform:scale(0.97);}
+.battle-card-win{border-color:#2D8C6A;background:#EDF5F0;}
+.bc-name{font-size:1rem;font-weight:800;color:#1a2e22;font-family:'Playfair Display',Georgia,serif;line-height:1.2;margin-bottom:4px;}
+.bc-sub{font-size:0.68rem;color:#88a898;margin-bottom:6px;}
+.bc-price{font-size:0.72rem;color:#2D8C6A;font-weight:700;margin-bottom:8px;}
+.bc-vote{font-size:0.7rem;font-weight:700;color:#2D8C6A;background:#EDF5F0;padding:6px;border-radius:8px;}
+.bc-pct{font-size:1.3rem;font-weight:900;color:#88a898;}
+.bc-win{color:#2D8C6A;}
+.vs-circle{width:36px;height:36px;border-radius:50%;background:#1a2e22;color:#fff;font-size:0.72rem;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.battle-result{text-align:center;font-size:0.85rem;font-weight:700;color:#2D8C6A;margin-top:14px;padding:10px;background:#EDF5F0;border-radius:12px;}
+.battle-next{width:100%;margin-top:12px;padding:13px;background:#1a2e22;color:#fff;border:none;border-radius:14px;font-size:0.88rem;font-weight:700;cursor:pointer;}
+
+/* ── Mode card new badge ── */
+.mode-card-viral{border-color:#2D8C6A !important;}
+.mode-card-new{background:#2D8C6A;color:#fff;border-radius:12px;padding:2px 8px;font-size:0.62rem;font-weight:700;}
+
+/* ── Battle Improvements ── */
+.bc-crown{font-size:1rem;text-align:center;margin-bottom:2px;}
+.bc-bar-wrap{background:#E8F5EE;border-radius:8px;height:6px;margin:8px 0 4px;overflow:hidden;}
+.bc-bar{height:6px;background:linear-gradient(90deg,#2D8C6A,#4ade80);border-radius:8px;transition:width 0.6s ease;}
+.battle-hint{text-align:center;font-size:0.78rem;color:#88a898;padding:8px 0 4px;}
+.battle-result-box{background:#EDF5F0;border-radius:16px;padding:14px 16px;margin-top:12px;}
+.br-winner{font-size:0.92rem;font-weight:700;color:#1a2e22;text-align:center;margin-bottom:10px;}
+.br-actions{display:flex;gap:8px;}
+.br-book-btn{flex:1;padding:11px 8px;background:linear-gradient(135deg,#2D8C6A,#1a5a40);color:#fff;border:none;border-radius:12px;font-size:0.78rem;font-weight:700;cursor:pointer;}
+.br-share-btn{padding:11px 14px;background:#fff;border:1.5px solid #2D8C6A;color:#2D8C6A;border-radius:12px;font-size:0.78rem;font-weight:700;cursor:pointer;}
+
+/* ── Deals improvements ── */
+.dc-deal-badge{font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:8px;background:#e05a2b;color:#fff;margin-bottom:2px;text-align:center;}
+
+/* ── Group Activities ── */
+.dc-group-acts{border-top:1px solid rgba(45,140,106,0.2);padding:12px 14px 14px;}
+.dc-group-acts-hdr{font-size:0.72rem;font-weight:700;color:#1a5a40;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
+.dc-gact-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f0f7f3;}
+.dc-gact-row:last-child{border-bottom:none;}
+.dc-gact-left{flex:1;min-width:0;}
+.dc-gact-name{font-size:0.82rem;font-weight:700;color:#1a2e22;}
+.dc-gact-desc{font-size:0.7rem;color:#5a8a72;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.dc-gact-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;flex-shrink:0;}
+.dc-gact-price{font-size:0.78rem;font-weight:700;color:#1a2e22;}
+.dc-gact-pp{font-size:0.64rem;color:#88a898;}
+.dc-gact-free{font-size:0.72rem;font-weight:700;color:#2D8C6A;background:#EDF5F0;padding:2px 8px;border-radius:8px;}
+.dc-gact-btn{padding:5px 10px;background:#2D8C6A;color:#fff;border:none;border-radius:8px;font-size:0.68rem;font-weight:700;cursor:pointer;margin-top:2px;}
+
+/* ── Trust Bar ── */
+.trust-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 0 4px;opacity:0.85;}
+.trust-item{font-size:0.68rem;color:rgba(255,255,255,0.75);font-weight:500;}
+.trust-dot{color:rgba(255,255,255,0.4);font-size:0.68rem;}
+
+/* ── AI Search Glow ── */
+.ai-search-box-glow{border-color:#2D8C6A !important;box-shadow:0 0 0 3px rgba(45,140,106,0.12),0 2px 8px rgba(45,140,106,0.07) !important;animation:aiGlowPulse 3s ease-in-out infinite;}
+@keyframes aiGlowPulse{0%,100%{box-shadow:0 0 0 3px rgba(45,140,106,0.12),0 2px 8px rgba(45,140,106,0.07);}50%{box-shadow:0 0 0 5px rgba(45,140,106,0.18),0 4px 14px rgba(45,140,106,0.14);}}
+
+/* ── Rotating AI Prompts ── */
+.ai-prompts{margin-top:6px;padding:0 2px;font-size:0.72rem;color:#88a898;display:flex;align-items:center;gap:4px;}
+.ai-prompt-example{color:#2D8C6A;font-weight:600;opacity:0;transition:opacity 0.3s ease;cursor:pointer;}
+.ai-prompt-example:hover{text-decoration:underline;}
+
+/* ── Social Caption in Share Modal ── */
+.share-caption-wrap{background:#F8FCF9;border:1px solid #E0F0E8;border-radius:12px;padding:12px;margin-bottom:12px;}
+.share-caption-text{font-size:0.78rem;color:#1a2e22;line-height:1.5;margin-bottom:8px;}
+.share-caption-copy{padding:6px 14px;background:#2D8C6A;color:#fff;border:none;border-radius:8px;font-size:0.72rem;font-weight:700;cursor:pointer;width:100%;}
+.share-caption-copy:active{opacity:0.8;}
+
+/* ── Confetti ── */
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(100vh) rotate(720deg);opacity:0;}}
+
+/* ── Hover/Active states on chips ── */
+.vibe-chip:active{transform:scale(0.95);}
+.fs-opt:active{transform:scale(0.97);}
+.mode-card:active{transform:scale(0.98);}
+.mode-card{transition:transform 0.15s ease,box-shadow 0.15s ease;}
+.rl-btn:active{transform:scale(0.95);}
+.dc-deal-btn:active{opacity:0.8;}
+.ev-book:active{opacity:0.8;}
+
+/* ── Mobile font size improvements ── */
+@media(max-width:380px){
+  .dc-vscore-num{font-size:1.1rem;}
+  .dc-deal-title{font-size:0.74rem;}
+  .bc-name{font-size:0.88rem;}
+  .rt-name{font-size:1.3rem;}
+  .pc-title{font-size:1.2rem;}
+}
+
+/* ── RV Section ── */
+.rv-section{padding:0 16px 16px;}
+.rv-section-hdr{font-size:0.72rem;font-weight:700;color:#1a5a40;text-transform:uppercase;
+  letter-spacing:0.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.rv-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;}
+.rv-tile{border-radius:14px;padding:12px 10px;cursor:pointer;text-align:center;
+  transition:transform 0.15s ease;border:1.5px solid transparent;}
+.rv-tile:active{transform:scale(0.97);}
+.rv-resort{background:linear-gradient(135deg,#1a3d52,#0d2533);border-color:#2a6d8a;}
+.rv-park{background:linear-gradient(135deg,#2d3d1a,#1a2510);border-color:#5a8a2d;}
+.rv-camp{background:linear-gradient(135deg,#1a3d28,#0d2015);border-color:#2D8C6A;}
+.rv-tile-icon{font-size:1.6rem;margin-bottom:5px;}
+.rv-tile-name{font-size:0.72rem;font-weight:800;color:#fff;margin-bottom:3px;}
+.rv-tile-desc{font-size:0.58rem;color:rgba(255,255,255,0.65);line-height:1.3;margin-bottom:6px;}
+.rv-tile-tag{font-size:0.62rem;font-weight:700;color:#4ade80;background:rgba(74,222,128,0.15);
+  padding:3px 7px;border-radius:8px;display:inline-block;}
+
+/* ── RV tile source + date hint ── */
+.rv-tile-src{font-size:0.52rem;color:rgba(255,255,255,0.45);margin-bottom:2px;text-transform:uppercase;letter-spacing:0.5px;}
+.rv-date-hint{font-size:0.66rem;color:#5a8a72;text-align:center;padding:6px 8px 2px;font-style:italic;}
 </style>
 
 <!-- Schema.org Structured Data for SEO + GEO -->
@@ -571,6 +747,13 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
   <div class="h-tag">&#10022; <span data-i18n="tag">Your Weekend Planner</span></div>
   <div class="h-h1"><span data-i18n="h1a">Your perfect escape</span><br><span data-i18n="h1b">is <em>closer than you think.</em></span></div>
   <div class="h-sub" data-i18n="hsub">Escape the city, explore your backyard, or let us surprise you.</div>
+  <div class="trust-bar">
+    <span class="trust-item">&#127775; 12,000+ weekends planned</span>
+    <span class="trust-dot">&middot;</span>
+    <span class="trust-item">Real prices from Booking &amp; Viator</span>
+    <span class="trust-dot">&middot;</span>
+    <span class="trust-item">No signup needed</span>
+  </div>
   <div class="hero-people" aria-hidden="true">
     <svg viewBox="0 0 800 110" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg">
       <path d="M0,92 Q100,64 220,80 T440,74 T660,82 T800,70 V110 H0 Z" fill="#0a1810" opacity="0.7"/>
@@ -622,12 +805,15 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
   <div class="sec-divider"></div>
   <div class="ai-search-wrap">
     <div class="sec-lbl" data-i18n="lbl_ai">Or just tell us what you want</div>
-    <div class="ai-search-box">
-      <span class="ai-search-icon">✨</span>
+    <div class="ai-search-box ai-search-box-glow">
+      <span class="ai-search-icon">&#10024;</span>
       <input type="text" id="aiSearchInput" class="ai-search-input" placeholder="Romantic dinner under $80..." data-i18n-placeholder="ai_placeholder" oninput="aiSearchParse(this.value)" onkeydown="if(event.key==='Enter'){event.preventDefault();aiSearchGo();}">
       <button type="button" id="aiSearchGoBtn" class="ai-search-go" onclick="aiSearchGo()" style="display:none;" aria-label="Go">&#8594;</button>
     </div>
     <div class="ai-search-hint" id="aiSearchHint"></div>
+    <div class="ai-prompts" id="aiPrompts">
+      <span>Try: </span><span id="aiPromptText" class="ai-prompt-example"></span>
+    </div>
   </div>
   <div class="sec-lbl" data-i18n="lbl_vibe">What's your vibe?</div>
   <div class="vibe-scroll" id="vibeScroll">
@@ -706,6 +892,20 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
     </div>
     <div class="mode-card-arrow">→</div>
   </div>
+  <div class="mode-card mode-card-viral" onclick="startRoulette()">
+    <div class="mode-card-left">
+      <div class="mode-card-icon">&#127922;</div>
+      <div><div class="mode-card-title">Weekend Roulette</div><div class="mode-card-desc">Random escape &middot; swipe to discover</div></div>
+    </div>
+    <div class="mode-card-arrow mode-card-new">NEW</div>
+  </div>
+  <div class="mode-card mode-card-viral" onclick="startBattle()">
+    <div class="mode-card-left">
+      <div class="mode-card-icon">&#9876;&#65039;</div>
+      <div><div class="mode-card-title">Weekend Battle</div><div class="mode-card-desc">Vote between two destinations</div></div>
+    </div>
+    <div class="mode-card-arrow mode-card-new">NEW</div>
+  </div>
   <div class="mode-card mode-card-surprise" onclick="goSurprise()">
     <div class="mode-card-left">
       <div class="mode-card-icon">🎲</div>
@@ -774,7 +974,9 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
       <div class="fs-opt on" onclick="selOpt('ePeople',this,'1')">🙋 <span data-i18n="ppl_solo">Solo</span></div>
       <div class="fs-opt" onclick="selOpt('ePeople',this,'2')">👫 <span data-i18n="ppl_couple">Couple</span></div>
       <div class="fs-opt" onclick="selOpt('ePeople',this,'4')">👨‍👩‍👧 <span data-i18n="ppl_family">Family</span></div>
-      <div class="fs-opt" onclick="selOpt('ePeople',this,'6')">🎉 <span data-i18n="ppl_group">Group</span></div>
+      <div class="fs-opt" onclick="selOpt('ePeople',this,'6')">&#127881; <span data-i18n="ppl_group6">Group (6)</span></div>
+      <div class="fs-opt" onclick="selOpt('ePeople',this,'8')">&#128101; <span data-i18n="ppl_group8">Group (8)</span></div>
+      <div class="fs-opt" onclick="selOpt('ePeople',this,'15')">&#127970; <span data-i18n="ppl_corporate">Corporate (15+)</span></div>
     </div>
   </div>
   <div class="fs" id="eBudgetWrap">
@@ -819,6 +1021,30 @@ body{font-family:'DM Sans',sans-serif;background:#EDF5F0;min-height:100vh;}
 </div>
 
 <!-- RESULTS -->
+<div class="screen" id="rouletteScreen">
+  <div class="mode-hdr">
+    <div class="form-back" onclick="show('modeScreen')">&#8592; Back</div>
+    <div class="mode-logo">wkndo<b>.</b></div>
+  </div>
+  <div class="rl-wrap">
+    <div class="rl-title">&#127922; Weekend Roulette</div>
+    <div class="rl-sub">Swipe right to GO &middot; left to skip</div>
+    <div id="rouletteCard" class="rl-card"></div>
+    <div class="rl-btns">
+      <button class="rl-btn rl-skip" onclick="rouletteSkip()">&#10005; Skip</button>
+      <button class="rl-btn rl-go" onclick="rouletteGo()">Let&#39;s Go &#10003;</button>
+    </div>
+  </div>
+</div>
+<div class="screen" id="battleScreen">
+  <div class="mode-hdr">
+    <div class="form-back" onclick="show('modeScreen')">&#8592; Back</div>
+    <div class="mode-logo">wkndo<b>.</b></div>
+  </div>
+  <div class="battle-wrap">
+    <div id="battleContainer" class="battle-container"></div>
+  </div>
+</div>
 <div class="screen" id="resScreen">
   <div class="rbn" id="rBn">
     <div class="rbn-back" onclick="goBack()">&#8592; Back</div>
@@ -880,7 +1106,7 @@ var I18N={
     fs_who:"Who's Going?",
     fs_budget:'Budget per Night',
     dr_1:'1 hr',dr_2:'2 hrs',dr_3:'3 hrs',dr_5:'5 hrs',dr_8:'8 hrs',dr_10:'10 hrs',dr_any:'Any',
-    ppl_solo:'Solo',ppl_couple:'Couple',ppl_family:'Family',ppl_group:'Group',
+    ppl_solo:'Solo',ppl_couple:'Couple',ppl_family:'Family',ppl_group6:'Group (6)',ppl_group8:'Group (8)',ppl_corporate:'Corporate (15+)',
     bud_budget:'Budget',bud_mid:'Mid-Range',bud_premium:'Premium',bud_all:'All',
     btn_find_escape:'Find My Escape',
     loc_title:"What's happening in your city? 🏙️",
@@ -965,7 +1191,7 @@ function applyLang(){
 }
 // Short reusable labels for dynamically-built results HTML
 var RTXT={
-  en:{share_cta_title:'Save this weekend',share_cta_sub:'Tap to download a shareable card',share_send:'\ud83d\udce4 Send',share_download:'\u2b07\ufe0f Save Image',value_score:'VALUE SCORE',why_title:'Why this destination',why_budget:'Fits your budget',why_close:'Quick drive away',why_activities:'Lots to do',why_scenic:'Beautiful scenery',why_value:'Great value',why_romantic:'Perfect for couples',why_curated:'Hand-picked for you',budget_est:'\ud83d\udcb0 Estimated Budget',bb_stay:'Stay',bb_gas:'Gas',bb_food:'Food',bb_activities:'Activities',bb_total:'Total',open_maps:'Open in Google Maps',where_stay:'WHERE TO STAY',hotels:'Hotels',hotel_desc:'Booking.com · cheapest first',budget:'Budget',mid:'Mid',premium:'Premium',top_picks:'TOP PICKS',bookable:'BOOKABLE ACTIVITIES',book:'Book ↗',visit:'Visit ↗',local_events:'LOCAL EVENTS',join:'Join',guided_tour:'Viator · Guided Tour',local_weekend:'Local Weekend',insider_weekend:' Insider Weekend',local_guide:'Local Guide',hotels_acts_events:'Hotels · Activities · Events · Itinerary · ',
+  en:{unique_stays:'Unique Stays',rv_hdr:'RV Options',rv_resort:'RV Resort',rv_park:'RV Park',rv_camp:'RV Camping',group_hdr:'Group Weekend',group_people:'people',group_per_person:'per person',group_book_hotel:'Book Hotels',group_venue:'Find Venue',group_activities:'Group Activities',deal_hdr:'Where to Stay',deal_off:' off',deal_book:'Book ↗',share_cta_title:'Save this weekend',share_cta_sub:'Tap to download a shareable card',share_send:'\ud83d\udce4 Send',share_download:'\u2b07\ufe0f Save Image',value_score:'VALUE SCORE',why_title:'Why this destination',why_budget:'Fits your budget',why_close:'Quick drive away',why_activities:'Lots to do',why_scenic:'Beautiful scenery',why_value:'Great value',why_romantic:'Perfect for couples',why_curated:'Hand-picked for you',budget_est:'\ud83d\udcb0 Estimated Budget',bb_stay:'Stay',bb_gas:'Gas',bb_food:'Food',bb_activities:'Activities',bb_total:'Total',open_maps:'Open in Google Maps',where_stay:'WHERE TO STAY',hotels:'Hotels',hotel_desc:'Booking.com · cheapest first',budget:'Budget',mid:'Mid',premium:'Premium',top_picks:'TOP PICKS',bookable:'BOOKABLE ACTIVITIES',book:'Book ↗',visit:'Visit ↗',local_events:'LOCAL EVENTS',join:'Join',guided_tour:'Viator · Guided Tour',local_weekend:'Local Weekend',insider_weekend:' Insider Weekend',local_guide:'Local Guide',hotels_acts_events:'Hotels · Activities · Events · Itinerary · ',
     stay_treehouse:'Treehouse',stay_treehouse_d:'Treetop escape with mountain views',
     stay_mtncabin:'Mountain Cabin',stay_mtncabin_d:'Cozy cabin near trails and peaks',
     stay_mtncabin_d2:'Cozy cabin near trails & nature',
@@ -996,7 +1222,7 @@ var RTXT={
     surprise_title:'Your Surprise Picks',surprise_eyebrow:'✨ Hand-picked hidden gems',
     surprise_sub_one:'Your one hidden gem this weekend',surprise_sub_two:'Two hidden gems, just for you',
     surprise_label:'HIDDEN GEM'},
-  es:{share_cta_title:'Guarda este finde',share_cta_sub:'Toca para descargar una tarjeta',share_send:'\ud83d\udce4 Enviar',share_download:'\u2b07\ufe0f Guardar',value_score:'PUNTUACI\u00d3N',why_title:'Por qu\u00e9 este destino',why_budget:'Se ajusta a tu presupuesto',why_close:'Manejo corto',why_activities:'Mucho que hacer',why_scenic:'Paisajes hermosos',why_value:'Excelente relaci\u00f3n calidad-precio',why_romantic:'Perfecto para parejas',why_curated:'Elegido especialmente para ti',budget_est:'\ud83d\udcb0 Presupuesto Estimado',bb_stay:'Hospedaje',bb_gas:'Gasolina',bb_food:'Comida',bb_activities:'Actividades',bb_total:'Total',open_maps:'Abrir en Google Maps',where_stay:'DÓNDE QUEDARTE',hotels:'Hoteles',hotel_desc:'Booking.com · más barato primero',budget:'Económico',mid:'Medio',premium:'Premium',top_picks:'LO MEJOR',bookable:'ACTIVIDADES RESERVABLES',book:'Reservar ↗',visit:'Visitar ↗',local_events:'EVENTOS LOCALES',join:'Unirme',guided_tour:'Viator · Tour Guiado',local_weekend:'Fin de Semana Local',insider_weekend:' Guía de Insider',local_guide:'Guía Local',hotels_acts_events:'Hoteles · Actividades · Eventos · Itinerario · ',
+  es:{unique_stays:'Alojamientos Únicos',group_hdr:'Fin de Semana Grupal',group_people:'personas',group_per_person:'por persona',group_book_hotel:'Reservar Hoteles',group_venue:'Buscar Lugar',group_activities:'Actividades Grupales',deal_hdr:'Dónde Quedarse',deal_off:'% descuento',deal_book:'Reservar ↗',share_cta_title:'Guarda este finde',share_cta_sub:'Toca para descargar una tarjeta',share_send:'\ud83d\udce4 Enviar',share_download:'\u2b07\ufe0f Guardar',value_score:'PUNTUACI\u00d3N',why_title:'Por qu\u00e9 este destino',why_budget:'Se ajusta a tu presupuesto',why_close:'Manejo corto',why_activities:'Mucho que hacer',why_scenic:'Paisajes hermosos',why_value:'Excelente relaci\u00f3n calidad-precio',why_romantic:'Perfecto para parejas',why_curated:'Elegido especialmente para ti',budget_est:'\ud83d\udcb0 Presupuesto Estimado',bb_stay:'Hospedaje',bb_gas:'Gasolina',bb_food:'Comida',bb_activities:'Actividades',bb_total:'Total',open_maps:'Abrir en Google Maps',where_stay:'DÓNDE QUEDARTE',hotels:'Hoteles',hotel_desc:'Booking.com · más barato primero',budget:'Económico',mid:'Medio',premium:'Premium',top_picks:'LO MEJOR',bookable:'ACTIVIDADES RESERVABLES',book:'Reservar ↗',visit:'Visitar ↗',local_events:'EVENTOS LOCALES',join:'Unirme',guided_tour:'Viator · Tour Guiado',local_weekend:'Fin de Semana Local',insider_weekend:' Guía de Insider',local_guide:'Guía Local',hotels_acts_events:'Hoteles · Actividades · Eventos · Itinerario · ',
     stay_treehouse:'Casa del Árbol',stay_treehouse_d:'Escape entre copas con vistas a la montaña',
     stay_mtncabin:'Cabaña de Montaña',stay_mtncabin_d:'Cabaña acogedora cerca de senderos y picos',
     stay_mtncabin_d2:'Cabaña acogedora cerca de senderos y naturaleza',
@@ -1095,6 +1321,7 @@ function addDays(d,n){var r=new Date(d);r.setDate(r.getDate()+n);return r;}
 
 // Country
 var selPeople='2';
+var selCorporate=false;
 var selPeople='2';
 
 // surpriseMe removed - using goSurprise/runSurprise flow
@@ -1129,78 +1356,166 @@ function shareResults(){
 // ── Visual Shareable Weekend Card (Canvas) ──────────────────────────
 function generateShareCard(){
   try{
-    var names=[];
-    // Try destination cards first (Escape & Surprise screens)
-    var dests=document.querySelectorAll('.dest-card');
-    for(var i=0;i<dests.length&&names.length<3;i++){
-      var nameDivs=dests[i].querySelectorAll('.dc-hdr > div > div');
+    // ── Collect destination data from DOM ──────────────────────────
+    var cards=document.querySelectorAll('.dest-card');
+    var destData=[];
+    for(var i=0;i<cards.length&&destData.length<3;i++){
+      var nameDivs=cards[i].querySelectorAll('.dc-hdr > div > div');
       var nameEl=nameDivs[1];
-      if(nameEl&&nameEl.textContent.trim())names.push(nameEl.textContent.trim());
+      if(!nameEl||!nameEl.textContent.trim()) continue;
+      var name=nameEl.textContent.trim();
+      // Get drive time
+      var driveEl=nameDivs[0];
+      var drive=driveEl?driveEl.textContent.replace('HR DRIVE','').replace('hr','').trim()+'hr':'';
+      // Get hotel price from wts tile
+      var priceEl=cards[i].querySelector('.wts-hotel-tiers button,.wts-tier-btn');
+      var price='';
+      var bbRows=cards[i].querySelectorAll('.dc-bb-row');
+      for(var r=0;r<bbRows.length;r++){
+        if(bbRows[r].textContent.indexOf('Total')>=0){
+          price=bbRows[r].querySelector('span:last-child')?bbRows[r].querySelector('span:last-child').textContent.trim():'';
+          break;
+        }
+      }
+      // Get value score
+      var scoreEl=cards[i].querySelector('.dc-vscore-num');
+      var score=scoreEl?scoreEl.textContent.trim():'';
+      // Get top activity
+      var actEl=cards[i].querySelector('.ev-name');
+      var act=actEl?actEl.textContent.trim():'';
+      destData.push({name:name,drive:drive,price:price,score:score,act:act});
     }
-    // Fallback: top picks / venue names (works on Local Guide too)
-    if(names.length===0){
-      var venues=document.querySelectorAll('.ev-name');
-      for(var k=0;k<venues.length&&names.length<3;k++){
-        var vt=venues[k].textContent.trim();
-        if(vt&&names.indexOf(vt)===-1)names.push(vt);
+    // Fallback for Local Guide / Roulette single card
+    if(destData.length===0){
+      var titleEl=document.getElementById('rTt');
+      var sbEl=document.getElementById('rSb');
+      var name=titleEl?titleEl.textContent.trim():'';
+      if(name) destData.push({name:name,drive:sbEl?sbEl.textContent.replace('hr drive','').replace('🚗','').trim():'',price:'',score:'',act:''});
+      if(destData.length===0){
+        var venues=document.querySelectorAll('.ev-name');
+        for(var k=0;k<venues.length&&destData.length<3;k++){
+          var vt=venues[k].textContent.trim();
+          if(vt&&!destData.find(function(d){return d.name===vt;})) destData.push({name:vt,drive:'',price:'',score:'',act:''});
+        }
       }
     }
-    // Last resort: screen title
-    if(names.length===0){
-      var titleEl=document.getElementById('rTt');
-      if(titleEl&&titleEl.textContent)names.push(titleEl.textContent.trim());
-    }
-    var cityName=selCity?selCity.name.split(',')[0]:'Your City';
-    var driveTxt=selDrive==='99'?'Anywhere':(selDrive+'hr drive');
 
-    var W=1080,H=1350;
+    var cityName=selCity?selCity.name.split(',')[0]:'Your City';
+    var driveTxt=selDrive==='99'?'Any distance':('Within '+selDrive+'hr drive');
+    var budgetTxt=selBudget==='all'?'All budgets':selBudget==='budget'?'Budget-friendly':selBudget==='mid'?'Mid-range':'Premium';
+    var nightsTxt=(typeof selDurIdx!=='undefined'&&selDurIdx>0)?'2 nights':'1 night';
+    var peopleTxt=(typeof selPeople!=='undefined'&&parseInt(selPeople)>1)?selPeople+' people':'2 people';
+
+    var W=1080,H=1920; // 9:16 Story format
     var cv=document.createElement('canvas');cv.width=W;cv.height=H;
     var ctx=cv.getContext('2d');
 
-    // Background gradient
+    // ── Background ───────────────────────────────────────────────────
     var bg=ctx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#0d2015');bg.addColorStop(0.5,'#1a4d2e');bg.addColorStop(1,'#0a1810');
+    bg.addColorStop(0,'#061510');
+    bg.addColorStop(0.35,'#0d2015');
+    bg.addColorStop(0.7,'#1a3d28');
+    bg.addColorStop(1,'#0a1810');
     ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
 
-    // Decorative circle
-    ctx.beginPath();ctx.arc(W-100,140,180,0,Math.PI*2);
-    ctx.fillStyle='rgba(74,154,114,0.15)';ctx.fill();
+    // Decorative circles
+    ctx.beginPath();ctx.arc(W+60,200,280,0,Math.PI*2);
+    ctx.fillStyle='rgba(45,140,106,0.12)';ctx.fill();
+    ctx.beginPath();ctx.arc(-60,H-200,220,0,Math.PI*2);
+    ctx.fillStyle='rgba(74,222,128,0.08)';ctx.fill();
 
-    // Logo
-    ctx.fillStyle='#fff';ctx.font='700 52px Georgia, serif';
-    ctx.fillText('wkndo.',70,130);
-    ctx.fillStyle='#4ade80';ctx.beginPath();ctx.arc(252,112,7,0,Math.PI*2);ctx.fill();
+    // ── HEADER: Logo + tagline ───────────────────────────────────────
+    ctx.fillStyle='#fff';ctx.font='800 56px Georgia, serif';
+    ctx.fillText('wkndo.',70,120);
+    ctx.fillStyle='#4ade80';ctx.beginPath();ctx.arc(270,100,8,0,Math.PI*2);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='500 22px -apple-system,sans-serif';
+    ctx.fillText('YOUR WEEKEND ESCAPE PLANNER',70,158);
 
-    // Tagline
-    ctx.fillStyle='rgba(255,255,255,0.65)';ctx.font='600 24px -apple-system, sans-serif';
-    ctx.fillText('YOUR WEEKEND ESCAPE',70,180);
+    // Divider
+    ctx.fillStyle='rgba(74,222,128,0.3)';ctx.fillRect(70,178,W-140,1);
 
-    // Main title
-    ctx.fillStyle='#fff';ctx.font='700 64px Georgia, serif';
-    wrapText(ctx,cityName+' Weekend',70,290,W-140,72);
+    // ── HERO SECTION ─────────────────────────────────────────────────
+    ctx.fillStyle='#fff';ctx.font='800 88px Georgia, serif';
+    wrapText(ctx,cityName+' Weekend',70,290,W-140,96);
 
-    // Drive badge
-    ctx.fillStyle='rgba(255,255,255,0.12)';
-    roundRect(ctx,70,330,260,56,28);ctx.fill();
-    ctx.fillStyle='#fff';ctx.font='600 26px -apple-system, sans-serif';
-    ctx.fillText('\ud83d\ude97 '+driveTxt,92,366);
-
-    // Destination list
-    var startY=460;
-    ctx.font='600 22px -apple-system, sans-serif';
-    for(var j=0;j<names.length;j++){
-      var y=startY+j*110;
-      ctx.fillStyle='rgba(255,255,255,0.08)';
-      roundRect(ctx,70,y,W-140,90,18);ctx.fill();
-      ctx.fillStyle='#4ade80';ctx.font='700 28px -apple-system, sans-serif';
-      ctx.fillText((j+1)+'.',100,y+56);
-      ctx.fillStyle='#fff';ctx.font='600 32px Georgia, serif';
-      ctx.fillText(names[j],150,y+56);
+    // Meta pills row
+    var pills=['🚗 '+driveTxt,'💰 '+budgetTxt,'👥 '+peopleTxt];
+    var pillX=70;
+    for(var pi=0;pi<pills.length;pi++){
+      var pw=ctx.measureText(pills[pi]).width;
+      ctx.font='600 22px -apple-system,sans-serif';
+      pw=ctx.measureText(pills[pi]).width;
+      ctx.fillStyle='rgba(74,222,128,0.15)';
+      roundRect(ctx,pillX,390,pw+32,46,23);ctx.fill();
+      ctx.fillStyle='#4ade80';
+      ctx.fillText(pills[pi],pillX+16,420);
+      pillX+=pw+48;
+      if(pillX>W-200){pillX=70;}
     }
 
-    // Footer
-    ctx.fillStyle='rgba(255,255,255,0.5)';ctx.font='500 24px -apple-system, sans-serif';
-    ctx.fillText('Free \u00b7 No signup \u00b7 wkndo.com',70,H-60);
+    // ── DESTINATION CARDS ─────────────────────────────────────────────
+    var cardStartY=470;
+    var cardH=destData.length>1?200:240;
+    var cardGap=20;
+
+    for(var j=0;j<destData.length;j++){
+      var d=destData[j];
+      var cy=cardStartY+j*(cardH+cardGap);
+
+      // Card bg
+      ctx.fillStyle='rgba(255,255,255,0.06)';
+      roundRect(ctx,70,cy,W-140,cardH,20);ctx.fill();
+      ctx.strokeStyle='rgba(74,222,128,0.2)';ctx.lineWidth=1;
+      roundRect(ctx,70,cy,W-140,cardH,20);ctx.stroke();
+
+      // Number badge
+      ctx.fillStyle='#4ade80';
+      ctx.beginPath();ctx.arc(114,cy+cardH/2,30,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='#0d2015';ctx.font='800 28px -apple-system,sans-serif';
+      ctx.textAlign='center';ctx.fillText(j+1,114,cy+cardH/2+10);ctx.textAlign='left';
+
+      // Destination name
+      ctx.fillStyle='#fff';ctx.font='700 42px Georgia,serif';
+      ctx.fillText(d.name,160,cy+60);
+
+      // Drive + score row
+      ctx.fillStyle='rgba(255,255,255,0.55)';ctx.font='500 22px -apple-system,sans-serif';
+      var meta=[];
+      if(d.drive)meta.push('🚗 '+d.drive+' drive');
+      if(d.score)meta.push('🏆 Score: '+d.score+'/100');
+      if(d.price)meta.push('💰 ~'+d.price+' total');
+      ctx.fillText(meta.join('  ·  '),160,cy+96);
+
+      // Top activity
+      if(d.act){
+        ctx.fillStyle='rgba(74,222,128,0.2)';
+        roundRect(ctx,160,cy+118,Math.min(ctx.measureText('🎫 '+d.act).width+24,W-240),38,10);ctx.fill();
+        ctx.fillStyle='#4ade80';ctx.font='600 20px -apple-system,sans-serif';
+        ctx.fillText('🎫 '+d.act,172,cy+142);
+      }
+    }
+
+    // ── FOOTER ───────────────────────────────────────────────────────
+    var footerY=cardStartY+destData.length*(cardH+cardGap)+40;
+    // Vibe strip
+    if(selVibes&&selVibes.length>0){
+      var vibes=selVibes.slice(0,4).map(function(v){return v.charAt(0).toUpperCase()+v.slice(1);});
+      ctx.fillStyle='rgba(74,222,128,0.15)';
+      roundRect(ctx,70,footerY,W-140,52,26);ctx.fill();
+      ctx.fillStyle='#4ade80';ctx.font='600 22px -apple-system,sans-serif';
+      ctx.fillText('✨ Vibe: '+vibes.join(' · '),90,footerY+34);
+      footerY+=72;
+    }
+
+    // "Planned in 30s" badge
+    ctx.fillStyle='rgba(255,255,255,0.08)';
+    roundRect(ctx,70,footerY,500,50,25);ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.8)';ctx.font='600 22px -apple-system,sans-serif';
+    ctx.fillText('⚡ Planned in 30 seconds — no signup needed',90,footerY+33);
+
+    // Bottom URL
+    ctx.fillStyle='rgba(255,255,255,0.35)';ctx.font='500 22px -apple-system,sans-serif';
+    ctx.fillText('Free · wkndo.com → plan your own',70,H-50);
 
     var dataUrl=cv.toDataURL('image/png');
     showSharePreview(dataUrl,cv);
@@ -1229,6 +1544,24 @@ function showSharePreview(dataUrl,canvasEl){
   img.alt='Your weekend card';
   img.src=dataUrl;
 
+  // Pre-written social caption
+  var city=selCity?selCity.name.split(',')[0]:'my city';
+  var caption='🌿 Just planned the perfect weekend from '+city+' in 30 seconds — no signup, no ads, totally free. Try it: wkndo.com 🚗✨';
+  var captionWrap=document.createElement('div');
+  captionWrap.className='share-caption-wrap';
+  var captionEl=document.createElement('div');
+  captionEl.className='share-caption-text';
+  captionEl.textContent=caption;
+  var copyCapBtn=document.createElement('button');
+  copyCapBtn.className='share-caption-copy';
+  copyCapBtn.textContent='Copy Caption';
+  copyCapBtn.addEventListener('click',function(){
+    if(navigator.clipboard){navigator.clipboard.writeText(caption).then(function(){copyCapBtn.textContent='✅ Copied!';setTimeout(function(){copyCapBtn.textContent='Copy Caption';},2000);});}
+    else{var ta=document.createElement('textarea');ta.value=caption;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);copyCapBtn.textContent='✅ Copied!';}
+  });
+  captionWrap.appendChild(captionEl);
+  captionWrap.appendChild(copyCapBtn);
+
   var btns=document.createElement('div');
   btns.className='share-modal-btns';
 
@@ -1248,6 +1581,7 @@ function showSharePreview(dataUrl,canvasEl){
   btns.appendChild(sendBtn);
   btns.appendChild(dlBtn);
   card.appendChild(img);
+  card.appendChild(captionWrap);
   card.appendChild(btns);
   card.appendChild(closeBtn);
   modal.appendChild(bgEl);
@@ -1682,6 +2016,21 @@ function aiSearchParse(text){
   var t=text.toLowerCase();
   var matched=[];
 
+  // Group size: "team of 20", "15 people", "group of 8"
+  var gm=t.match(/(group|team|party|crew|colleagues?|coworkers?|people|persons?|attendees?)\s+of\s+(\d+)|(\d+)\s+(people|persons?|colleagues?|pax|attendees?|guests?|friends?)/);
+  if(!gm)gm=t.match(/(?:for|with)\s+(\d+)\s+(?:people|persons?|colleagues?|guests?)/);
+  if(gm){
+    var gn=parseInt(gm[2]||gm[3]||gm[1]);
+    if(gn>=2&&gn<=200){selPeople=String(gn);matched.push(gn+' people');if(gn>=8)selCorporate=true;}
+  }
+  // Corporate keywords
+  if(/(corporate|offsite|off-site|retreat|team building|conference|summit|kickoff|company)/.test(t)){
+    selCorporate=true;if(selPeople==='2'||selPeople==='1')selPeople='10';matched.push('Corporate retreat');
+  }
+  // Drive time
+  var dm=t.match(/(\d+)\s*(?:hour|hr)/);
+  if(dm){var dh=parseInt(dm[1]);if(dh>=1&&dh<=10){selDrive=String(dh);matched.push(dh+'hr drive');}}
+
   // Budget detection: $80, under 50, etc.
   var priceMatch=t.match(/\$?(\d{2,4})/);
   if(priceMatch){
@@ -1758,6 +2107,67 @@ function aiSearchParse(text){
 }
 
 // ── Instant results: AI box -> straight to results, no extra questions ──
+
+// ── Rotating AI prompts ───────────────────────────────────────────────
+var _aiPrompts=[
+  'Romantic dinner under \$80…',
+  'Beach day for 2 this weekend…',
+  'Team of 15 for offsite…',
+  '3hr drive adventure…',
+  'Cheap camping under \$50…',
+  'Family trip with kids…',
+  'Wellness spa weekend…',
+  'Nightlife + food tour…',
+  'Nature hike + cabin…',
+  'Corporate retreat 20 people…'
+];
+var _aiPromptIdx=0;
+function _rotateAiPrompt(){
+  var el=document.getElementById('aiPromptText');
+  if(el&&!el._clickSet){
+    el._clickSet=true;
+    el.addEventListener('click',function(){
+      var inp=document.getElementById('aiSearchInput');
+      if(inp&&el.textContent){inp.value=el.textContent.replace('…','');aiSearchParse(inp.value);}
+    });
+  }
+  var inp=document.getElementById('aiSearchInput');
+  if(!el)return;
+  if(inp&&inp.value.trim()){el.parentNode&&(el.parentNode.style.display='none');return;}
+  el.style.opacity='0';
+  setTimeout(function(){
+    _aiPromptIdx=(_aiPromptIdx+1)%_aiPrompts.length;
+    el.textContent=_aiPrompts[_aiPromptIdx];
+    el.style.opacity='1';
+  },300);
+}
+// Start rotating on load
+setTimeout(function(){
+  var el=document.getElementById('aiPromptText');
+  if(el){el.textContent=_aiPrompts[0];el.style.opacity='1';}
+  setInterval(_rotateAiPrompt,2800);
+},1200);
+
+// ── Confetti on Roulette Go ───────────────────────────────────────────
+function launchConfetti(){
+  var colors=['#2D8C6A','#4ade80','#fbbf24','#f87171','#60a5fa','#c084fc'];
+  for(var i=0;i<60;i++){
+    (function(i){setTimeout(function(){
+      var el=document.createElement('div');
+      el.className='confetti-piece';
+      el.style.cssText='position:fixed;top:-10px;left:'+(5+Math.random()*90)+'%;'
+        +'width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;'
+        +'background:'+colors[Math.floor(Math.random()*colors.length)]+';'
+        +'border-radius:'+(Math.random()>0.5?'50%':'2px')+';'
+        +'animation:confettiFall '+(1.2+Math.random()*1.5)+'s ease-out forwards;'
+        +'z-index:99999;pointer-events:none;'
+        +'transform:rotate('+(Math.random()*360)+'deg);';
+      document.body.appendChild(el);
+      setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},3000);
+    },i*40);})(i);
+  }
+}
+
 function aiSearchGo(){
   var inp=document.getElementById('aiSearchInput');
   var text=inp?inp.value:'';
@@ -1777,7 +2187,7 @@ function aiSearchGo(){
 }
 
 function selOpt(gid,el,val){
-  if(gid==='ePeople'){selPeople=val;}
+  if(gid==='ePeople'){selPeople=val;selCorporate=(parseInt(val)>=10);}
   var nl=document.getElementById(gid).querySelectorAll('.fs-opt');
   for(var i=0;i<nl.length;i++)nl[i].className='fs-opt';
   el.className='fs-opt on';
@@ -1806,7 +2216,7 @@ function updateBudgetLabel(){
   updateBudgetHint();
 }
 function show(id){
-  var ss=['homeScreen','modeScreen','surpriseScreen','escapeForm','localForm','loadScreen','resScreen'];
+  var ss=['homeScreen','modeScreen','surpriseScreen','escapeForm','localForm','loadScreen','resScreen','rouletteScreen','battleScreen'];
   for(var i=0;i<ss.length;i++){var el=document.getElementById(ss[i]);if(el)el.className=ss[i]===id?'screen on':'screen';}
   window.scrollTo(0,0);
 }
@@ -1950,6 +2360,7 @@ function startLoad(){
 }
 function showRes(){
   show('resScreen');
+  setTimeout(function(){if((selVibes&&selVibes.length>0)||(selVibe&&selVibe!=='all'))showPersonality();},2200);
   var rb=document.getElementById('rBody');
   if(rb&&rb.innerHTML.indexOf('shareCtaCard')===-1){
     rb.innerHTML+='<div id="shareCtaCard" class="share-cta-card" onclick="generateShareCard()">'
@@ -1961,6 +2372,21 @@ function showRes(){
 }
 
 // Run Escape
+function _getBadges(d,allDests){
+  var badges=[];
+  var price=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||200:200);
+  var acts=d.acts?d.acts.length:0;
+  var tags=(d.ch||[]).map(function(x){return(x.t||'').toLowerCase();}).join(' ');
+  if(d.dr<=1.5&&price<=150&&acts>=3) badges.push({icon:'💎',label:'Hidden Gem',cls:'badge-gem'});
+  if(allDests&&allDests.length>0&&typeof _valueScore==='function'){
+    var my=_valueScore(d);
+    var sorted=allDests.map(function(x){return _valueScore(x);}).sort(function(a,b){return b-a;});
+    if(my>=sorted[Math.min(2,sorted.length-1)]&&my>=75) badges.push({icon:'🔥',label:'Trending',cls:'badge-trend'});
+  }
+  if(d.dr<=2&&acts>=4&&tags.indexOf('popular')<0&&price<=160&&!badges.length) badges.push({icon:'🤫',label:'Locals Only',cls:'badge-local'});
+  return badges;
+}
+
 function _valueScore(d){
   var price=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||150:150);
   var drive=d.dr||2;
@@ -1992,13 +2418,62 @@ function _whyReasons(d,selBudgetVal){
 function _budgetBreakdown(d,nights,peopleCount){
   nights=nights||1;peopleCount=parseInt(peopleCount)||2;
   var hotelNight=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||100:100);
-  var hotel=hotelNight*nights;
-  var gas=Math.round(d.dr*16);
+  // Scale by rooms (2 per room) for groups
+  var rooms=peopleCount<=2?1:Math.ceil(peopleCount/2);
+  var hotel=hotelNight*rooms*nights;
+  // Gas scales by number of cars needed (~5 per car)
+  var cars=Math.ceil(peopleCount/5);
+  var gas=Math.round(d.dr*16*cars);
   var food=Math.round(35*peopleCount*nights*0.75);
-  var activities=d.acts&&d.acts.length?Math.round(parseInt(String(d.acts[0].price).replace(/[^\d]/g,''))||25)*Math.min(peopleCount,4):50;
+  var actBase=d.acts&&d.acts.length?parseInt(String(d.acts[0].price).replace(/[^\d]/g,''))||25:25;
+  var activities=Math.round(actBase*Math.min(peopleCount,20));
   var total=hotel+gas+food+activities;
-  return {hotel:hotel,gas:gas,food:food,activities:activities,total:total};
+  return {hotel:hotel,gas:gas,food:food,activities:activities,total:total,rooms:rooms,cars:cars};
 }
+// ── Weekend deals based on destination data ──────────────────────────
+function _dealsForDest(d,wk){
+  var deals=[];
+  var baseHotel=(d.hotels&&d.hotels[0]?parseInt(String(d.hotels[0].price).replace(/[^\d]/g,''))||120:120);
+  var tags=(d.ch||[]).map(function(x){return(x.t||'').toLowerCase();}).join(' ');
+  var now=new Date();
+  var isLastMinute=(now.getDay()>=4); // Thu/Fri/Sat
+  var ppl=typeof selPeople!=='undefined'?Math.min(parseInt(selPeople)||2,30):2;
+
+  // ── DEAL 1: Hotel ─────────────────────────────────────────────────
+  var hotelUrl='https://www.booking.com/searchresults.html?ss='+encodeURIComponent(d.n+', '+d.st)
+    +'&checkin='+wk.ci+'&checkout='+wk.co+'&group_adults='+ppl
+    +'&nflt=class%3D3&order=price&selected_currency=USD';
+  deals.push({
+    emoji:'🏨',
+    title:isLastMinute?'⏰ Last Minute Rate':'Best Hotel Rate',
+    desc:isLastMinute?'Book tonight — rates dropping fast':'Booking.com · cheapest first',
+    badge:isLastMinute?'LAST MINUTE':null,
+    badgeColor:isLastMinute?'#e05a2b':null,
+    price:'From $'+baseHotel+'/nt',
+    url:hotelUrl
+  });
+
+  // ── DEAL 2: Unique Stay (Airbnb) ──────────────────────────────────
+  var stayType=tags.indexOf('beach')>=0||tags.indexOf('coast')>=0?'Beachfront':
+               tags.indexOf('mountain')>=0||tags.indexOf('cabin')>=0?'Cabin':
+               tags.indexOf('lake')>=0?'Lakefront':
+               tags.indexOf('desert')>=0?'Glamping':'Unique';
+  var airbnbUrl='https://www.airbnb.com/s/'+encodeURIComponent(d.n+' '+d.st)
+    +'/homes?checkin='+wk.ci+'&checkout='+wk.co+'&adults='+Math.min(ppl,16);
+  deals.push({
+    emoji:'🌊',
+    title:stayType+' Stay',
+    desc:'Airbnb · entire place',
+    badge:null,
+    price:'From $'+Math.round(baseHotel*0.9)+'/nt',
+    url:airbnbUrl
+  });
+
+  // NOTE: Activities are already shown in BOOKABLE ACTIVITIES section above.
+  // No duplication here — deals section = stays only.
+  return deals;
+}
+
 function buildDestCard(d,wk,isIndia,accent){
   var html='';
         var _hdrGrad=accent||'#0d2015,#1a4d2e';
@@ -2008,6 +2483,16 @@ function buildDestCard(d,wk,isIndia,accent){
         html+='<div><div style="font-size:0.6rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:3px">'+d.dr+'HR DRIVE</div><div style="font-family:\'Playfair Display\',serif;font-size:1.3rem;font-weight:900;color:#fff">'+d.n+'</div><div style="font-size:0.72rem;color:rgba(255,255,255,.65)">'+d.st+'</div></div>';
         html+='<div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:100px;padding:6px 14px;text-align:center"><div style="font-size:1.1rem;font-weight:900;color:'+_drColor+'">'+d.dr+'h</div><div style="font-size:0.55rem;color:rgba(255,255,255,.7);font-weight:600">DRIVE</div></div>';
         html+='</div>';
+        // Badge injection
+        var _allDestsForBadge=typeof DESTS!=='undefined'&&selCity&&DESTS[selCity.code]?DESTS[selCity.code]:[];
+        var _badges=typeof _getBadges==='function'?_getBadges(d,_allDestsForBadge):[];
+        if(_badges.length>0){
+          html+='<div class="dc-badge-row">';
+          for(var bi=0;bi<_badges.length;bi++){
+            html+='<span class="dest-badge '+_badges[bi].cls+'">'+_badges[bi].icon+' '+_badges[bi].label+'</span>';
+          }
+          html+='</div>';
+        }
         html+='<div class="dc-body">';
         // dc-head now in dc-hdr above
         html+='<div class="dc-desc">'+d.desc+'</div><div class="dc-chips">';
@@ -2044,6 +2529,64 @@ function buildDestCard(d,wk,isIndia,accent){
         html+='</div></div>';
         html+='</div>'; // close wts-grid
         html+='</div>'; // close wts-section
+
+        // ── RV STAYS SECTION (smart — only outdoor/nature/beach/camping dests) ──
+        var _rvTags=(d.ch||[]).map(function(x){return(x.t||'').toLowerCase();}).join(' ');
+        var _rvKeys=['beach','nature','camp','outdoor','mountain','forest','lake','river',
+          'trail','park','wilderness','coastal','island','desert','canyon','kayak','hiking'];
+        var _showRV=_rvKeys.some(function(k){return _rvTags.indexOf(k)>=0;});
+        if(!_showRV){
+          var _descLow=(d.desc||'').toLowerCase();
+          _showRV=_descLow.indexOf('camp')>=0||_descLow.indexOf('outdoor')>=0
+            ||_descLow.indexOf('nature')>=0||_descLow.indexOf('trail')>=0
+            ||_descLow.indexOf('wilderness')>=0||_descLow.indexOf('kayak')>=0;
+        }
+        if(_showRV){
+          var _rvPpl=typeof selPeople!=='undefined'?Math.max(parseInt(selPeople)||2,1):2;
+          function _fmtRv(d){if(!d)return '';var p=d.split('-');return p.length===3?p[1]+'/'+p[2]+'/'+p[0]:d;}
+          var _rCi=_fmtRv(wk.ci),_rCo=_fmtRv(wk.co);
+          var _rvDH=wk.ci&&wk.co?(wk.ci+' → '+wk.co):'';
+          var _rvLoc=d.n+', '+d.st;
+          var _rvLocE=encodeURIComponent(_rvLoc);
+          var _rvLocP=d.n.replace(/ /g,'+')+'%2C+'+d.st.replace(/ /g,'+');
+          var _rvGL=(_rCi?_rCi+' · '+_rvPpl+' guests':_rvLoc);
+          var _u1='https://rvshare.com/search?location='+_rvLocP
+            +(wk.ci?'&start='+encodeURIComponent(_rCi):'')
+            +(wk.co?'&end='+encodeURIComponent(_rCo):'')
+            +'&sleeps='+_rvPpl;
+          var _u2='https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(d.n+' '+d.st)
+            +(wk.ci?'&arrive='+wk.ci:'')
+            +(wk.co?'&depart='+wk.co:'')
+            +'&adults='+_rvPpl;
+          var _u3='https://thedyrt.com/search?location='+_rvLocE;
+          html+='<div class="rv-section">';
+          html+='<div class="rv-section-hdr">🛻 RV Stays Near '+d.n+'</div>';
+          html+='<div class="rv-grid">';
+          html+='<div class="rv-tile rv-resort" data-url="'+_u1+'" onclick="goTo(this.dataset.url)">';
+          html+='<div class="rv-tile-icon">🚐</div>';
+          html+='<div class="rv-tile-name">Rent an RV</div>';
+          html+='<div class="rv-tile-desc">Search RV rentals near '+d.n+'</div>';
+          html+='<div class="rv-tile-src">RVshare</div>';
+          html+='<div class="rv-tile-tag">'+_rvGL+' ↗</div>';
+          html+='</div>';
+          html+='<div class="rv-tile rv-park" data-url="'+_u2+'" onclick="goTo(this.dataset.url)">';
+          html+='<div class="rv-tile-icon">🌳</div>';
+          html+='<div class="rv-tile-name">Camp &amp; Park</div>';
+          html+='<div class="rv-tile-desc">Book RV sites &amp; camping near '+d.n+'</div>';
+          html+='<div class="rv-tile-src">Hipcamp</div>';
+          html+='<div class="rv-tile-tag">'+_rvGL+' ↗</div>';
+          html+='</div>';
+          html+='<div class="rv-tile rv-camp" data-url="'+_u3+'" onclick="goTo(this.dataset.url)">';
+          html+='<div class="rv-tile-icon">🌲</div>';
+          html+='<div class="rv-tile-name">Free Spots</div>';
+          html+='<div class="rv-tile-desc">Free &amp; paid RV spots near '+d.n+'</div>';
+          html+='<div class="rv-tile-src">The Dyrt</div>';
+          html+='<div class="rv-tile-tag">Browse ↗</div>';
+          html+='</div>';
+          html+='</div>';
+          if(_rvDH)html+='<div class="rv-date-hint">📅 '+_rvDH+' · '+_rvPpl+' people</div>';
+          html+='</div>';
+        }
         // ══ WHERE TO STAY - Dest-specific tiles ══
         var wtsAdults=(typeof selPeople!=='undefined'?selPeople:'2');
         // ch = [{t:'Beach',c:'dcc-b'}] - check properly with .some()
@@ -2109,7 +2652,7 @@ function buildDestCard(d,wk,isIndia,accent){
           _stayFallback.forEach(function(f){if(_stayPool.length<4&&_seenLabels.indexOf(f.label)<0){_stayPool.push(f);_seenLabels.push(f.label);}});
         }
         var _stayTiles=_stayPool.slice(0,4);
-        html+='<div class="ev-subhead">🏕️ '+rt('where_stay')+'</div>';
+        html+='<div class="ev-subhead">✨ '+rt('unique_stays')+'</div>';
         html+='<div class="ai-stays-grid">';
         _stayTiles.forEach(function(s){
           html+='<div class="ai-stay-card" style="background:linear-gradient('+s.color+')" data-url="'+s.url+'" onclick="goTo(this.dataset.url)">'+
@@ -2126,7 +2669,7 @@ function buildDestCard(d,wk,isIndia,accent){
         var _cvNames=_cv?_cv.map(function(v){return v.name.toLowerCase();}).join('|'):'';
         if(_cv&&_cv.length>0){
           html+='<div class="ev-subhead">⭐ '+rt('top_picks')+'</div>';
-          _cv.slice(0,3).forEach(function(v){
+          _cv.forEach(function(v){
             html+='<div class="ev-item" data-url="'+v.url+'" onclick="goTo(this.dataset.url)">'+
               '<div class="ev-left">'+
                 '<div class="ev-cat">'+getCatEmoji(v.category)+' '+trCat(v.category)+'</div>'+
@@ -2146,7 +2689,7 @@ function buildDestCard(d,wk,isIndia,accent){
         var _matchedActs=_activeVibes.length?_availableActs.filter(function(a){return actVibeMatch(a,_activeVibes);}):[];
         var _restActs=_availableActs.filter(function(a){return _matchedActs.indexOf(a)<0;});
         var _orderedActs=_matchedActs.concat(_restActs);
-        var _seenActs={},_actCount=0,_maxActs=5;
+        var _seenActs={},_actCount=0,_maxActs=999;
         for(var ai=0;ai<_orderedActs.length;ai++){
           if(_actCount>=_maxActs)break;
           var a=_orderedActs[ai];
@@ -2154,9 +2697,11 @@ function buildDestCard(d,wk,isIndia,accent){
           _seenActs[a.name]=true;_actCount++;
           var aUrl=actUrl(a.name,d.n+(d.st?', '+d.st:''),wk.ci,wk.co);
           var _aBadge=(_activeVibes.length&&actVibeMatch(a,_activeVibes))?'<span style="background:#2D8C6A;color:#fff;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:6px;">'+(selLang==='es'?'COINCIDE':'MATCH')+'</span>':'';
+          var _isFreeAct=a.price&&(String(a.price).toLowerCase()==='free'||String(a.price)==='$0');
+          var _freeBadge=_isFreeAct?'<span style="background:#2D8C6A;color:#fff;font-size:0.6rem;font-weight:700;padding:2px 7px;border-radius:100px;margin-left:6px;">FREE</span>':'';
           html+='<div class="ev-item" data-url="'+aUrl+'" onclick="goTo(this.dataset.url)">'+
             '<div class="ev-left">'+
-              '<div class="ev-cat">&#x1F3AF; '+rt('guided_tour')+_aBadge+'</div>'+
+              '<div class="ev-cat">&#x1F3AF; '+rt('guided_tour')+_aBadge+_freeBadge+'</div>'+
               '<div class="ev-name">'+a.name+'</div>'+
               '<div class="ev-desc-sm">'+a.desc+'</div>'+
             '</div>'+
@@ -2166,21 +2711,78 @@ function buildDestCard(d,wk,isIndia,accent){
             '</div></div>';
         }
         html+='<div id="'+_did+'_ev"></div>';
+        // Free explore link at bottom of activities
+        if(d.n){
+          var _exploreUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent('things to do '+d.n+' '+d.st);
+          html+='<div class="ev-item" data-url="'+_exploreUrl+'" onclick="goTo(this.dataset.url)">'
+            +'<div class="ev-left">'
+            +'<div class="ev-cat">🗺️ Free Things Nearby</div>'
+            +'<div class="ev-name">Explore '+d.n+' for free</div>'
+            +'<div class="ev-venue">Beaches, trails & local spots · $0</div>'
+            +'</div>'
+            +'<div class="ev-right"><button class="ev-book">Explore</button></div>'
+            +'</div>';
+        }
         html+='</div>'; // close ev-section
 
         // ── Budget Breakdown + Map Route ─────────────────────────────
+        var _bbPplN=parseInt(typeof selPeople!=='undefined'?selPeople:'2')||2;
+        var _isGrpMode=_bbPplN>=6||(typeof selCorporate!=='undefined'&&selCorporate);
         var _bb=_budgetBreakdown(d,wk.nights||1,typeof selPeople!=='undefined'?selPeople:'2');
         var _mapUrl='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(d.n+', '+d.st);
         html+='<div class="dc-footer">';
-        html+='<div class="dc-bb"><div class="dc-bb-tt">'+rt('budget_est')+'</div>';
-        html+='<div class="dc-bb-row"><span>'+rt('bb_stay')+'</span><span>$'+_bb.hotel+'</span></div>';
-        html+='<div class="dc-bb-row"><span>'+rt('bb_gas')+'</span><span>$'+_bb.gas+'</span></div>';
-        html+='<div class="dc-bb-row"><span>'+rt('bb_food')+'</span><span>$'+_bb.food+'</span></div>';
-        html+='<div class="dc-bb-row"><span>'+rt('bb_activities')+'</span><span>$'+_bb.activities+'</span></div>';
-        html+='<div class="dc-bb-row dc-bb-total"><span>'+rt('bb_total')+'</span><span>$'+_bb.total+'</span></div>';
-        html+='</div>';
+        if(!_isGrpMode){
+          var _bbPpl=_bbPplN;
+          var _bbLabel=_bbPpl<=1?'Solo':_bbPpl===2?'Couple':_bbPpl===4?'Family (4)':_bbPpl+' People';
+          var _stayLbl=_bb.rooms>1?rt('bb_stay')+' ('+_bb.rooms+' rooms)':rt('bb_stay');
+          html+='<div class="dc-bb"><div class="dc-bb-tt">'+rt('budget_est')+' <span style="font-size:0.7rem;font-weight:500;color:#88a898;">('+_bbLabel+')</span></div>';
+          html+='<div class="dc-bb-row"><span>'+_stayLbl+'</span><span>$'+_bb.hotel+'</span></div>';
+          html+='<div class="dc-bb-row"><span>'+rt('bb_gas')+'</span><span>$'+_bb.gas+'</span></div>';
+          html+='<div class="dc-bb-row"><span>'+rt('bb_food')+'</span><span>$'+_bb.food+'</span></div>';
+          html+='<div class="dc-bb-row"><span>'+rt('bb_activities')+'</span><span>$'+_bb.activities+'</span></div>';
+          html+='<div class="dc-bb-row dc-bb-total"><span>'+rt('bb_total')+'</span><span>$'+_bb.total+'</span></div>';
+          html+='</div>';
+        }
         html+='<button class="dc-map-btn" data-url="'+_mapUrl+'" onclick="goTo(this.dataset.url)">\ud83d\uddfa\ufe0f '+rt('open_maps')+'</button>';
         html+='</div>';
+
+        
+        // ── Group/Corporate Panel ─────────────────────────────────────
+        var _ppl=parseInt(typeof selPeople!=='undefined'?selPeople:'2')||2;
+        if(_ppl>=6||(typeof selCorporate!=='undefined'&&selCorporate)){
+          var _ghBase=(d.hotels&&d.hotels[1]?parseInt(String(d.hotels[1].price).replace(/[^\d]/g,''))||200:200);
+          var _gRooms=Math.ceil(_ppl/2);
+          var _gNights=wk.nights||1;
+          var _gHotel=_ghBase*_gRooms*_gNights;
+          var _gFood=Math.round(40*_ppl*_gNights);
+          var _gAct=Math.round((d.acts&&d.acts[0]?parseInt(String(d.acts[0].price).replace(/[^\d]/g,''))||30:30)*Math.min(_ppl,20));
+          var _gGas=Math.round(d.dr*16*Math.ceil(_ppl/5));
+          var _gTotal=_gHotel+_gFood+_gAct+_gGas;
+          var _gPP=Math.round(_gTotal/_ppl);
+          var _gHotelUrl='https://www.booking.com/searchresults.html?ss='+encodeURIComponent(d.n+', '+d.st)+'&checkin='+wk.ci+'&checkout='+wk.co+'&group_adults='+Math.min(_ppl,30)+'&no_rooms='+_gRooms+'&nflt=class%3D3%3Bclass%3D4&order=price&selected_currency=USD';
+          var _gVenueUrl='https://www.peerspace.com/s?query='+encodeURIComponent(d.n+' '+d.st)+'&activity=corporate-retreat&guestCount='+_ppl;
+          var _gActUrl='https://www.viator.com/searchResults/all?text='+encodeURIComponent(d.n+' group activities')+'&startDate='+wk.ci+'&pax='+Math.min(_ppl,20);
+          html+='<div class="dc-group-box">';
+          html+='<div class="dc-group-hdr">\ud83c\udfe2 '+rt('group_hdr')+' ('+_ppl+' '+rt('group_people')+')</div>';
+          html+='<div class="dc-group-est">';
+          html+='<div class="dc-group-row"><span>\ud83c\udfe8 '+rt('bb_stay')+' ('+_gRooms+' rooms)</span><span>$'+_gHotel+'</span></div>';
+          html+='<div class="dc-group-row"><span>\ud83c\udf7d\ufe0f '+rt('bb_food')+'</span><span>$'+_gFood+'</span></div>';
+          html+='<div class="dc-group-row"><span>\ud83c\udfac '+rt('bb_activities')+'</span><span>$'+_gAct+'</span></div>';
+          html+='<div class="dc-group-row"><span>\u26fd '+rt('bb_gas')+'</span><span>$'+_gGas+'</span></div>';
+          html+='<div class="dc-group-row dc-group-total"><span>'+rt('bb_total')+'</span><span>$'+_gTotal+'</span></div>';
+          html+='<div class="dc-group-pp">~$'+_gPP+' '+rt('group_per_person')+'</div>';
+          html+='</div>';
+          html+='<div class="dc-group-btns">';
+          html+='<button class="dc-group-btn dc-group-btn-primary" data-url="'+_gHotelUrl+'" onclick="goTo(this.dataset.url)">\ud83c\udfe8 '+rt('group_book_hotel')+'</button>';
+          html+='<button class="dc-group-btn" data-url="'+_gVenueUrl+'" onclick="goTo(this.dataset.url)">\ud83c\udfe2 '+rt('group_venue')+'</button>';
+          html+='<button class="dc-group-btn" data-url="'+_gActUrl+'" onclick="goTo(this.dataset.url)">\ud83c\udfac '+rt('group_activities')+'</button>';
+          html+='</div>';
+
+          // ── Group Activities Section ─────────────────────────────
+
+
+          html+='</div>';
+        }
 
         html+='</div>'; // close dest-card
         (function(dn,ds,ci,co,evId){
@@ -2191,7 +2793,7 @@ function buildDestCard(d,wk,isIndia,accent){
             var nh='';
             if(data.events&&data.events.length>0&&!data.eventsFallback){
               nh+='<div class="ev-subhead">\u{1F3AB} '+rt('local_events')+'</div>';
-              data.events.slice(0,3).forEach(function(ev){nh+='<div class="ev-item" onclick="goTo(\"'+ev.url+'\")">'+'<div class="ev-left">'+'<div class="ev-cat">'+ev.group+'</div>'+'<div class="ev-name">'+ev.name+'</div>'+'<div class="ev-venue">'+ev.venue+'</div>'+'<div class="ev-date">'+ev.date+'</div>'+'</div>'+'<div class="ev-right"><div class="ev-price">'+ev.price+'</div><button class="ev-book">'+rt('join')+'</button></div></div>';});
+              data.events.forEach(function(ev){nh+='<div class="ev-item" onclick="goTo(\"'+ev.url+'\")">'+'<div class="ev-left">'+'<div class="ev-cat">'+ev.group+'</div>'+'<div class="ev-name">'+ev.name+'</div>'+'<div class="ev-venue">'+ev.venue+'</div>'+'<div class="ev-date">'+ev.date+'</div>'+'</div>'+'<div class="ev-right"><div class="ev-price">'+ev.price+'</div><button class="ev-book">'+rt('join')+'</button></div></div>';});
             }
             if(nh)el.innerHTML=nh;
           }).catch(function(){});
@@ -2199,6 +2801,179 @@ function buildDestCard(d,wk,isIndia,accent){
   return html;
 }
 
+// ── VIRAL FEATURES ───────────────────────────────────────────────────
+var _PERSONALITIES={
+  beach:{emoji:'🌊',title:'Beach Addict',desc:'Sun, waves and salty air — your happy place.',bg:'linear-gradient(135deg,#1a6b8a,#0d3d52)'},
+  explorer:{emoji:'🏔️',title:'Weekend Explorer',desc:'Mountains, trails and open roads call your name.',bg:'linear-gradient(135deg,#2d5a2d,#1a3d1a)'},
+  foodie:{emoji:'🍷',title:'Food & Wine Lover',desc:'You plan trips around the best meals and local sips.',bg:'linear-gradient(135deg,#6b2d4a,#3d1a2d)'},
+  nature:{emoji:'🌲',title:'Nature Escapist',desc:'Forests, stars and silence — you recharge outdoors.',bg:'linear-gradient(135deg,#1a4d2e,#0d2015)'},
+  city:{emoji:'🌃',title:'City Night Owl',desc:'Rooftops, nightlife, street food — the city never sleeps.',bg:'linear-gradient(135deg,#1a2d4a,#0d1a2d)'},
+  wellness:{emoji:'💆',title:'Wellness Seeker',desc:'Spa days, quiet mornings and restorative escapes.',bg:'linear-gradient(135deg,#4a2d6a,#2d1a40)'},
+  adventure:{emoji:'🎲',title:'Adventure Junkie',desc:'Adrenaline is your love language. Thrill-seeker.',bg:'linear-gradient(135deg,#8a3d1a,#52250f)'}
+};
+var _rouletteDests=[];
+var _rouletteIdx=0;
+var _battleVotes={};
+
+function _getPersonality(){
+  var v=(selVibes&&selVibes.length?selVibes:[selVibe||'']).join(' ').toLowerCase();
+  if(v.indexOf('beach')>=0||v.indexOf('ocean')>=0) return 'beach';
+  if(v.indexOf('adventure')>=0||v.indexOf('roadtrip')>=0) return 'adventure';
+  if(v.indexOf('food')>=0||v.indexOf('wine')>=0) return 'foodie';
+  if(v.indexOf('wellness')>=0||v.indexOf('romantic')>=0) return 'wellness';
+  if(v.indexOf('nature')>=0||v.indexOf('camping')>=0) return 'nature';
+  if(v.indexOf('nightlife')>=0||v.indexOf('culture')>=0) return 'city';
+  var cards=document.querySelectorAll('.dest-card');
+  var t='';
+  for(var i=0;i<Math.min(cards.length,3);i++) t+=cards[i].textContent.toLowerCase();
+  if(t.indexOf('beach')>=0||t.indexOf('coast')>=0) return 'beach';
+  return 'explorer';
+}
+function showPersonality(){
+  var p=_PERSONALITIES[_getPersonality()];
+  if(!p)return;
+  var ex=document.getElementById('personalityCard');
+  if(ex)ex.remove();
+  var el=document.createElement('div');
+  el.id='personalityCard';
+  el.className='personality-card';
+  el.style.cssText='background:'+p.bg;
+  el.innerHTML='<div class="pc-close" onclick="closePersonality()">✕</div>'
+    +'<div class="pc-emoji">'+p.emoji+'</div>'
+    +'<div class="pc-label">YOUR TRAVEL PERSONALITY</div>'
+    +'<div class="pc-title">'+p.title+'</div>'
+    +'<div class="pc-desc">'+p.desc+'</div>'
+    +'<div class="pc-btns">'
+    +'<button class="pc-share-btn" onclick="generateShareCard()">📸 Share It</button>'
+    +'<button class="pc-plan-btn" onclick="closePersonality()">See My Escapes →</button>'
+    +'</div>';
+  document.body.appendChild(el);
+  setTimeout(function(){el.classList.add('pc-show');},30);
+}
+function startRoulette(){
+  if(!selCity){var ci=document.getElementById('homeCity');if(ci){ci.style.borderColor='#e05a2b';ci.focus();setTimeout(function(){ci.style.borderColor='#C8E4D4';},1500);}return;}
+  var all=(typeof DESTS!=='undefined'&&DESTS[selCity.code])?DESTS[selCity.code].slice():[];
+  for(var i=all.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=all[i];all[i]=all[j];all[j]=t;}
+  _rouletteDests=all;_rouletteIdx=0;
+  show('rouletteScreen');
+  _renderRoulette();
+}
+function rouletteSkip(){
+  var el=document.getElementById('rouletteCard');
+  if(el){el.style.transform='translateX(-110%) rotate(-8deg)';el.style.opacity='0';}
+  setTimeout(function(){
+    _rouletteIdx=(_rouletteIdx+1)%(_rouletteDests.length||1);
+    if(el){el.style.transform='';el.style.opacity='';}
+    _renderRoulette();
+  },280);
+}
+function rouletteGo(){
+  var d=_rouletteDests[_rouletteIdx];
+  if(!d)return;
+  if(typeof launchConfetti==='function')launchConfetti();
+  selVibe='all';selVibes=[];selDrive='99';selBudget='all';
+  prevScreen='rouletteScreen';
+  var wk=getSelDates();
+  document.getElementById('rNT').textContent='Your Escape';
+  document.getElementById('rTt').textContent=d.n+', '+d.st;
+  document.getElementById('rSb').textContent='🚗 '+d.dr+'hr drive';
+  setTimeout(function(){
+    document.getElementById('rBody').innerHTML=buildDestCard(d,wk,curCountry==='india');
+    showRes();
+  },350);
+}
+function startBattle(){
+  if(!selCity){var ci=document.getElementById('homeCity');if(ci){ci.style.borderColor='#e05a2b';ci.focus();setTimeout(function(){ci.style.borderColor='#C8E4D4';},1500);}return;}
+  var all=(typeof DESTS!=='undefined'&&DESTS[selCity.code])?DESTS[selCity.code].slice():[];
+  if(all.length<2)return;
+  var i1=Math.floor(Math.random()*all.length),i2;
+  do{i2=Math.floor(Math.random()*all.length);}while(i2===i1);
+  _renderBattle(all[i1],all[i2]);
+  show('battleScreen');
+}
+
+function _renderRoulette(){
+  var d=_rouletteDests[_rouletteIdx];
+  if(!d)return;
+  var el=document.getElementById('rouletteCard');
+  if(!el)return;
+  var score=typeof _valueScore==='function'?_valueScore(d):80;
+  var sc=score>=85?'#2D8C6A':score>=72?'#d4920a':'#a85a2d';
+  var tags=(d.ch||[]).slice(0,3).map(function(t){return '<span class="rt-tag">'+t.t+'</span>';}).join('');
+  var hp=d.hotels&&d.hotels[0]?d.hotels[0].price:'';
+  var bgs=typeof _getBadges==='function'?_getBadges(d,_rouletteDests):[];
+  var bh=bgs.map(function(b){return '<span class="dest-badge '+b.cls+'">'+b.icon+' '+b.label+'</span>';}).join('');
+  el.style.transition='none';
+  el.innerHTML='<div class="rt-hdr" style="background:linear-gradient(135deg,#0d2015,#1a4d2e)">'
+    +'<div class="rt-drive">🚗 '+d.dr+' HR DRIVE</div>'
+    +'<div class="rt-name">'+d.n+'</div>'
+    +'<div class="rt-state">'+d.st+'</div>'
+    +'<div class="rt-badge-score" style="border-color:'+sc+';color:'+sc+'">'+score+'<div style="font-size:0.44rem;letter-spacing:1px;margin-top:1px">VALUE</div></div>'
+    +'</div>'
+    +'<div class="rt-body">'
+    +(bh?'<div style="margin-bottom:8px">'+bh+'</div>':'')
+    +'<div class="rt-desc">'+d.desc+'</div>'
+    +'<div class="rt-tags">'+tags+'</div>'
+    +(hp?'<div class="rt-price">🏨 From '+hp+'/night</div>':'')
+    +'</div>'
+    +'<div class="rt-progress">'+(_rouletteIdx+1)+' of '+_rouletteDests.length+'</div>';
+  setTimeout(function(){el.style.transition='transform 0.28s ease, opacity 0.28s ease';},50);
+  el.ontouchstart=function(e){el._tx=e.touches[0].clientX;};
+  el.ontouchend=function(e){var dx=e.changedTouches[0].clientX-(el._tx||0);if(dx>60)rouletteGo();else if(dx<-60)rouletteSkip();};
+}
+function _renderBattle(d1,d2){
+  var el=document.getElementById('battleContainer');
+  if(!el)return;
+  var key=d1.n+'__vs__'+d2.n;
+  var v=_battleVotes[key]||[0,0];
+  var total=v[0]+v[1]||1;
+  var voted=v[0]+v[1]>0;
+  var wk=typeof getSelDates==='function'?getSelDates():{ci:'',co:''};
+  function bookUrl(d){
+    return 'https://www.booking.com/searchresults.html?ss='+encodeURIComponent(d.n+', '+d.st)+'&checkin='+wk.ci+'&checkout='+wk.co+'&group_adults=2&order=price&selected_currency=USD';
+  }
+  function cardHtml(d,side){
+    var hp=d.hotels&&d.hotels[0]?d.hotels[0].price:'';
+    var pct=Math.round(v[side]/total*100);
+    var isWin=voted&&v[side]>v[1-side];
+    var barW=voted?pct:0;
+    return '<div class="battle-card'+(isWin?' battle-card-win':'')+'" data-key="'+key+'" data-side="'+side+'" onclick="castVote(this.dataset.key,this.dataset.side)">'
+      +(isWin?'<div class="bc-crown">🏆</div>':'')
+      +'<div class="bc-name">'+d.n+'</div>'
+      +'<div class="bc-sub">'+d.st+' · 🚗 '+d.dr+'hr</div>'
+      +(hp?'<div class="bc-price">From '+hp+'/nt</div>':'')
+      +(voted
+        ?('<div class="bc-bar-wrap"><div class="bc-bar" style="width:'+barW+'%"></div></div>'
+         +'<div class="bc-pct'+(isWin?' bc-win':'')+'">'+pct+'%</div>')
+        :'<div class="bc-vote">TAP TO VOTE</div>')
+      +'</div>';
+  }
+  var winnerD=(v[0]>v[1])?d1:(v[1]>v[0]?d2:null);
+  var tieMsg=voted&&v[0]===v[1];
+  el.innerHTML='<div class="battle-title">WHERE WOULD YOU GO?</div>'
+    +'<div class="battle-row">'+cardHtml(d1,0)+'<div class="vs-circle">VS</div>'+cardHtml(d2,1)+'</div>'
+    +(voted
+      ?('<div class="battle-result-box">'
+        +(tieMsg
+          ?'<div class="br-winner">🤝 Tied so far!</div>'
+          :('<div class="br-winner">🏆 '+winnerD.n+' is winning!</div>'))
+        +'<div class="br-actions">'
+        +(winnerD?('<button class="br-book-btn" data-url="'+bookUrl(winnerD)+'" onclick="goTo(this.dataset.url)">🏨 Book '+winnerD.n+'</button>'):'')
+        +'<button class="br-share-btn" onclick="generateShareCard()">📸 Share</button>'
+        +'</div></div>')
+      :'<div class="battle-hint">Tap to cast your vote 👇</div>')
+    +'<button class="battle-next" onclick="startBattle()">⚡ New Battle</button>';
+  el._d1=d1;el._d2=d2;
+}
+function castVote(key,side){
+  side=parseInt(side)||0;
+  if(!_battleVotes[key])_battleVotes[key]=[0,0];
+  _battleVotes[key][side]++;
+  var el=document.getElementById('battleContainer');
+  if(el&&el._d1)_renderBattle(el._d1,el._d2);
+}
+
+function closePersonality(){var c=document.getElementById('personalityCard');if(c)c.remove();}
 function runEscape(){
   var wk=getSelDates(),nights=wk.nights||2,isHol=wk.isHol||false;
   var maxDr=parseFloat(selDrive)||99;
@@ -2381,7 +3156,7 @@ function runLocal(){
     var _lcvNames=_lcv?_lcv.map(function(v){return v.name.toLowerCase();}):[];
     if(_lcv&&_lcv.length>0){
       html+='<div class="ev-subhead">⭐ '+rt('top_picks')+'</div>';
-      _lcv.slice(0,4).forEach(function(v){
+      _lcv.forEach(function(v){
         html+='<div class="ev-item" data-url="'+v.url+'" onclick="goTo(this.dataset.url)">'+
           '<div class="ev-left">'+
             '<div class="ev-cat">'+getCatEmoji(v.category)+' '+trCat(v.category)+'</div>'+
@@ -2444,7 +3219,7 @@ function runLocal(){
         var nh='';
         if(data.events&&data.events.length>0&&!data.eventsFallback){
           nh+='<div class="ev-subhead">🎫 '+rt('local_events')+'</div>';
-          data.events.slice(0,4).forEach(function(ev){
+          data.events.forEach(function(ev){
             nh+='<div class="ev-item" data-url="'+ev.url+'" onclick="goTo(this.dataset.url)">'+
               '<div class="ev-left">'+
                 '<div class="ev-cat">👥 '+ev.group+'</div>'+
