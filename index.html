@@ -1692,7 +1692,7 @@ function hotelUrl(dest,ci,co,nflt){
   // Booking.com USA - force USD even if user is in India
   var u='https://www.booking.com/searchresults.html?ss='+encodeURIComponent(dest);
   u+='&checkin='+ci+'&checkout='+co;
-  u+='&group_adults='+selPeople+'&no_rooms='+(parseInt(selPeople)>=4?'2':'1');
+  var _hp=parseInt(typeof selPeople!=='undefined'?selPeople:'2')||2;u+='&group_adults='+_hp+'&no_rooms='+Math.ceil(_hp/2);
   u+='&selected_currency=USD&changed_currency=1&top_currency=1';
   u+='&lang=en-us&order=price';
   if(nflt)u+='&nflt='+nflt;
@@ -1779,37 +1779,33 @@ function getCuratedVenues(destName){
 }
 
 function getStayUrl(stayType, cityName, stateName, ci, co){
-  var dest=cityName+(stateName?', '+stateName:'');
-  var citySlug=cityName.toLowerCase().split(' ').join('-');
-  var stateSlug=stateName?stateName.toLowerCase().split(' ').join('-'):'';
-  
+  // Use dash-slug for Airbnb path (avoids %2C visible in browser)
+  var ppl=typeof selPeople!=='undefined'?selPeople:'2';
+  var citySlug=cityName.toLowerCase().replace(/[^a-z0-9]+/g,'-');
+  var stateSlug=stateName?stateName.toLowerCase().replace(/[^a-z0-9]+/g,'-'):'';
+  var airbnbPath=citySlug+(stateSlug?'--'+stateSlug:'');
+  var airbnbBase='https://www.airbnb.com/s/'+airbnbPath+'/homes?checkin='+ci+'&checkout='+co+'&adults='+ppl;
+  var hipcampBase='https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateName)+'&arrive='+ci+'&depart='+co+'&adults='+ppl;
+  var vrboBase='https://www.vrbo.com/search/keywords:'+encodeURIComponent(cityName+' '+stateName);
+  var vrboParams='?startDate='+ci+'&endDate='+co+'&adults='+ppl+'&sort=PRICE_ASC';
+
   switch(stayType){
     case 'treehouse':
-      // Airbnb - best treehouse inventory, sort by price
-      return 'https://www.airbnb.com/s/'+encodeURIComponent(dest+' treehouse')+'/homes?checkin='+ci+'&checkout='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&sort_order=PRICE_LTE&price_max=300';
-    
-    case 'farmhouse':
-      // VRBO - private homes specialist, farm/ranch category
-      return 'https://www.vrbo.com/search/keywords:'+encodeURIComponent(cityName+' farmhouse')+'?startDate='+ci+'&endDate='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&maxNightlyPrice=200&sort=PRICE_ASC';
-    
-    case 'camping':
-      // Hipcamp - #1 camping app USA, best prices
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=camping';
-    
+      return airbnbBase+'&selectedTab=home_tab&refinement_paths[]='+encodeURIComponent('/homes')+'&amenities[]=6&room_types[]=Entire+home';
+    case 'beachfront':
+      return airbnbBase+'&amenities[]=1&room_types[]=Entire+home';
     case 'cabin':
-      // Hipcamp for nature cabins, sorted by price
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=cabins';
-    
+      return hipcampBase+'&category=cabins';
     case 'glamping':
-      // Hipcamp glamping - luxury outdoor stays
-      return 'https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(cityName+' '+stateSlug)+'&start='+ci+'&end='+co+'&category=glamping';
-    
+      return hipcampBase+'&category=glamping';
+    case 'camping':
+      return hipcampBase+'&category=camping';
     case 'lakefront':
-      // VRBO - best for lakefront/waterfront private homes
-      return 'https://www.vrbo.com/search/keywords:'+encodeURIComponent(cityName+' lakefront')+'?startDate='+ci+'&endDate='+co+'&adults='+(typeof selPeople!=='undefined'?selPeople:'2')+'&sort=PRICE_ASC';
-    
+      return vrboBase+' lakefront'+vrboParams;
+    case 'farmhouse':
+      return vrboBase+' farmhouse'+vrboParams;
     default:
-      return 'https://www.airbnb.com/s/'+encodeURIComponent(dest)+'/homes?checkin='+ci+'&checkout='+co+'&adults=2';
+      return airbnbBase;
   }
 }
 // India Hotels: Goibibo - ALWAYS INR, never USD
@@ -2551,8 +2547,8 @@ function buildDestCard(d,wk,isIndia,accent){
           var _rvLocP=d.n.replace(/ /g,'+')+'%2C+'+d.st.replace(/ /g,'+');
           var _rvGL=(_rCi?_rCi+' · '+_rvPpl+' guests':_rvLoc);
           var _u1='https://rvshare.com/search?location='+_rvLocP
-            +(wk.ci?'&start='+encodeURIComponent(_rCi):'')
-            +(wk.co?'&end='+encodeURIComponent(_rCo):'')
+            +(wk.ci?'&start='+_rCi:'')
+            +(wk.co?'&end='+_rCo:'')
             +'&sleeps='+_rvPpl;
           var _u2='https://www.hipcamp.com/en-US/search?q='+encodeURIComponent(d.n+' '+d.st)
             +(wk.ci?'&arrive='+wk.ci:'')
